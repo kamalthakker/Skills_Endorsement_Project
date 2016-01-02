@@ -256,7 +256,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
     <!-- begin #footer -->
     <div id="footer">
 	    <center>
-		Copyright &copy; Skills Endorsement. Designed by Monmouth University
+		Copyright &copy; Skills Endorsement. Design by Monmouth University
 	    </center>
 	</div>
     <!-- end #footer -->
