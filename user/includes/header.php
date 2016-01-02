@@ -44,9 +44,9 @@ if(!isset($linkno)) $linkno=0;
 
 <body>
 <!-- begin #container -->
-<div id="container11">
+<div id="container">
 	<!-- begin #header -->
-    <div id="header11">
+    <div id="header">
     	<div class="logo">
     	
     	 <table width="100%">
@@ -59,7 +59,7 @@ if(!isset($linkno)) $linkno=0;
 	    	 <!--  <a href="index.php"><img src="../images/logo.png" alt="logo" /></a> -->
 	    	 
     	  </td>
-    	      	<td style="text-align: right; padding-right: 30px;">
+    	      	<td style="text-align: right; padding-right: 10px;">
     	      	<div class="headerText3">
             		<?php 
             		if (isset($fname) && isset($lname)){
@@ -76,54 +76,19 @@ if(!isset($linkno)) $linkno=0;
     	  
     	</div>
     	
-    	 
-    	
-        <div class="cssmenu">
-            
-                <ul>
-                     
-                    <li <?php if($linkno==1) echo 'id="active"'?>><a href="index.php">Home</a></li>
-                    
-                    <?php if(isset($uname) && isset($role) && $role == 'user') { ?>
-                    	<li <?php if($linkno==2) echo 'id="active"'?>><a href="my_account.php">My Account</a></li>
-                    <?php } else { ?>
-                    	<li <?php if($linkno==2) echo 'id="active"'?>><a href="register.php">Create an Account</a></li>
-                    <?php }?>
-                    
-                    <li <?php if($linkno==3) echo 'id="active"'?>><a href="cart.php">
-                    
-                    My Cart <?php //if($total_cart_item>0) echo ' (' . $total_cart_item. ')'?>
-                    
-                    </a></li>
-                    <!-- 
-                    	<li><a href="">About Us</a></li>
-                    	<li><a href="">Contact Us</a></li>
-                     -->
-                </ul>
-            
-            
-       
-            
-            <form>
-            
-               <input type="text" name="search"  class="search" placeholder="Search entire store..." required />
-               
-          
-			</form>
-            
-           
-            
-        </div>
-                
+    	<div id='cssmenu'>
+		<ul>
+		   <li <?php if($linkno==1) echo 'class="active"'?>><a href='#'>Home</a></li>
+		   <li <?php if($linkno==2) echo 'class="active"'?>><a href='#'>Add Project</a></li>
+		   <li <?php if($linkno==3) echo 'class="active"'?>><a href='#'>Add Skill</a></li>
+		   <li <?php if($linkno==4) echo 'class="active"'?>><a href='#'>Add Endorsement</a></li>
+		   <li <?php if($linkno==5) echo 'class="active"'?>><a href='#'>Approvals</a></li>
+		   
+		   <li <?php if($linkno==6) echo 'class="active"'?>><a href='#'>Edit Profile</a></li>
+		</ul>
+		</div>
+    	      
     </div>
     <!-- end #header -->
     
     
-    <div id='cssmenu'>
-<ul>
-   <li class='active'><a href='#'>Home</a></li>
-   <li><a href='#'>Products1111111111</a></li>
-   <li><a href='#'>Company</a></li>
-   <li><a href='#'>Contact</a></li>
-</ul>
-</div>
