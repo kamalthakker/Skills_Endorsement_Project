@@ -58,7 +58,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 		// --- Log in form ---
 		$uname  = $_POST['uname'];
 		$psword = $_POST['psword'];
-		$role =   $_POST['role'];
+		//$role =   $_POST['role'];
+		$role = "user";
 
 		if( empty($uname))  $error[] = "Please input your username!";
 		if( empty($psword)) $error[] = "Please input your password!";
@@ -143,13 +144,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 				$_SESSION['lname']= $lname;
 				$_SESSION['role']= $role;
 				
-				
-
+			
 				// redriect to the home page
 				//header("Location: home.php");
 				if($role == 'admin')
 					header("Location: admin/index.php");
-				else if ($role == 'customer')
+				else if ($role == 'user')
 					header("Location: user/index.php");
 			}
 			else if($loginAttempt < $Number_of_attempt_allowed)
@@ -218,7 +218,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 					<td><input type = "password" name = "psword" /></td>
 				</tr>
 				
-				
+				<!--
 				<tr>
 					
 					<td>Role:</td>
@@ -227,7 +227,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 				<br><input type = "radio" name = "role" value = "admin" />Administrator
 					</td>
 				</tr>
-				
+				-->
 				
 			</table>
 			
