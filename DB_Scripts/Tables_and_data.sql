@@ -30,3 +30,28 @@ VALUES
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE `projects` (
+  `project_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `project_name` varchar(50) DEFAULT NULL,
+  `project_desc` varchar(5000) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `manager` varchar(50) DEFAULT NULL,
+  `approved` char(1) DEFAULT 'N',
+  PRIMARY KEY (`project_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+CREATE TABLE `user_project_skill` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uname` int(11) DEFAULT NULL,
+  `project_id` int(11) DEFAULT NULL,
+  `skill_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
