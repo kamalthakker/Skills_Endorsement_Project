@@ -79,9 +79,9 @@ if(!isset($linkno)) $linkno=0;
     	<div id='cssmenu'>
 		<ul>
 		   <li <?php if($linkno==1) echo 'class="active"'?>><a href='#'>Home</a></li>
-		   <li <?php if($linkno==2) echo 'class="active"'?>><a href='#'>Add Project</a></li>
-		   <li <?php if($linkno==3) echo 'class="active"'?>><a href='#'>Add Skill</a></li>
-		   <li <?php if($linkno==4) echo 'class="active"'?>><a href='#'>Add Endorsement</a></li>
+		   <li <?php if($linkno==2) echo 'class="active"'?>><a href='#'>Manage Project</a></li>
+		   <li <?php if($linkno==3) echo 'class="active"'?>><a href='#'>Manage Skill</a></li>
+		   <li <?php if($linkno==4) echo 'class="active"'?>><a href='#'>Manage Endorsement</a></li>
 		   <li <?php if($linkno==5) echo 'class="active"'?>><a href='#'>Approvals</a></li>
 		   
 		   <li <?php if($linkno==6) echo 'class="active"'?>><a href='#'>Edit Profile</a></li>
