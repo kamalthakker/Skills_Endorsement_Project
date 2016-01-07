@@ -8,12 +8,12 @@ $db_password = "root";
 $db_name = "Skills_Endorsement";
 
 
-// MU DB
+// Remote DB
 /*
- $db_servername = "localhost";
- $db_username = "s0962803";
- $db_password = "ahn8Thoh";
- $db_name = "s0962803";
-*/ 
+ $db_servername = "mysql1.000webhost.com";
+ $db_username = "a7297254_root";
+ $db_password = "root123";
+ $db_name = "a7297254_SE";
+ */
 
 ?>
