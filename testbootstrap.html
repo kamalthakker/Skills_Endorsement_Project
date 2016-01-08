@@ -87,14 +87,14 @@
     </nav> <!-- end of menu -->
 <!-- End of Header -->
 
+
+
+
 <!-- Begin page content -->
-
-
 <div class="container-fluid">
 
-    <div class="page-header">
-  <h3>Example page header <small>Subtext for header</small></h3>
-</div>
+    
+ <!-- Page header can go here... -->
     
     <div class="row">
 
@@ -104,9 +104,51 @@
 	        <!-- Display picture, and person's info -->
 	        
 	        <div class="row">
-		        <div class="col-md-2" style="background-color: lightblue">aaaaa</div>
-				<div class="col-md-5" style="background-color: lightgreen">bbbbb</div>
-				<div class="col-md-5" style="background-color: lightgray">cccccc</div>
+		        <!-- DP - Display Image -->
+		        <div class="col-md-2" style="background-color: #ffffff">
+			        <img src="images/default-user.png" class="img-responsive" alt="Cinque Terre" width="200" height="200">
+		        </div>
+
+				<!-- Detail - like name, title, etc. -->
+				<div class="col-md-4" style="background-color: #ffffff">
+					<h2 class="text-capitalize">Mike Bush</h2>
+					
+					
+						<address>
+						Group leader <br/>
+						<strong><abbr title="Phone">P:</abbr> 410-272-5848</strong><br/>
+						<a href="mailto:#">mbush@mitre.org</a> <br/>
+						03-441 | Aberdeen, MD <br/>
+						Speciality: Software Engineering <br/>
+						2nd Speciality: Software Apps Development
+						</addres>
+					
+					
+				</div>
+				
+				<!-- Skills-->
+				<div class="col-md-6" style="background-color: #ffffff">
+					
+					<h2 class="text-capitalize">Skills</h2>
+					
+					<ul class="nav nav-pills" role="tablist">
+					  <li role="presentation"><a href="#">SQL <span class="badge">12</span></a></li>
+					  <li role="presentation"><a href="#">Java <span class="badge">9</span></a></li>
+					  <li role="presentation"><a href="#">C# <span class="badge">5</span></a></li>
+					  <li role="presentation"><a href="#">AngularJS <span class="badge">2</span></a></li>
+					  <li role="presentation"><a href="#">CSS<span class="badge">1</span></a></li>
+					  <li role="presentation"><a href="#">Project Management <span class="badge">1</span></a></li>
+					  <li role="presentation"><a href="#">HTML<span class="badge"></span></a></li>
+					  <li role="presentation"><a href="#">Hadoop<span class="badge"></span></a></li>
+					  <li role="presentation"><a href="#">Web Services<span class="badge"></span></a></li>
+					  <li role="presentation"><a href="#">JQuery<span class="badge"></span></a></li>
+					  <li role="presentation"><a href="#">Rest<span class="badge"></span></a></li>
+					  <li role="presentation"><a href="#">SOAP<span class="badge"></span></a></li>
+					  <li role="presentation"><a href="#">XML<span class="badge"></span></a></li>
+					  <li role="presentation"><a href="#">Software Design<span class="badge"></span></a></li>
+					</ul>
+					
+				</div>
 	        </div>
 		        
 	        
@@ -221,8 +263,8 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-sm-2">
-                <h6>Copyright © 2015 MITRE - Skills Endorsement</h6>
+            <div class="col-sm-4">
+                <h6>Copyright © 2015 MITRE / Monmouth University</h6>
             </div><!-- end col-sm-2 -->
 
             <div class="col-sm-4">
@@ -230,7 +272,7 @@
                 <p>MITRE - Skills Endorsement</p>
             </div><!-- end col-sm-4 -->
 
-            <div class="col-sm-2">
+            <div class="col-sm-4">
                 <h6>Navigation</h6>
                 <ul class="unstyled">
                     <li><a href="#">Home</a></li>

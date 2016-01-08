@@ -16,6 +16,12 @@ body > .container-fluid {
     padding: 60px 10px 0px 10px;
 }
 
+.badge {
+	//-webkit-border-radius: 0 !important;
+    //-moz-border-radius: 0 !important;
+    //border-radius: 0 !important;
+}
+
 
 /* --------------------------------------
    Navbar
