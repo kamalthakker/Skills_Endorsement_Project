@@ -24,6 +24,25 @@
     <!-- Custom styles for this template -->
     <link href="user/includes/stylesmain.css" rel="stylesheet">
 
+	<!-- Custom jscript -->
+	<script src="user/includes/jqueryscripts.js"></script>
+
+
+<script>
+$(function(){
+    $('#makeViewEndorsementsModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('whatever');
+        var modal = $(this);
+        modal.find('.modal-title').text('Endorsement - ' + recipient);
+        //modal.find('.modal-body input').val(recipient);
+        
+        // set maximum height
+        $('.modal .modal-body').css('overflow-y', 'auto'); 
+    $('.modal .modal-body').css('max-height', $(window).height() * 0.7);
+    });
+});
+</script>
 
 </head>
 <body>
@@ -87,7 +106,76 @@
     </nav> <!-- end of menu -->
 <!-- End of Header -->
 
+<!-- http://tutsme-webdesign.info/bootstrap-3-1-and-modals-with-remote-content/ -->
+<!-- http://stackoverflow.com/questions/29831077/call-a-php-function-on-a-bootstrap-modal-using-ajax -->
+<!-- Endorsement Modal -->
+<div class="modal fade" id="makeViewEndorsementsModal" tabindex="-1" role="dialog" aria-labelledby="makeViewEndorsementsModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Endorsement</h4>
+      </div>
+      <div class="modal-body">
+        
+        <!-- body -->
+        
+        <ul class="nav nav-tabs">
+		  <li class="active"><a data-toggle="tab" href="#makeEndorsement">Make an endorsement</a></li>
+		  <li><a data-toggle="tab" href="#viewEndorsement">View endorsements</a></li>
+		</ul>
 
+<div class="tab-content">
+  
+  <div id="makeEndorsement" class="tab-pane fade in active">
+    <h3>Make an endorsement</h3>
+    <p>TBD <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> </p>
+  </div>
+  
+  <div id="viewEndorsement" class="tab-pane fade">
+    <h3>View endorsements</h3>
+    <p>List of all endorsements ... TBD
+	    <br/>
+	    
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>blah<br/>
+	    
+    </p>
+  </div>
+</div>
+        
+        <!-- end of body -->
+        
+        
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--
+        <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of endoresment modal -->
 
 
 <!-- Begin page content -->
@@ -96,7 +184,7 @@
     
  <!-- Page header can go here if needed... -->
     
-    <div class="row">
+    <div class="row"> <!-- Main page row that has left and right area -->
 
         <!-- Left Area -->
         <div class="col-md-9" role="main" style="background-color: #ffffff">
@@ -126,7 +214,7 @@
 					
 			</div>
 				
-				<!-- Skills-->
+			<!-- Skills-->
 			<div class="col-md-6" style="background-color: #ffffff">
 					
 					<h2 class="text-capitalize">Skills</h2>
@@ -152,8 +240,13 @@
                     -->
 
 
-					  <li role="presentation"><a href="#">SQL <span class="badge">12</span></a></li>
-					  <li role="presentation"><a href="#">Java <span class="badge">9</span></a></li>
+					<!-- button style -->
+					<!--
+					  <li role="presentation"><button type="button" data-toggle="modal" data-target="#makeViewEndorsementsModal" data-whatever="SQL">SQL<span class="badge">12</span></button></li>
+					  -->
+					  
+					  <li role="presentation"><a href="#" data-toggle="modal" data-target="#makeViewEndorsementsModal" data-whatever="SQL">SQL<span class="badge">12</span></a></li>
+					  <li role="presentation"><a href="#" data-toggle="modal" data-target="#makeViewEndorsementsModal" data-whatever="Java">Java<span class="badge">9</span></a></li>
 					  <li role="presentation"><a href="#">C#<span class="badge">5</span></a></li>
 					  <li role="presentation"><a href="#">AngularJS<span class="badge">2</span></a></li>
 					  <li role="presentation"><a href="#">CSS<span class="badge">1</span></a></li>
@@ -204,7 +297,9 @@
 				          <!-- Project Desc -->
 				          <div class="col-md-5" style="background-color: #ffffff"> 
 					          <h4 class="list-group-item-heading">Project Description:</h4>
-							  <p class="list-group-item-text">blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
+							  <p class="list-group-item-text">
+								  <span class="more">
+								  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</span></p>
 				          </div>
 				          
 				          <!-- Skills used -->
@@ -238,7 +333,9 @@
 				          <!-- Project Desc -->
 				          <div class="col-md-5" style="background-color: #ffffff"> 
 					          <h4 class="list-group-item-heading">Project Description:</h4>
-							  <p class="list-group-item-text">blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
+							  <p class="list-group-item-text">
+								  <span class="more">
+								  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</span></p>
 				          </div>
 				          
 				          <!-- Skills used -->
@@ -272,7 +369,9 @@
 				          <!-- Project Desc -->
 				          <div class="col-md-5" style="background-color: #ffffff"> 
 					          <h4 class="list-group-item-heading">Project Description:</h4>
-							  <p class="list-group-item-text">blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
+							  <p class="list-group-item-text">
+								  <span class="more">
+								  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</span></p>
 				          </div>
 				          
 				          <!-- Skills used -->
@@ -304,18 +403,10 @@
 		     </div> <!-- End of project row -->  
 	        
 	       
-	       <div class="accordion" id="accordion2">
-  
-   
-    
-    <!-- Shoe/hide more text demo 
-    <div id="collapseTwo" class="accordion-body collapse">
-    	More text
-    </div><a class="SeeMore2" data-toggle="collapse" href="#collapseTwo">more...</a>
-	end of show/hide demo -->
-
-</div>
 	       
+
+
+	 
 	        
 	<br/>aaa
     <br/>bbb

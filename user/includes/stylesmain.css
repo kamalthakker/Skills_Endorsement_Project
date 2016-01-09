@@ -44,3 +44,14 @@ footer {
     padding: 20px;
 }
 
+
+/* --------------------------------------
+   Show more, show less 
+   -------------------------------------- */
+
+.morecontent span {
+    display: none;
+}
+.morelink {
+    display: block;
+}
