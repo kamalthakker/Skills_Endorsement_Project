@@ -8,9 +8,7 @@ include_once 'includes/header.php';
 <!-- Begin page content -->
 <div class="container-fluid">
 	
-	<!-- Your page desing goes here -->
-	<br/>
-	<br/>
+	<!-- Your page content goes here -->
 	
 </div>
 <!-- End page content -->

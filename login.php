@@ -85,6 +85,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 			$fname = $dbRow['fname'];
 			$lname = $dbRow['lname'];
 			$approved = $dbRow['approved_by_admin'];
+			$userid = $dbRow['user_id'];
 				
 			if(!empty($dbRow['login_attempt'])) $loginAttempt=$dbRow['login_attempt'];
 				
@@ -139,6 +140,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 				session_start();
 					
 				// set session var
+				$_SESSION['userid']= $userid;
 				$_SESSION['uname']= $uname;
 				$_SESSION['fname']= $fname;
 				$_SESSION['lname']= $lname;
@@ -175,48 +177,65 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 
 ?>
 
-<title>Login Page</title>
-<link href="user/includes/styles.css" rel="stylesheet" type="text/css" />
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <title>Log in</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap core CSS - Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="user/includes/signin.css" rel="stylesheet">
+    
 </head>
+    
 <body>
 <!-- begin #container -->
 <div id="container">
+	
 	<!-- begin #header -->
-    <div id="header">
-    	<div class="logo">
-    	
-    	<h1 style="color:#89bdd3;">Skills Endorsement</h1>
-    	</div>
-    	 
-    	
-    	
-    	
-           
+ 	<div class="page-header">
+   		<!-- <h1 class="page-header">Skills Endorsement</h1> -->
+   	</div>      
     <!-- end #header -->
-    
-    <div style = "color: red; padding: 20px">
-		<?php foreach($error as $msg) {echo "$msg <br>";} ?>	
-	</div>
+
+    <center>
+	    <div style="width: 70%" class="alert alert-warning alert-dismissible" role="alert">
+		    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		    
+			<?php foreach($error as $msg) {echo "$msg <br>";} ?>	
+		</div>
+	</center>
+		
+			
+
 	
-			<table style = "padding: 10px 350px 10px; " >
-			<tr>
-				<td><h3>Sign In</h3></td>
-			</tr>
-			</table>
 	
-	
-		<form action = "" method = "POST">
-		<center>
-			<table style = "padding: 30px 350px 10px; " >
-				<tr>
-					<td>Email Address:</td>
-					<td><input type = "text" name = "uname" value="<?php if(isset($_POST['uname'])) echo  $_POST['uname']; ?>" /></td>
-				</tr>
-				<tr>
-					<td>Password:</td>
-					<td><input type = "password" name = "psword" /></td>
-				</tr>
+		<form class="form-signin" action = "" method = "POST">
+			
+			<h2 class="form-signin-heading">Please sign in</h2>
+			
+			<label for="inputEmail" class="sr-only">Email address</label>
+			<input type = "email" name = "uname" class="form-control" placeholder="Email address" required autofocus value="<?php if(isset($_POST['uname'])) echo  $_POST['uname']; ?>" />
+				
+			<label for="inputPassword" class="sr-only">Password</label>
+			<input type = "password" name = "psword" class="form-control" placeholder="Password" required/>
+				
 				
 				<!--
 				<tr>
@@ -229,10 +248,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 				</tr>
 				-->
 				
-			</table>
+			<button class="btn btn-lg btn-primary btn-block" name = "login" value = "Login" type="submit">Sign in</button>
 			
-			<input type = "submit" name = "login" value = "Login"  class="buttonBox" />	
-		</center>
+			<!-- 
+			<input type = "submit" name = "login" value = "Login"  class="buttonBox" />	-->
+		
 		</form>
 
 		<p> 
@@ -256,11 +276,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
     <!-- begin #footer -->
     <div id="footer">
 	    <center>
-		Copyright &copy; Skills Endorsement. Design by Monmouth University
+		<!-- Copyright &copy; Skills Endorsement. Design by Monmouth University -->
 	    </center>
 	</div>
     <!-- end #footer -->
+    
 </div>
 <!-- end #container -->
 </body>
+
 </html>

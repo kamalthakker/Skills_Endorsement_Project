@@ -1,7 +1,7 @@
 <?php
 
 // User's header file
-
+$userid = null;
 $uname = null;
 $fname = null;
 $lname = null;
@@ -10,85 +10,112 @@ $role = null;
 session_start();
 
 if(isset($_SESSION['role']) && $_SESSION['role'] == 'user' ){
+	$userid= $_SESSION['userid'];
 	$uname= $_SESSION['uname'];
 	$fname= $_SESSION['fname'];
 	$lname= $_SESSION['lname'];
 	$role = $_SESSION['role'];
 }
-
+else
+{
+	header("Location: ../login.php");
+}
 
 if(!isset($linkno)) $linkno=0;
 
-//echo basename($_SERVER['PHP_SELF']);
-// header("Location: index.php?search=".$_GET['search']);
-
-//if(!empty($_GET['search']) && basename($_SERVER['PHP_SELF']) != 'index.php')
-//	header("Location: index.php?search=".$_GET['search']);
-
-
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-   <script src="script.js"></script>
-   <link href="includes/styles.css" rel="stylesheet" type="text/css" />
-   
-	<title><?php echo $page_title?></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><?php echo $page_title?></title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap core CSS - Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="includes/stylesmain.css" rel="stylesheet">
+
+	<!-- Custom common jscript -->
+	<script src="includes/jqueryscripts.js"></script>
 	
 </head>
 
+
 <body>
-<!-- begin #container -->
-<div id="container">
-	<!-- begin #header -->
-    <div id="header">
-    	<div class="logo">
-    	
-    	 <table width="100%">
-    	 <tr>
-    	 <td>
-	    	 <h2>
-	    	 MITRE - Skills Endorsement
-	    	 </h2>
-	    	  
-	    	 <!--  <a href="index.php"><img src="../images/logo.png" alt="logo" /></a> -->
-	    	 
-    	  </td>
-    	      	<td style="text-align: right; padding-right: 10px;">
-    	      	<div class="headerText3">
-            		<?php 
-            		if (isset($fname) && isset($lname)){
-            			echo "Hello " . ucfirst($fname) . " " . ucfirst($lname) . "! " ;
-            			echo '<a href="../logout.php">Logout</a>';
-            		}	
-            			else
-            		echo '<a href="../login.php">Login</a>'		 
-            		?>
-            	</div>	
-            	</td>
-          </tr>  	
-         </table>   
-    	  
-    	</div>
-    	
-    	<div id='cssmenu'>
-		<ul>
-		   <li <?php if($linkno==1) echo 'class="active"'?>><a href='#'>Home</a></li>
-		   <li <?php if($linkno==2) echo 'class="active"'?>><a href='#'>Manage Project</a></li>
-		   <li <?php if($linkno==3) echo 'class="active"'?>><a href='#'>Manage Skill</a></li>
-		   <li <?php if($linkno==4) echo 'class="active"'?>><a href='#'>Manage Endorsement</a></li>
-		   <li <?php if($linkno==5) echo 'class="active"'?>><a href='#'>Approvals</a></li>
-		   
-		   <li <?php if($linkno==6) echo 'class="active"'?>><a href='#'>Edit Profile</a></li>
-		</ul>
-		</div>
-    	      
-    </div>
-    <!-- end #header -->
+
+<!-- Header -->
+<nav  class="navbar navbar-default navbar-fixed-top">         
+	
+	<div class="container-fluid">
+
+            <!-- Logo -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">MITRE Skills Endorsement</a>
+            </div>
+
+            <!-- Menu Items -->
+            <div  id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav ">
+                    <li <?php if($linkno==1) echo 'class="active"'?>>
+                        <a href="#"><span class="glyphicon glyphicon-home"></span> Home</a>
+                    </li>
+
+                    <!-- drop down menu -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> My Profile <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+	                        <li><a href="#">Edit Profile</a></li>
+	                        <li class="divider"></li>
+                            <li><a href="#">Manage Projects</a></li>
+                            <li><a href="#">Manage Skills</a></li>
+							<li><a href="#">Manage Endorsements</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Approvals</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!--Search Form-->
+                <form class="navbar-form pull-left">
+					<input type="text" class="form-control" placeholder="Search people..." id="searchInput">
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+				</form>
+
+                <!--Logout - right align -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="../logout.php"><span class="glyphicon glyphicon-off"></span> Logout</a>
+                    </li>
+                </ul>
+
+            </div> <!-- end of logical div menu  -->
+        </div> <!-- end of container-fluid -->
+
+    </nav> <!-- end of menu -->
+<!-- End of Header -->
+
+
+
     
     
