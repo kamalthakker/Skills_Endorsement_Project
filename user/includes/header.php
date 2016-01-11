@@ -53,6 +53,9 @@ if(!isset($linkno)) $linkno=0;
 	<!-- Custom common jscript -->
 	<script src="includes/jqueryscripts.js"></script>
 	
+	<!-- http://www.iconarchive.com/show/beautiful-flat-icons-by-elegantthemes.1.html -->
+	<link rel="shortcut icon" href="../images/website.ico">
+	
 </head>
 
 
