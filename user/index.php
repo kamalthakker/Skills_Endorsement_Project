@@ -77,6 +77,7 @@ echo "--->".$dbRowsUserInfo['fname']."<br>";
 // by default - show logged in user - otherwise show searched user
 $display_user_id=$userid;
 
+/*----------------------------*/
 // Create an object for categories
 $objUser = new user();
 
@@ -86,6 +87,12 @@ $dbRow_UserInfo = $objUser->getUserInfo($display_user_id);
 // Get user's skills with ratings
 $dbRows_UserSkillsWithRank = $objUser->getUserSkillsWithRank($display_user_id);
 
+/*----------------------------*/
+$objProject = new project();
+
+// Get approved projects
+$dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
+/*----------------------------*/
 ?>
 
 <script type="text/javascript">
@@ -176,15 +183,24 @@ $dbRows_UserSkillsWithRank = $objUser->getUserSkillsWithRank($display_user_id);
 		            	<h4 class="list-group-item-heading">Projects</h4> 
 		            </div> 
 		            
+		            <?php while ( isset($dbRow_Projects) && $dbRow = mysqli_fetch_array($dbRow_Projects)){ ?>
+		            
 		            <div  class="list-group-item"> 
 			            
 			          <div class="row">
 				          
 				          <!-- Project name, start/end date, manager -->
 				          <div class="col-md-3" style="background-color: #ffffff"> 
-					          <h4 class="list-group-item-heading">Project A</h4> 
-					          <p class="list-group-item-text">Oct 2015 - Present</p>
-					          <p class="list-group-item-text">Manager: Bill Pope</p>						      
+					          <h4 class="list-group-item-heading"><?php echo $dbRow['project_name']; ?></h4> 
+					          <p class="list-group-item-text">
+						          <time datetime="YYYY">
+						          	<?php echo $dbRow['start_date']; ?>
+						          </time> - 
+								  <?php if (isset($dbRow['end_date'])) echo $dbRow['end_date']; else echo 'Present'; ?>
+					          </p>
+					          <p class="list-group-item-text text-capitalize">Manager: 
+						          <?php echo $dbRow['manager_fname'] . ' ' . $dbRow['manager_lname']; ?>
+					          </p>						      
 				          </div>
 				          
 				          <!-- Project Desc -->
@@ -192,98 +208,40 @@ $dbRows_UserSkillsWithRank = $objUser->getUserSkillsWithRank($display_user_id);
 					          <h4 class="list-group-item-heading">Project Description:</h4>
 							  <p class="list-group-item-text">
 								  <span class="more">
-								  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</span></p>
+								  <?php echo $dbRow['project_desc']; ?>
+								  </span></p>
 				          </div>
 				          
 				          <!-- Skills used -->
 				          <div class="col-md-4" style="background-color: #ffffff">
 					          <h4 class="list-group-item-heading">Skills Used:</h4>
 					          
+					          <?php 
+						          // Get project's skills
+								  $dbRow_ProjectSkills = $objProject->getProjectSkills($dbRow['project_id']);
+
+								  // Print skills		
+								   printSkills($dbRow_ProjectSkills, 10);
+					          ?>
+					          
+					          <!--
 					          <ul class="nav nav-pills" role="tablist"> 
 						        <li role="presentation"><a href="#">Java <span class="badge">9</span></a></li>
 					  <li role="presentation"><a href="#">C#<span class="badge">5</span></a></li>
 					  <li role="presentation"><a href="#">AngularJS<span class="badge">2</span></a></li>
 					  <li role="presentation"><a href="#">CSS<span class="badge">1</span></a></li>    
 					          </ul>
+					          -->
 					          
 				          </div>
 				          
 			          </div> <!-- End of list item row -->
 				     
 			        </div> <!-- end of list group item -->
+				    
+				    <?php } ?>
 				            
-				    <div class="list-group-item"> 
-					     
-					    <div class="row">
-				          
-				          <!-- Project name, start/end date, manager -->
-				          <div class="col-md-3" style="background-color: #ffffff"> 
-					          <h4 class="list-group-item-heading">Project B</h4> 
-					          <p class="list-group-item-text">Feb 2013 - Sept 2015</p>
-					          <p class="list-group-item-text">Manager: Steve Avon</p>						      
-				          </div>
-				          
-				          <!-- Project Desc -->
-				          <div class="col-md-5" style="background-color: #ffffff"> 
-					          <h4 class="list-group-item-heading">Project Description:</h4>
-							  <p class="list-group-item-text">
-								  <span class="more">
-								  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</span></p>
-				          </div>
-				          
-				          <!-- Skills used -->
-				          <div class="col-md-4" style="background-color: #ffffff">
-					          <h4 class="list-group-item-heading">Skills Used:</h4>
-					          
-					          <ul class="nav nav-pills" role="tablist"> 
-						        <li role="presentation"><a href="#">Java <span class="badge">9</span></a></li>
-					  <li role="presentation"><a href="#">C#<span class="badge">5</span></a></li>
-					  <li role="presentation"><a href="#">AngularJS<span class="badge">2</span></a></li>
-					  <li role="presentation"><a href="#">CSS<span class="badge">1</span></a></li>    
-					          </ul>
-					          
-				          </div>
-				          
-			          </div> <!-- End of list item row -->
-					     
-					</div> <!-- end of list group item -->
-					            
-					<div class="list-group-item"> 
-		
-					   <div class="row">
-				          
-				          <!-- Project name, start/end date, manager -->
-				          <div class="col-md-3" style="background-color: #ffffff"> 
-					          <h4 class="list-group-item-heading">Project C</h4> 
-					          <p class="list-group-item-text">Mar 2012 - Jan 2013</p>
-					          <p class="list-group-item-text">Manager: Howard Li</p>						      
-				          </div>
-				          
-				          <!-- Project Desc -->
-				          <div class="col-md-5" style="background-color: #ffffff"> 
-					          <h4 class="list-group-item-heading">Project Description:</h4>
-							  <p class="list-group-item-text">
-								  <span class="more">
-								  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</span></p>
-				          </div>
-				          
-				          <!-- Skills used -->
-				          <div class="col-md-4" style="background-color: #ffffff">
-					          <h4 class="list-group-item-heading">Skills Used:</h4>
-					          
-					          <ul class="nav nav-pills" role="tablist"> 
-						        <li role="presentation"><a href="#">Java <span class="badge">9</span></a></li>
-					  <li role="presentation"><a href="#">C#<span class="badge">5</span></a></li>
-					  <li role="presentation"><a href="#">AngularJS<span class="badge">2</span></a></li>
-					  <li role="presentation"><a href="#">CSS<span class="badge">1</span></a></li>    
-					          </ul>
-					          
-				          </div>
-				          
-			          </div> <!-- End of list item row -->
-					             
-					</div> <!-- end of list group item -->
-					            
+				              
 				</div> 
 			</div>
 				    
@@ -294,79 +252,6 @@ $dbRows_UserSkillsWithRank = $objUser->getUserSkillsWithRank($display_user_id);
 			    </div> <!-- End of project column -->
 
 		     </div> <!-- End of project row -->  
-	        
-	       
-	       
-
-
-	 
-	        
-	<br/>aaa
-    <br/>bbb
-    <br/>ccc
-    <br/>ddd
-    <br/>eee
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-    <br/>111
-
 	        
 	        
 	        

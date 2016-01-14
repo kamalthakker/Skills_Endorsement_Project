@@ -10,8 +10,9 @@ class project{
 	
 	
 		$q = "/*List of approved projects*/
-				select * from projects 
-				where upper(approved)='Y' and user_id=".$user_id;
+				select p.*, u.fname as manager_fname, u.lname as manager_lname from projects p 
+				inner join users u on p.manager_user_id=u.user_id
+				where upper(approved)='Y' and p.user_id=".$user_id. " order by p.end_date is not null, p.end_date desc, p.start_date desc";
 	
 		//echo $q;
 		
