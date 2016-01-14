@@ -1,7 +1,7 @@
 <?php
 
 // User's header file
-
+$user_id = null;
 $uname = null;
 $fname = null;
 $lname = null;
@@ -10,6 +10,7 @@ $role = null;
 session_start();
 
 if(isset($_SESSION['role']) && $_SESSION['role'] == 'user' ){
+	$user_id= $_SESSION['user_id'];
 	$uname= $_SESSION['uname'];
 	$fname= $_SESSION['fname'];
 	$lname= $_SESSION['lname'];

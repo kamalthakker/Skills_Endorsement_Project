@@ -13,3 +13,5 @@ http://www.free-db.com/download/4/list-of-skills-from-linkedin.html
 
 https://market.mashape.com/itsyourskills/skills-library
 
+http://www.w3bees.com/2013/09/jquery-infinite-scroll-with-php-mysql.html
+
