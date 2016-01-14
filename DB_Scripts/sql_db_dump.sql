@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.38)
 # Database: Skills_Endorsement
-# Generation Time: 2016-01-13 02:26:00 +0000
+# Generation Time: 2016-01-14 02:14:43 +0000
 # ************************************************************
 
 
@@ -58,6 +58,47 @@ CREATE TABLE `non_project_skills` (
   PRIMARY KEY (`non_project_skill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# Dump of table project_skills
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `project_skills`;
+
+CREATE TABLE `project_skills` (
+  `project_skill_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) DEFAULT NULL,
+  `skill_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`project_skill_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+
+LOCK TABLES `project_skills` WRITE;
+/*!40000 ALTER TABLE `project_skills` DISABLE KEYS */;
+
+INSERT INTO `project_skills` (`project_skill_id`, `project_id`, `skill_id`)
+VALUES
+	(1,1,2918),
+	(2,1,1010),
+	(3,1,3731),
+	(4,1,3050),
+	(5,1,3067),
+	(6,2,3070),
+	(7,2,3080),
+	(8,2,3084),
+	(9,2,3141),
+	(10,3,3183),
+	(11,3,3059),
+	(12,3,3060),
+	(13,4,3103),
+	(14,4,3153),
+	(15,4,3181),
+	(16,4,3216),
+	(17,5,3317),
+	(18,5,3559),
+	(19,5,3558);
+
+/*!40000 ALTER TABLE `project_skills` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table projects
@@ -123,47 +164,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table project_skills
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `project_skills`;
-
-CREATE TABLE `project_skills` (
-  `project_skill_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `project_id` int(11) DEFAULT NULL,
-  `skill_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`project_skill_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
-
-LOCK TABLES `project_skills` WRITE;
-/*!40000 ALTER TABLE `project_skills` DISABLE KEYS */;
-
-INSERT INTO `project_skills` (`project_skill_id`, `project_id`, `skill_id`)
-VALUES
-	(1,1,2918),
-	(2,1,1010),
-	(3,1,3731),
-	(4,1,3050),
-	(5,1,3067),
-	(6,2,3070),
-	(7,2,3080),
-	(8,2,3084),
-	(9,2,3141),
-	(10,3,3183),
-	(11,3,3059),
-	(12,3,3060),
-	(13,4,3103),
-	(14,4,3153),
-	(15,4,3181),
-	(16,4,3216),
-	(17,5,3317),
-	(18,5,3559),
-	(19,5,3558);
-
-/*!40000 ALTER TABLE `project_skills` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Dump of table users
 # ------------------------------------------------------------
 
@@ -190,18 +190,20 @@ CREATE TABLE `users` (
   `approved_by_admin` varchar(1) DEFAULT NULL,
   `speciality` varchar(75) DEFAULT NULL,
   `speciality2` varchar(75) DEFAULT NULL,
+  `job_title` varchar(25) DEFAULT NULL,
+  `userdp` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`user_id`,`uname`,`role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`user_id`, `uname`, `role`, `psword`, `fname`, `lname`, `gender`, `email`, `phone`, `address`, `state`, `city`, `zip`, `registration_date`, `last_login`, `login_attempt`, `blocked_time`, `approved_by_admin`, `speciality`, `speciality2`)
+INSERT INTO `users` (`user_id`, `uname`, `role`, `psword`, `fname`, `lname`, `gender`, `email`, `phone`, `address`, `state`, `city`, `zip`, `registration_date`, `last_login`, `login_attempt`, `blocked_time`, `approved_by_admin`, `speciality`, `speciality2`, `job_title`, `userdp`)
 VALUES
-	(1,'mbush@mitre.org','user','test','mike','bush','m','mbush@mitre.org','410-272-5848',NULL,'MD','Aberdeen','03-441',NULL,'2016-01-12 18:37:42',0,NULL,NULL,'Software Engineering','Software Apps Development'),
-	(2,'kamalthakker@gmail.com','user','test','kamal','thakker','m','kamalthakker@gmail.com','123-456-7890',NULL,'NJ','Monroe','08831',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development'),
-	(3,'savon40@gmail.com ','user','test','steve','avon','m','savon40@gmail.com ','234-567-89101',NULL,'NJ','Point Pleasant','1234',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development'),
-	(4,'hli1022@gmail.com ','user','test','howard','li','m','hli1022@gmail.com ','345-678-9012',NULL,'NJ','Point Pleasant','1234',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development');
+	(1,'mbush@mitre.org','user','test','mike','bush','m','mbush@mitre.org','410-272-5848',NULL,'MD','Aberdeen','03-441',NULL,'2016-01-13 20:45:27',0,NULL,NULL,'Software Engineering','Software Apps Development','Group leader',NULL),
+	(2,'kamalthakker@gmail.com','user','test','kamal','thakker','m','kamalthakker@gmail.com','123-456-7890',NULL,'NJ','Monroe','08831',NULL,'2016-01-13 20:44:15',0,NULL,NULL,'Software Engineering','Software Apps Development','Manager',NULL),
+	(3,'savon40@gmail.com ','user','test','steve','avon','m','savon40@gmail.com ','234-567-89101',NULL,'NJ','Point Pleasant','1234',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development','Manager',NULL),
+	(4,'hli1022@gmail.com ','user','test','howard','li','m','hli1022@gmail.com ','345-678-9012',NULL,'NJ','Point Pleasant','1234',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development','Manager',NULL);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
