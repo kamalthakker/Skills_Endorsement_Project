@@ -101,7 +101,7 @@
                     $(this).text('See more');
                 }
 
-
+                /*
                 $(function(){
                     $('#demo').on('hide.bs.collapse', function () {
                         $('#button').html('<span class="glyphicon glyphicon-collapse-down"></span> Show');
@@ -109,7 +109,7 @@
                     $('#demo').on('show.bs.collapse', function () {
                         $('#button').html('<span class="glyphicon glyphicon-collapse-up"></span> Hide');
                     })
-                });
+                });*/
 
                 /*
                  http://stackoverflow.com/questions/16224636/twitter-bootstrap-collapse-change-display-of-toggle-button
@@ -121,10 +121,194 @@
 
     </script>
 
+
+    <script>
+        //$(function(){
+        $(document).ready(function () {
+            $('#makeViewEndorsementsModal').on('show.bs.modal', function (event) {
+                //var loadingContent = '<div class="modal-header"><h2>Processing...</h2></div><div class="modal-body"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div>';
+                //var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img src="https://www.drupal.org/files/issues/ajax-loader.gif"></img></div>'
+                var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img class="img-responsive center-block" src="images/ajax-loader.gif"></img></div>'
+                var button = $(event.relatedTarget);
+                var skillname = button.data('skillname');
+                var skillid = button.data('skillid');
+                var dataString = 'skillid='+skillid;
+                var modal = $(this);
+
+                // Clear the old content before making the call...
+                $('#viewEndorsement').empty();
+
+                // Showing loading icon
+                $('#viewEndorsement').append(loadingContent);
+
+                /* AJAX Call */
+                $.ajax({
+                    cache: false,
+                    type: 'GET',
+                    url: 'test.php',
+                    data: dataString,
+                    success: function(data)
+                    {
+                        $('#viewEndorsement').empty();
+                        $('#viewEndorsement').append(data);
+                    }
+                });
+                /* End of AJAX Call */
+
+
+                modal.find('.modal-title').text('Endorsement - ' + skillname);
+                //modal.find('.modal-body input').val(recipient);
+
+                // set maximum height
+                $('.modal .modal-body').css('overflow-y', 'auto');
+                $('.modal .modal-body').css('max-height', $(window).height() * 0.8);
+            });
+
+
+            $("input#submitEndorsement").click(function(){
+
+                // Prevent closing on save
+                //$("#makeViewEndorsementsModal").modal({"backdrop": "static"});
+
+                //alert($('#contact').innerHTML);
+
+                /*
+                $.ajax({
+                    type: "POST",
+                    url: "process_endorsement.php", //
+                    data: $('form.contact').serialize(),
+                    success: function(msg){
+                        $("#recform").empty();
+                        $("#recform").html(msg);
+                        $("#thanks").append(msg);
+
+                        //$("#form-content").modal('hide');
+                    },
+                    error: function(){
+                        alert("failure");
+                    }
+                });*/
+
+                //var msgstr = $("#recommendation").val();
+                //alert (msgstr);
+
+                // http://untame.net/2013/05/how-to-build-a-modal-contact-form-in-twitter-bootstrap-with-php-ajax/
+
+                var msgstr = 'recommendation="abcd"';
+
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "process_endorsement.php", //
+                    data: msgstr,
+                    success: function(msg){
+                        $("#recform").empty();
+                        $("#recform").html(msg);
+                        $("#thanks").append(msg);
+
+                        //$("#form-content").modal('hide');
+                    },
+                    error: function(){
+                        alert("failure");
+                    }
+                });
+            });
+
+
+            $("#submitEndorsement1").click(function(){
+                //alert("test123");
+
+
+
+            });
+
+
+            $( "#contact" ).submit(function( event ) {
+                event.preventDefault();
+            });
+
+
+
+
+        });
+
+
+
+
+    </script>
+
 </head>
+
 <body>
 
+<div class="modal fade" id="makeViewEndorsementsModal" tabindex="-1" role="dialog" aria-labelledby="makeViewEndorsementsModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Endorsement</h4>
+            </div>
+            <div class="modal-body">
+
+                <!-- body -->
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#viewEndorsement">View endorsements</a></li>
+                    <li><a data-toggle="tab" href="#makeEndorsement">Make an endorsement</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div id="viewEndorsement" class="tab-pane fade in active">
+                        <br/><br/><br/><br/>
+
+                    </div>
+
+                    <div id="makeEndorsement" class="tab-pane fade in">
+
+                        <div class="modal-body" id="recform">
+                            <form class="contact" id="contact" name="contact">
+                            <h4 class="lead">Endorse Kamal Thakker for Java!</h4>
+
+                            <label for="Recommendation" class="sr-only">Recommendation</label>
+                            <textarea name = "recommendation" class="form-control input-xlarge"  style="min-width: 100%; min-height: 100%;" placeholder="Your message" required autofocus></textarea>
+
+                            <br>
+
+                            <input class="btn btn-primary pull-right"  value = "Endorse" type="submit" id="submitEndorsement">
+                                <button type="button" class="btn btn-primary" id="submitEndorsement1">Save changes</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <!-- end of body -->
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!--
+                <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of endoresment modal -->
+
 <div class="container">
+
+
+    <a href="#" data-toggle="modal" data-target="#makeViewEndorsementsModal" data-skillname="SQL" data-skillid="5">SQL</a>
+
+    <div id="thanks"></div>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
 
     <div class="well">test 123</div>
 
@@ -181,10 +365,6 @@
     <a href="#"  class="morelessul" data-toggle="collapse" data-target="#demo1">See more</a>
 
     <br/><br/>
-
-
-
-
 
         <div class="hero-unit">
             <h1>Hello, world!</h1>
