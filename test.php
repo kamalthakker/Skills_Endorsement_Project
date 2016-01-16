@@ -1,3 +1,5 @@
+<script src="includes/jqueryscripts.js"></script>
+
 <?php
 $skill_id=$_REQUEST['skillid'];
 echo 'skill id:' . $skill_id . '<br>';

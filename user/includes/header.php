@@ -82,7 +82,7 @@ if(!isset($linkno)) $linkno=0;
             <div  id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav ">
                     <li <?php if($linkno==1) echo 'class="active"'?>>
-                        <a href="#"><span class="glyphicon glyphicon-home"></span> Home</a>
+                        <a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a>
                     </li>
 
                     <!-- drop down menu -->
@@ -101,10 +101,17 @@ if(!isset($linkno)) $linkno=0;
                 </ul>
 
                 <!--Search Form-->
-                <form class="navbar-form pull-left">
-					<input type="text" class="form-control" placeholder="Search people..." id="searchInput">
+                <form class="navbar-form pull-left" role="search" method="post" action="searchresult.php">
+	               
+		                
+					<input type="text" class="form-control" placeholder="Search people..." id="searchInput" name="searchby">
+					
 					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+	                
 				</form>
+				
+				
+				
 
                 <!--Logout - right align -->
                 <ul class="nav navbar-nav navbar-right">

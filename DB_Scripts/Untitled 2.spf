@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>Skills_Endorsement</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>4841365841578438293</string>
+			<key>name</key>
+			<string>127.0.0.1</string>
+			<key>port</key>
+			<integer>8889</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentFilter</key>
+			<dict/>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFy
+			Y2hpdmVyVCR0b3ASAAGGoK8QDwcIFRYXGBkfICEoLDA0OFUkbnVs
+			bNMJCgsMEBRXTlMua2V5c1pOUy5vYmplY3RzViRjbGFzc6MNDg+A
+			AoADgASjERITgAWABoAKgA5UdHlwZVRyb3dzVGtleXNfECZTZWxl
+			Y3Rpb25EZXRhaWxUeXBlUHJpbWFyeUtleWVkRGV0YWlsc9MJCgsa
+			HB6hG4AHoR2ACIAJUTIJ0iIjJCVaJGNsYXNzbmFtZVgkY2xhc3Nl
+			c18QE05TTXV0YWJsZURpY3Rpb25hcnmjJCYnXE5TRGljdGlvbmFy
+			eVhOU09iamVjdNIKCykroSqAC4AN0gstLi9ZTlMuc3RyaW5ngAxf
+			EBRza2lsbF9lbmRvcnNlbWVudF9pZNIiIzEyXxAPTlNNdXRhYmxl
+			U3RyaW5nozEzJ1hOU1N0cmluZ9IiIzU2Xk5TTXV0YWJsZUFycmF5
+			ozU3J1dOU0FycmF50iIjJjmiJidfEA9OU0tleWVkQXJjaGl2ZXLR
+			PD1UZGF0YYABAAgAEQAaACMALQAyADcASQBPAFYAXgBpAHAAdAB2
+			AHgAegB+AIAAggCEAIYAiwCQAJUAvgDFAMcAyQDLAM0AzwDRANIA
+			1wDiAOsBAQEFARIBGwEgASIBJAEmASsBNQE3AU4BUwFlAWkBcgF3
+			AYYBigGSAZcBmgGsAa8BtAAAAAAAAAIBAAAAAAAAAD4AAAAAAAAA
+			AAAAAAAAAAG2
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {1163, 617}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>CREATE TABLE `users` (
+  `user_id` int(11)  NOT NULL AUTO_INCREMENT,
+  `uname` varchar(50) NOT NULL DEFAULT '',
+  `role` varchar(50) NOT NULL DEFAULT '',
+  `psword` varchar(20) DEFAULT NULL,
+  `fname` varchar(25) DEFAULT NULL,
+  `lname` varchar(25) DEFAULT NULL,
+  `gender` varchar(1) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `state` varchar(2) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `zip` varchar(20) DEFAULT NULL,
+  `registration_date` datetime DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `login_attempt` int(11) DEFAULT NULL,
+  `blocked_time` datetime DEFAULT NULL,
+  `approved_by_admin` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`uname`,`role`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `users` (`uname`, `role`, `psword`, `fname`, `lname`, `gender`, `email`, `phone`, `address`, `state`, `city`, `zip`, `registration_date`, `last_login`, `login_attempt`, `blocked_time`, `approved_by_admin`)
+VALUES
+	( 'mbush@mitre.org', 'user', 'test', 'mike', 'bush', 'm', 'mbush@mitre.org', '410-272-5848', NULL, 'MD', 'Aberdeen', '03-441', NULL, '2016-01-02 15:25:40', 0, NULL, NULL);
+	
+	
+select * from users	where user_id=1;
+
+/*All user's skills with endorsement rankings*/
+select userskills.user_id, userskills.skill_id, userskills.skill_name, skillrank.rank from 
+(
+	select p.user_id, ps.skill_id, s.name as skill_name from project_skills ps 
+	inner join projects p on p.project_id=ps.project_id
+	inner join skills s on s.skill_id=ps.skill_id
+ 	where upper(p.approved)='Y' and user_id=1
+) userskills
+left join
+( 
+	select skill_id, count(skill_id) as rank from  skill_endorsements
+	where user_id=1
+	group by skill_id
+) skillrank
+on userskills.skill_id=skillrank.skill_id
+order by skillrank.rank desc, userskills.skill_name;
+
+/*List of approved projects*/
+select p.*, u.fname as manager_fname, u.lname as manager_lname from projects p 
+inner join users u on p.manager_user_id=u.user_id
+where upper(approved)='Y' and p.user_id=1
+order by p.end_date is not null, p.end_date desc, p.start_date desc;
+
+/*Project skills with ranking*/
+select pskill.user_id, pskill.project_skill_id, pskill.project_id, pskill.skill_id, pskill.skill_name, skillrank.rank  from
+(
+	select p.user_id, ps.project_skill_id, ps.project_id, ps.skill_id, s.name as skill_name from project_skills ps
+	inner join skills s on s.skill_id=ps.skill_id
+	inner join projects p on p.project_id=ps.project_id
+	where p.project_id=2
+) pskill
+left join
+( 
+	select user_id, skill_id, count(skill_id) as rank from  skill_endorsements
+	group by user_id, skill_id
+) skillrank
+on pskill.skill_id=skillrank.skill_id and pskill.user_id=skillrank.user_id
+order by skillrank.rank desc, pskill.skill_name;
+
+
+/*Get user's endorsement*/
+select se.skill_endorsement_id, se.user_id, se.skill_id,  
+se.endorsed_by_user_id, se.endorsed_on, se.comments,
+u.fname, u.lname, u.job_title, u.userdp
+from skill_endorsements se
+inner join users u on se.endorsed_by_user_id=u.user_id
+where se.user_id=1 and se.skill_id=2918 
+order by se.endorsed_on desc, u.lname
+
+ 
+ 
+</string>
+			<key>table</key>
+			<string>skill_endorsements</string>
+			<key>view</key>
+			<string>SP_VIEW_CONTENT</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>177</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select se.skill_endorsement_id, se.user_id, se.skill_id,  
+se.endorsed_by_user_id, se.endorsed_on, se.comments,
+u.fname, u.lname, u.job_title, u.userdp
+from skill_endorsements se
+inner join users u on se.endorsed_by_user_id=u.user_id
+where se.user_id=1 and se.skill_id=2918 
+order by se.endorsed_on desc, u.lname</string>
+		<string>select se.skill_endorsement_id, se.user_id, se.skill_id,  
+se.endorsed_by_user_id, se.endorsed_on, se.comments,
+u.fname, u.lname, u.job_title, u.userdp
+from skill_endorsements se
+inner join users u on se.endorsed_by_user_id=u.user_id
+where se.user_id=1 and se.skill_id=2918</string>
+		<string>select se.skill_endorsement_id, se.user_id, se.skill_id,  
+se.endorsed_by_user_id, se.endorsed_on, se.comments
+u.fname, u.lname, u.job_title, u.userdp
+from skill_endorsements se
+inner join users u on se.endorsed_by_user_id=u.user_id
+where se.user_id=1 and se.skill_id=2918</string>
+		<string>select * from skill_endorsements se
+inner join users u on se.user_id=u.user_id
+where se.user_id=1 and se.skill_id=2918</string>
+		<string>select pskill.user_id, pskill.project_skill_id, pskill.project_id, pskill.skill_id, pskill.skill_name, skillrank.rank  from
+(
+	select p.user_id, ps.project_skill_id, ps.project_id, ps.skill_id, s.name as skill_name from project_skills ps
+	inner join skills s on s.skill_id=ps.skill_id
+	inner join projects p on p.project_id=ps.project_id
+	where p.project_id=2
+) pskill
+left join
+( 
+	select user_id, skill_id, count(skill_id) as rank from  skill_endorsements
+	group by user_id, skill_id
+) skillrank
+on pskill.skill_id=skillrank.skill_id and pskill.user_id=skillrank.user_id
+order by skillrank.rank desc, pskill.skill_name</string>
+		<string>select userskills.user_id, userskills.skill_id, userskills.skill_name, skillrank.rank from 
+(
+	select p.user_id, ps.skill_id, s.name as skill_name from project_skills ps 
+	inner join projects p on p.project_id=ps.project_id
+	inner join skills s on s.skill_id=ps.skill_id
+ 	where upper(p.approved)='Y' and user_id=1
+) userskills
+left join
+( 
+	select skill_id, count(skill_id) as rank from  skill_endorsements
+	where user_id=1
+	group by skill_id
+) skillrank
+on userskills.skill_id=skillrank.skill_id
+order by skillrank.rank desc, userskills.skill_name</string>
+		<string>select userskills.skill_id, userskills.skill_name, skillrank.rank from 
+(
+	select ps.skill_id, s.name as skill_name from project_skills ps 
+	inner join projects p on p.project_id=ps.project_id
+	inner join skills s on s.skill_id=ps.skill_id
+ 	where upper(p.approved)='Y' and user_id=1
+) userskills
+left join
+( 
+	select skill_id, count(skill_id) as rank from  skill_endorsements
+	where user_id=1
+	group by skill_id
+) skillrank
+on userskills.skill_id=skillrank.skill_id
+order by skillrank.rank desc, userskills.skill_name</string>
+		<string>select p.*, u.fname as manager_fname, u.lname as manager_lname from projects p 
+inner join users u on p.manager_user_id=u.user_id
+where upper(approved)='Y' and p.user_id=1
+order by p.end_date is not null, p.end_date desc, p.start_date desc</string>
+		<string>select p.*, u.fname as manager_fname, u.lname as manager_lname from projects p 
+inner join users u on p.manager_user_id=u.user_id
+where upper(approved)='Y' and p.user_id=1
+order by p.end_date desc, p.start_date desc</string>
+		<string>select p.*, u.fname as manager_fname, u.lname as manager_lname from projects p 
+inner join users u on p.manager_user_id=u.user_id
+where upper(approved)='Y' and p.user_id=1
+order by end_date desc, start date desc</string>
+		<string>select p.*, u.fname as manager_fname, u.lname as manager_lname from projects p 
+inner join users u on p.manager_user_id=u.user_id
+where upper(approved)='Y' and p.user_id=1;
+order by end_date desc, start date desc</string>
+		<string>select p.*, u.fname, u.lname from projects p 
+inner join users u on p.manager_user_id=u.user_id
+where upper(approved)='Y' and p.user_id=1</string>
+		<string>select p.*, u.fname, u.lname from projects p 
+inner join users u on p.manager_user_id=u.user_id
+where upper(approved)='Y' and user_id=1</string>
+		<string>select * from projects 
+where upper(approved)='Y' and user_id=1</string>
+		<string>select * from users	where user_id=1</string>
+		<string>select pskill.user_id, pskill.project_skill_id, pskill.project_id, pskill.skill_id, pskill.skill_name from
+(
+	select p.user_id, ps.project_skill_id, ps.project_id, ps.skill_id, s.name as skill_name from project_skills ps
+	inner join skills s on s.skill_id=ps.skill_id
+	inner join projects p on p.project_id=ps.project_id
+	where p.project_id=2
+) pskill
+left join
+( 
+	select user_id, skill_id, count(skill_id) as rank from  skill_endorsements
+	group by user_id, skill_id
+) skillrank
+on pskill.skill_id=skillrank.skill_id and pskill.user_id=skillrank.user_id
+order by skillrank.rank desc, pskill.skill_name</string>
+		<string>select pskill.user_id, pskill.project_skill_id, pskill.project_id, pskill.skill_id, pskill.skill_name from
+(
+	select p.user_id, ps.project_skill_id, ps.project_id, ps.skill_id, s.name as skill_name from project_skills ps
+	inner join skills s on s.skill_id=ps.skill_id
+	inner join projects p on p.project_id=ps.project_id
+	where p.project_id=2
+) pskill
+left join
+( 
+	select user_id, skill_id, count(skill_id) as rank from  skill_endorsements
+	group by user_id, skill_id
+) skillrank
+on pskill.skill_id=skillrank.skill_id and pskill.user_id=skillrank.user_id
+order by skillrank.rank desc, userskills.skill_name</string>
+		<string>select user_id, skill_id, count(skill_id) as rank from  skill_endorsements
+	group by user_id, skill_id</string>
+		<string>select pskill.user_id, pskill.project_skill_id, pskill.project_id, pskill.skill_id, pskill.skill_name from
+(
+	select p.user_id, ps.project_skill_id, ps.project_id, ps.skill_id, s.name as skill_name from project_skills ps
+	inner join skills s on s.skill_id=ps.skill_id
+	inner join projects p on p.project_id=ps.project_id
+	where p.project_id=2
+) pskill</string>
+		<string>select ps.project_skill_id, ps.project_id, ps.skill_id, s.name as skill_name from project_skills ps
+	inner join skills s on s.skill_id=ps.skill_id
+	inner join projects p on p.project_id=ps.project_id
+	where p.project_id=2</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.38</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

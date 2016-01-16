@@ -29,9 +29,9 @@ VALUES
 select * from users	where user_id=1;
 
 /*All user's skills with endorsement rankings*/
-select userskills.skill_id, userskills.skill_name, skillrank.rank from 
+select userskills.user_id, userskills.skill_id, userskills.skill_name, skillrank.rank from 
 (
-	select ps.skill_id, s.name as skill_name from project_skills ps 
+	select p.user_id, ps.skill_id, s.name as skill_name from project_skills ps 
 	inner join projects p on p.project_id=ps.project_id
 	inner join skills s on s.skill_id=ps.skill_id
  	where upper(p.approved)='Y' and user_id=1
@@ -46,10 +46,12 @@ on userskills.skill_id=skillrank.skill_id
 order by skillrank.rank desc, userskills.skill_name;
 
 /*List of approved projects*/
-select * from projects 
-where upper(approved)='Y' and user_id=1;
+select p.*, u.fname as manager_fname, u.lname as manager_lname from projects p 
+inner join users u on p.manager_user_id=u.user_id
+where upper(approved)='Y' and p.user_id=1
+order by p.end_date is not null, p.end_date desc, p.start_date desc;
 
-
+/*Project skills with ranking*/
 select pskill.user_id, pskill.project_skill_id, pskill.project_id, pskill.skill_id, pskill.skill_name, skillrank.rank  from
 (
 	select p.user_id, ps.project_skill_id, ps.project_id, ps.skill_id, s.name as skill_name from project_skills ps
@@ -64,6 +66,15 @@ left join
 ) skillrank
 on pskill.skill_id=skillrank.skill_id and pskill.user_id=skillrank.user_id
 order by skillrank.rank desc, pskill.skill_name;
+
+
+/*Get user's endorsement*/
+select se.skill_endorsement_id, se.user_id, se.skill_id,  
+se.endorsed_by_user_id, se.endorsed_on, se.comments
+u.fname, u.lname, u.job_title, u.userdp
+from skill_endorsements se
+inner join users u on se.endorsed_by_user_id=u.user_id
+where se.user_id=1 and se.skill_id=2918 
 
 
  

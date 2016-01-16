@@ -114,25 +114,32 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
             });
             
         /* -----------------------------
-	        On modal show 
+	        On modal show for skills
 	       ----------------------------- */
         $('#makeViewEndorsementsModal').on('show.bs.modal', function (event) {
+	        	
+	        	//alert("heloo!"); // debug
+	        	
                 //var loadingContent = '<div class="modal-header"><h2>Processing...</h2></div><div class="modal-body"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div>';
                 //var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img src="https://www.drupal.org/files/issues/ajax-loader.gif"></img></div>'
-                var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img class="img-responsive center-block" src="images/ajax-loader.gif"></img></div>'
+                var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img class="img-responsive center-block" src="../images/ajax-loader.gif"></img></div>'
                 
                 var button = $(event.relatedTarget);
                 
                 var skillname = button.data('skillname');
                 var skillid = button.data('skillid');
                 
-                var skillname = button.data('displayusername'); // Endorse To Name
-                var skillname = button.data('displayuserid'); // Endorse To
-                var skillid = button.data('loggedinuserid'); // Endorse By
+                var displayusername = button.data('displayusername'); // Endorse To Name
+                var displayuserid = button.data('displayuserid'); // Endorse To
+                var loggedinuserid = button.data('loggedinuserid'); // Endorse By
                 
                 
-                var dataString = 'skillid='+skillid;
+                var dataString = 'skillid='+skillid+'&skillname='+skillname+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid;
                 var modal = $(this);
+                
+                // For Make an endorsement 
+                $('#endorsefor').empty();
+                $('#endorsefor').append("Endorse <span class=\"text-capitalize\">"+ displayusername +"</span> for "+ skillname +"!");
 
                 // Clear the old content before making the call...
                 $('#viewEndorsement').empty();
@@ -140,14 +147,17 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
                 // Showing loading icon
                 $('#viewEndorsement').append(loadingContent);
 
+					
+
                 /* AJAX Call */
                 $.ajax({
                     cache: false,
                     type: 'GET',
-                    url: 'test.php',
+                    url: 'modal_viewendorsement.php',
                     data: dataString,
                     success: function(data)
                     {
+	                    
                         $('#viewEndorsement').empty();
                         $('#viewEndorsement').append(data);
                     }
@@ -160,7 +170,8 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 
                 // set maximum height
                 $('.modal .modal-body').css('overflow-y', 'auto');
-                $('.modal .modal-body').css('max-height', $(window).height() * 0.8);
+                //$('.modal .modal-body').css('max-height', $(window).height() * 0.5);
+                $('.modal .modal-body').css('max-height', '65%');
             });    
 
         }); // End of ready function
@@ -183,7 +194,9 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#viewEndorsement">View endorsements</a></li>
-                    <li><a data-toggle="tab" href="#makeEndorsement">Make an endorsement</a></li>
+                    
+                    <!-- hide when it is for the logged in user -->
+                    <li <?php if ($display_user_id==$userid) echo 'style="display:none;"' ?>><a data-toggle="tab" href="#makeEndorsement">Make an endorsement</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -197,10 +210,10 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 
                         <div class="modal-body" id="recform">
                             <form class="contact" id="contact" name="contact">
-                            <h4 class="lead">Endorse Kamal Thakker for Java!</h4>
+                            <h4 class="lead" id="endorsefor">Endorse Kamal Thakker for Java!</h4>
 
                             <label for="Recommendation" class="sr-only">Recommendation</label>
-                            <textarea name = "recommendation" class="form-control input-xlarge"  style="min-width: 100%; min-height: 100%;" placeholder="Your message" required autofocus></textarea>
+                            <textarea name = "recommendation" class="form-control input-xlarge"  style="min-width: 100%; min-height: 35%;" placeholder="Your recommendation meesage" required autofocus></textarea>
 
                             <br>
 
@@ -290,8 +303,6 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 			    <!-- one column with 100% width -->
 			    <div class="col-md-12" style="background-color: #ffffff"> 
 				    
-				     
-				      
 				      <div class="bs-example" data-example-id="list-group-custom-content"> 
 	            <div class="list-group"> 
 		            
