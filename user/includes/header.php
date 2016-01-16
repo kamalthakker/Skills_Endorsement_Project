@@ -49,6 +49,7 @@ if(!isset($linkno)) $linkno=0;
 
     <!-- Custom styles for this template -->
     <link href="includes/stylesmain.css" rel="stylesheet">
+    <link href="includes/callout.css" rel="stylesheet">
 
 	<!-- Custom common jscript -->
 	<script src="includes/jqueryscripts.js"></script>

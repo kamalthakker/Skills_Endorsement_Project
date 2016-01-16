@@ -7,11 +7,11 @@ include_once 'classes/project.php';
 ?>
 
 <?php 
-	
-function printSkills($dbRows_UserSkillsWithRank, $HowManyShow)
+function printSkills($dbRows_UserSkillsWithRank, $HowManyShow, $LoggedInUserId, $DisplayUsername)
 {
 	$counter = 0;
 	$more = 0;
+	
 	
 	echo '<ul class="nav nav-pills" role="tablist">';	
 	
@@ -19,7 +19,7 @@ function printSkills($dbRows_UserSkillsWithRank, $HowManyShow)
 	{
 		$counter = $counter + 1;
 		
-		$li_str = '<li role="presentation"><a href="#" data-toggle="modal" data-target="#makeViewEndorsementsModal" data-whatever="'.$dbRow['skill_id'].'">'. $dbRow['skill_name'] .'<span class="badge">'. $dbRow['rank'] .'</span></a></li>';
+		$li_str = '<li role="presentation"><a href="#" data-toggle="modal" data-target="#makeViewEndorsementsModal" data-skillid="'.$dbRow['skill_id'].'"  data-skillname="'.$dbRow['skill_name'].'"  data-displayuserid="'.$dbRow['user_id'].'"  data-loggedinuserid="'.$LoggedInUserId.'" data-displayusername="'.$DisplayUsername.'">'. $dbRow['skill_name'] .'<span class="badge">'. $dbRow['rank'] .'</span></a></li>';
 		
 		if ($counter <= $HowManyShow)
 		{
@@ -112,10 +112,123 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
                 $(this).text('See more ('+ $(this).data("more") +'+)');
             }
             });
+            
+        /* -----------------------------
+	        On modal show 
+	       ----------------------------- */
+        $('#makeViewEndorsementsModal').on('show.bs.modal', function (event) {
+                //var loadingContent = '<div class="modal-header"><h2>Processing...</h2></div><div class="modal-body"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div>';
+                //var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img src="https://www.drupal.org/files/issues/ajax-loader.gif"></img></div>'
+                var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img class="img-responsive center-block" src="images/ajax-loader.gif"></img></div>'
+                
+                var button = $(event.relatedTarget);
+                
+                var skillname = button.data('skillname');
+                var skillid = button.data('skillid');
+                
+                var skillname = button.data('displayusername'); // Endorse To Name
+                var skillname = button.data('displayuserid'); // Endorse To
+                var skillid = button.data('loggedinuserid'); // Endorse By
+                
+                
+                var dataString = 'skillid='+skillid;
+                var modal = $(this);
 
-        });
+                // Clear the old content before making the call...
+                $('#viewEndorsement').empty();
+
+                // Showing loading icon
+                $('#viewEndorsement').append(loadingContent);
+
+                /* AJAX Call */
+                $.ajax({
+                    cache: false,
+                    type: 'GET',
+                    url: 'test.php',
+                    data: dataString,
+                    success: function(data)
+                    {
+                        $('#viewEndorsement').empty();
+                        $('#viewEndorsement').append(data);
+                    }
+                });
+                /* End of AJAX Call */
+
+
+                modal.find('.modal-title').text('Endorsement - ' + skillname);
+                //modal.find('.modal-body input').val(recipient);
+
+                // set maximum height
+                $('.modal .modal-body').css('overflow-y', 'auto');
+                $('.modal .modal-body').css('max-height', $(window).height() * 0.8);
+            });    
+
+        }); // End of ready function
+        
+        
         
 </script>	
+
+<!-- Endorsement Modal -->
+<div class="modal fade" id="makeViewEndorsementsModal" tabindex="-1" role="dialog" aria-labelledby="makeViewEndorsementsModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Endorsement</h4>
+            </div>
+            <div class="modal-body">
+
+                <!-- body -->
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#viewEndorsement">View endorsements</a></li>
+                    <li><a data-toggle="tab" href="#makeEndorsement">Make an endorsement</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div id="viewEndorsement" class="tab-pane fade in active">
+                        <br/><br/><br/><br/>
+
+                    </div>
+
+                    <div id="makeEndorsement" class="tab-pane fade in">
+
+                        <div class="modal-body" id="recform">
+                            <form class="contact" id="contact" name="contact">
+                            <h4 class="lead">Endorse Kamal Thakker for Java!</h4>
+
+                            <label for="Recommendation" class="sr-only">Recommendation</label>
+                            <textarea name = "recommendation" class="form-control input-xlarge"  style="min-width: 100%; min-height: 100%;" placeholder="Your message" required autofocus></textarea>
+
+                            <br>
+
+                            <input class="btn btn-primary pull-right"  value = "Endorse" type="submit" id="submitEndorsement">
+                                <button type="button" class="btn btn-primary" id="submitEndorsement1">Save changes</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <!-- end of body -->
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <!--
+                <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of endoresment modal -->
+
 
 <!-- Begin page content -->
 <div class="container-fluid">
@@ -139,7 +252,10 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 
 				<!-- Detail - like name, title, etc. -->
 				<div class="col-md-4" style="background-color: #ffffff">
-					<h2 class="text-capitalize"><?php echo $dbRow_UserInfo['fname'] . ' ' . $dbRow_UserInfo['lname']; ?></h2>
+					<h2 class="text-capitalize"><?php 
+						$displayname=$dbRow_UserInfo['fname'] . ' ' . $dbRow_UserInfo['lname'];
+						echo $displayname; 
+						?></h2>
 
 
                     <addres>    
@@ -159,7 +275,7 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 					
 					<h2 class="text-capitalize">Skills</h2>
 						
-					<?php printSkills($dbRows_UserSkillsWithRank, 10); ?>
+					<?php printSkills($dbRows_UserSkillsWithRank, 10, $userid, $displayname); ?>
 
 					
 				</div> <!-- End of Skills-->
@@ -193,14 +309,26 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 				          <div class="col-md-3" style="background-color: #ffffff"> 
 					          <h4 class="list-group-item-heading"><?php echo $dbRow['project_name']; ?></h4> 
 					          <p class="list-group-item-text">
-						          <time datetime="YYYY">
-						          	<?php echo $dbRow['start_date']; ?>
-						          </time> - 
-								  <?php if (isset($dbRow['end_date'])) echo $dbRow['end_date']; else echo 'Present'; ?>
+						          	
+								<?php
+									// Start date
+									$startDate = new DateTime($dbRow['start_date']);
+									echo $startDate->format('M y') . ' - ';
+								
+									// End date
+									if (isset($dbRow['end_date'])) {
+										$endDate = new DateTime($dbRow['end_date']);
+										echo $endDate->format('M y'); }
+									else 
+										echo 'Present'; 	
+								?>
+								
 					          </p>
+					          
 					          <p class="list-group-item-text text-capitalize">Manager: 
 						          <?php echo $dbRow['manager_fname'] . ' ' . $dbRow['manager_lname']; ?>
-					          </p>						      
+					          </p>
+					          						      
 				          </div>
 				          
 				          <!-- Project Desc -->
@@ -221,7 +349,7 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 								  $dbRow_ProjectSkills = $objProject->getProjectSkills($dbRow['project_id']);
 
 								  // Print skills		
-								   printSkills($dbRow_ProjectSkills, 10);
+								   printSkills($dbRow_ProjectSkills, 10, $userid, $displayname);
 					          ?>
 					          
 					          <!--
