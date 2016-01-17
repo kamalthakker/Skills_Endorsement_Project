@@ -184,7 +184,22 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
                 $('.modal .modal-body').css('overflow-y', 'auto');
                 //$('.modal .modal-body').css('max-height', $(window).height() * 0.5);
                 $('.modal .modal-body').css('max-height', '65%');
-            });    
+            });  
+        
+          /* -----------------------------
+	        On submit of make an endorsement 
+	       ----------------------------- */
+        $( "#makeendorsementform" ).submit(function( event ) {
+	        	//alert("stop!");
+                event.preventDefault(); // this keeps the modal window open
+                
+                var modal=$('#makeViewEndorsementsModal');
+                //modal.find('.modal-title').text("hello"); // test - to be deleted
+                var recmsg=$("textarea#recommendation").val();
+                
+                
+                
+            });  
 
         }); // End of ready function
         
@@ -221,16 +236,17 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
                     <div id="makeEndorsement" class="tab-pane fade in">
 
                         <div class="modal-body" id="recform">
-                            <form class="contact" id="contact" name="contact">
+                            <form  id="makeendorsementform" name="makeendorsement">
                             <h4 class="lead" id="endorsefor">Endorse Kamal Thakker for Java!</h4>
 
                             <label for="Recommendation" class="sr-only">Recommendation</label>
-                            <textarea name = "recommendation" class="form-control input-xlarge"  style="min-width: 100%; min-height: 35%;" placeholder="Your recommendation meesage" required autofocus></textarea>
+                            <textarea id="recommendation" class="form-control input-xlarge"  style="min-width: 100%; min-height: 35%;" placeholder="Your recommendation meesage" required autofocus></textarea>
 
                             <br>
 
                             <input class="btn btn-primary pull-right"  value = "Endorse" type="submit" id="submitEndorsement">
-                                <button type="button" class="btn btn-primary" id="submitEndorsement1">Save changes</button>
+                            <!--
+                                <button type="button" class="btn btn-primary" id="submitEndorsement1">Save changes</button> -->
                             </form>
                         </div>
 
