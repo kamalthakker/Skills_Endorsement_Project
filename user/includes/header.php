@@ -104,7 +104,7 @@ if(!isset($linkno)) $linkno=0;
                 <form class="navbar-form pull-left" role="search" method="post" action="searchresult.php">
 	               
 		                
-					<input type="text" class="form-control" placeholder="Search people..." id="searchInput" name="searchby">
+					<input type="text" class="form-control" placeholder="Search people, skills, or projects..." id="searchInput" name="searchby">
 					
 					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 	                

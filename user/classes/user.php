@@ -37,7 +37,7 @@ public function getUserSkillsWithRank($user_id){
 	
 	
 		$q = "/*All user's skills with endorsement rankings*/
-				select userskills.user_id, userskills.skill_id, userskills.skill_name, skillrank.rank from 
+				select distinct userskills.user_id, userskills.skill_id, userskills.skill_name, skillrank.rank from 
 				(
 					select p.user_id, ps.skill_id, s.name as skill_name from project_skills ps 
 					inner join projects p on p.project_id=ps.project_id
