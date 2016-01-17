@@ -163,7 +163,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 					$error[] = "You have exceeded the login attempt limit! <br>
 					You will be blocked for $minutes_to_wait minutes!";
 				else
-					$error[] = "Wrong password! You have tried $loginAttempt times";
+					$error[] = "Wrong password! You have tried $loginAttempt times.";
 
 			}
 				
@@ -215,8 +215,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
     <!-- end #header -->
 
     <center>
-	    <div style="width: 70%" class="alert alert-warning alert-dismissible" role="alert">
+    
+    <?php if (count($error) >= 1) {?>
+	    <div style="width: 70%" class="alert alert-danger alert-dismissible" role="alert">
 		    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		    <?php } ?>
 		    
 			<?php foreach($error as $msg) {echo "$msg <br>";} ?>	
 		</div>
