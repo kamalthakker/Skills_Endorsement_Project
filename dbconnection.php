@@ -7,14 +7,13 @@ if($_SERVER['SERVER_NAME']=='localhost')
 	$db_password = "root";
 	$db_name = "Skills_Endorsement";
 }
-else
+else if ($_SERVER['SERVER_NAME']=='skillsendorsement-monmouth.rhcloud.com')
 {
-	// Redhat Cloud
+	// Openshift Cloud
 	$db_servername = "127.8.139.130";
 	$db_username = "adminpHqBkNj";
 	$db_password = "AcFMEZi_xNEw";
-	$db_name = "skillsendorsement";
-	
+	$db_name = "skillsendorsement";	
 }
 
 // Local DB
