@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.38)
 # Database: Skills_Endorsement
-# Generation Time: 2016-01-17 01:39:37 +0000
+# Generation Time: 2016-01-17 04:41:38 +0000
 # ************************************************************
 
 
@@ -98,8 +98,8 @@ VALUES
 	(19,5,3558),
 	(20,6,2918),
 	(21,7,2918),
-	(22,7,33),
-	(23,6,46);
+	(22,7,5302),
+	(23,6,220);
 
 /*!40000 ALTER TABLE `project_skills` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -152,7 +152,7 @@ CREATE TABLE `skill_endorsements` (
   `comments` varchar(5000) DEFAULT NULL,
   `endorsed_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`skill_endorsement_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `skill_endorsements` WRITE;
 /*!40000 ALTER TABLE `skill_endorsements` DISABLE KEYS */;
@@ -166,7 +166,8 @@ VALUES
 	(5,1,3067,2,'Very good!','2015-09-01 00:00:00'),
 	(6,1,3050,3,'XYZ Training Services will be launching its new website in the second quarter of this year. We have been setting up a page for testimonials to give new clients an idea of what they can expect from our company. We would therefore like to ask if you could graciously share your own experiences for inclusion on this page. We would just like to highlight the benefits your staff members have received from their training sessions with us. Would you be comfortable with this? If so, we will be sending one of our representatives over to take down your comments. Thank you very much!\n','2015-09-01 00:00:00'),
 	(7,1,3070,2,'Very nice skill','2015-09-01 00:00:00'),
-	(8,1,2918,5,'I write on behalf of xyz\'s application for a Rhodes Scholarship.  I believe abc to be an exemplary student-scholar as well as a person of tremendous character with significant leadership skills.\r\rI heard of xyz before I met her.  A top student of mine and Truman finalist came into my office and announced that she had met the next Truman finalist - a first year woman who was full of energy for leading the Students for Choice organization.  The young woman I encountered in my American Politics class that next semester was, in fact, quite enthusiastic for her studies and a solid, conscientious student.  Full of questions, xyz regularly participated in class discussions and probed the materials with a zest for learning.  In her first year, however, I was more struck by her openness to the world than her analytic ability.   ','2016-01-16 16:39:30');
+	(8,1,2918,5,'I write on behalf of xyz\'s application for a Rhodes Scholarship.  I believe abc to be an exemplary student-scholar as well as a person of tremendous character with significant leadership skills.\r\rI heard of xyz before I met her.  A top student of mine and Truman finalist came into my office and announced that she had met the next Truman finalist - a first year woman who was full of energy for leading the Students for Choice organization.  The young woman I encountered in my American Politics class that next semester was, in fact, quite enthusiastic for her studies and a solid, conscientious student.  Full of questions, xyz regularly participated in class discussions and probed the materials with a zest for learning.  In her first year, however, I was more struck by her openness to the world than her analytic ability.   ','2016-01-16 16:39:30'),
+	(14,3,2918,1,'he is an expert','2016-01-16 23:37:14');
 
 /*!40000 ALTER TABLE `skill_endorsements` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -208,8 +209,8 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`user_id`, `uname`, `role`, `psword`, `fname`, `lname`, `gender`, `email`, `phone`, `address`, `state`, `city`, `zip`, `registration_date`, `last_login`, `login_attempt`, `blocked_time`, `approved_by_admin`, `speciality`, `speciality2`, `job_title`, `userdp`)
 VALUES
-	(1,'mbush@mitre.org','user','test','mike','bush','m','mbush@mitre.org','410-272-5848',NULL,'MD','Aberdeen','03-441',NULL,'2016-01-16 20:32:38',0,NULL,NULL,'Software Engineering','Software Apps Development','Group leader','mike.jpg'),
-	(2,'kamalthakker@gmail.com','user','test','kamal','thakker','m','kamalthakker@gmail.com','123-456-7890',NULL,'NJ','Monroe','08831',NULL,'2016-01-13 20:44:15',0,NULL,NULL,'Software Engineering','Software Apps Development','Manager','kamal.jpg'),
+	(1,'mbush@mitre.org','user','test','mike','bush','m','mbush@mitre.org','410-272-5848',NULL,'MD','Aberdeen','03-441',NULL,'2016-01-16 23:32:20',0,NULL,NULL,'Software Engineering','Software Apps Development','Group leader','mike.jpg'),
+	(2,'kamalthakker@gmail.com','user','test','kamal','thakker','m','kamalthakker@gmail.com','123-456-7890',NULL,'NJ','Monroe','08831',NULL,'2016-01-16 20:43:34',0,NULL,NULL,'Software Engineering','Software Apps Development','Manager','kamal.jpg'),
 	(3,'savon40@gmail.com ','user','test','steve','avon','m','savon40@gmail.com ','234-567-89101',NULL,'NJ','Point Pleasant','1234',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development','Manager','steve.jpg'),
 	(4,'hli1022@gmail.com ','user','test','howard','li','m','hli1022@gmail.com ','345-678-9012',NULL,'NJ','Point Pleasant','1234',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development','Manager','howard.jpg'),
 	(5,'bharti.chinni@gmail.com ','user','test','chaitanya','bharti','f','bharti.chinni@gmail.com ','456-789-0123',NULL,'NJ','Long Branch','1234',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development','Group Leader','chaitanya.jpg'),

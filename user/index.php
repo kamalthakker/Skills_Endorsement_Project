@@ -134,9 +134,11 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 	        	
                 //var loadingContent = '<div class="modal-header"><h2>Processing...</h2></div><div class="modal-body"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div>';
                 //var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img src="https://www.drupal.org/files/issues/ajax-loader.gif"></img></div>'
-                var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img class="img-responsive center-block" src="../images/ajax-loader.gif"></img></div>'
+                var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img class="img-responsive center-block" src="../images/ajax-loader.gif"></img></div>';
                 
                 var button = $(event.relatedTarget);
+                
+                var modal = $(this);
                 
                 var skillname = button.data('skillname');
                 var skillid = button.data('skillid');
@@ -145,13 +147,29 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
                 var displayuserid = button.data('displayuserid'); // Endorse To
                 var loggedinuserid = button.data('loggedinuserid'); // Endorse By
                 
+                //Set these values to modal's data attributes
+                modal.data("skillid",skillid);
+                modal.data("displayuserid",displayuserid);
+                modal.data("loggedinuserid",loggedinuserid);
+                modal.data("refreshpage","N");
+                
+                
                 
                 var dataString = 'skillid='+skillid+'&skillname='+skillname+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid;
-                var modal = $(this);
+                
                 
                 // For Make an endorsement 
                 $('#endorsefor').empty();
                 $('#endorsefor').append("Endorse <span class=\"text-capitalize\">"+ displayusername +"</span> for "+ skillname +"!");
+                
+                // Show the form
+                $('#recform').css('display', 'inline');
+                        
+                // Clear and hide the last result, if any
+                $('#makeEndorsementResult').empty();
+                $('#makeEndorsementResult').css('display', 'none');
+        
+                // End of make an endorsement logic
 
                 // Clear the old content before making the call...
                 $('#viewEndorsement').empty();
@@ -172,6 +190,9 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 	                    
                         $('#viewEndorsement').empty();
                         $('#viewEndorsement').append(data);
+                    },
+                    error: function(){
+                        alert("failure - please contact sys admin!");
                     }
                 });
                 /* End of AJAX Call */
@@ -186,6 +207,7 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
                 $('.modal .modal-body').css('max-height', '65%');
             });  
         
+        
           /* -----------------------------
 	        On submit of make an endorsement 
 	       ----------------------------- */
@@ -193,13 +215,65 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 	        	//alert("stop!");
                 event.preventDefault(); // this keeps the modal window open
                 
+                var loadingContent = '<div id="ajax_loader" style="position: fixed; left: 50%; top: 50%;"><img class="img-responsive center-block" src="../images/ajax-loader.gif"></img></div>';
+                
                 var modal=$('#makeViewEndorsementsModal');
                 //modal.find('.modal-title').text("hello"); // test - to be deleted
                 var recmsg=$("textarea#recommendation").val();
                 
+                var skillid = modal.data('skillid');
+                var displayuserid = modal.data('displayuserid');
+                var loggedinuserid = modal.data('loggedinuserid');
+                
+                var dataString = 'skillid='+skillid+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid+'&message='+encodeURIComponent(recmsg);
+                
+                // Set loading icon
+                $('#makeEndorsementAJAXLoader').append(loadingContent);
+
+					
+
+                /* AJAX Call */
+                $.ajax({
+                    cache: false,
+                    type: 'GET',
+                    url: 'modal_makeendorsement.php',
+                    data: dataString,
+                    success: function(data)
+                    {
+	                    // Clear AJAX loader image...
+                        $('#makeEndorsementAJAXLoader').empty();
+                                                
+                        // Hide the form
+                        $('#recform').css('display', 'none');
+                        
+                        // Clear text area;
+                        $("textarea#recommendation").val('');
+                        
+                        // Show result
+                        $('#makeEndorsementResult').empty();
+						$('#makeEndorsementResult').append(data);
+                        $('#makeEndorsementResult').css('display', 'inline');
+                        
+                        // Refresh page on quiting...
+                        modal.data("refreshpage","Y");
+                        
+                        
+                    },
+                    error: function(){
+                        alert("failure - please contact sys admin!");
+                    }
+                });
+                /* End of AJAX Call */
                 
                 
             });  
+            
+            
+           $('#makeViewEndorsementsModal').on('hidden.bs.modal', function () {
+		   		
+		   		if ($('#makeViewEndorsementsModal').data('refreshpage')=="Y")
+		   			location.reload();
+		   	}) ; 
 
         }); // End of ready function
         
@@ -208,7 +282,7 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 </script>	
 
 <!-- Endorsement Modal -->
-<div class="modal fade" id="makeViewEndorsementsModal" tabindex="-1" role="dialog" aria-labelledby="makeViewEndorsementsModalLabel">
+<div class="modal fade" id="makeViewEndorsementsModal" tabindex="-1" role="dialog" aria-labelledby="makeViewEndorsementsModalLabel" data-skillid="0" data-displayuserid="0" data-loggedinuserid="0" data-refreshpage="N">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -234,6 +308,7 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
                     </div>
 
                     <div id="makeEndorsement" class="tab-pane fade in">
+	                    <span id="makeEndorsementAJAXLoader"></span>
 
                         <div class="modal-body" id="recform">
                             <form  id="makeendorsementform" name="makeendorsement">
@@ -249,6 +324,8 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
                                 <button type="button" class="btn btn-primary" id="submitEndorsement1">Save changes</button> -->
                             </form>
                         </div>
+                        
+                        <div class="modal-body" id="makeEndorsementResult" style="display:none;"></div>
 
                     </div>
 
