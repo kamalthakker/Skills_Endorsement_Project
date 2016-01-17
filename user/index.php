@@ -1,6 +1,15 @@
 <?php
 $page_title = "Home";
-$linkno = 1;
+$linkno = 1;	
+$search_user_id=null;
+	
+if(isset($_REQUEST['search_user_id'])) {	
+	$search_user_id=$_REQUEST['search_user_id'];
+	$page_title = "Search";
+	$linkno = 0;	
+}
+
+
 include_once 'includes/header.php';
 include_once 'classes/user.php';
 include_once 'classes/project.php';
@@ -75,7 +84,10 @@ echo "--->".$dbRowsUserInfo['fname']."<br>";
 */
 
 // by default - show logged in user - otherwise show searched user
-$display_user_id=$userid;
+if(isset($search_user_id))
+	$display_user_id=$search_user_id;
+else
+	$display_user_id=$userid;
 
 /*----------------------------*/
 // Create an object for categories
@@ -260,7 +272,7 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 		        <!-- DP - Display Image -->
 		        <div class="col-md-2" style="background-color: #ffffff">
 			        <!-- images/default-user.png -->
-			        <img src="<?php if ( isset($dbRow_UserInfo['userdp']) ) echo '../images/userdp/'. $dbRow_UserInfo['userdp']; else echo '../images/userdp/default-user.png';?>" class="img-responsive" alt="Cinque Terre" width="200" height="200">
+			        <img src="<?php if ( isset($dbRow_UserInfo['userdp']) ) echo '../images/userdp/'. $dbRow_UserInfo['userdp']; else echo '../images/userdp/default-user.png';?>" class="img-responsive voffset3" alt="Cinque Terre" width="200" height="200">
 		        </div>
 
 				<!-- Detail - like name, title, etc. -->
