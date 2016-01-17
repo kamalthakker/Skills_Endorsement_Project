@@ -115,8 +115,10 @@ if(!isset($linkno)) $linkno=0;
 
                 <!--Logout - right align -->
                 <ul class="nav navbar-nav navbar-right">
+	                
                     <li>
-                        <a href="../logout.php"><span class="glyphicon glyphicon-off"></span> Logout</a>
+                        <a href="../logout.php"><span class="glyphicon glyphicon-off"></span> Hello 
+	                        <span class="text-capitalize"><strong><?php echo $fname;?></strong></span> - Logout?</a>
                     </li>
                 </ul>
 
