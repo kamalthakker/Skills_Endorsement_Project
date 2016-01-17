@@ -205,10 +205,10 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
                 <!-- body -->
 
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#viewEndorsement">View endorsements</a></li>
+                    <li class="active"><a data-toggle="tab" href="#viewEndorsement"><strong>View endorsements</strong></a></li>
                     
                     <!-- hide when it is for the logged in user -->
-                    <li <?php if ($display_user_id==$userid) echo 'style="display:none;"' ?>><a data-toggle="tab" href="#makeEndorsement">Make an endorsement</a></li>
+                    <li <?php if ($display_user_id==$userid) echo 'style="display:none;"' ?>><a data-toggle="tab" href="#makeEndorsement"><strong>Make an endorsement</strong></a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -391,6 +391,10 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
 			        </div> <!-- end of list group item -->
 				    
 				    <?php } ?>
+				    
+				    <?php if(!isset($dbRow_Projects)) {?>
+				    <div  class="list-group-item">  <a href="#"> Click here</a> to enter projects.</div>
+				    <?php }?>
 				            
 				              
 				</div> 
