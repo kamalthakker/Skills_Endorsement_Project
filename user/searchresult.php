@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' ) {
 <!-- Begin page content -->
 <div class="container-fluid">
 	
-	
+<!-- search by: people, skills, projects -->	
 <h2 class="page-header">?? results for <strong><span class="text-success"><?php echo $searchby;?></span></strong></span></h2>
 
 <div class="table-responsive">
