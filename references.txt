@@ -15,3 +15,12 @@ https://market.mashape.com/itsyourskills/skills-library
 
 http://www.w3bees.com/2013/09/jquery-infinite-scroll-with-php-mysql.html
 
+
+auto complete drop down box:
+http://stackoverflow.com/questions/12902010/twitter-bootstrap-autocomplete-dropdown-combobox-with-knockoutjs
+1) https://select2.github.io/ (Tagging support)
+https://fk.github.io/select2-bootstrap-css/3.5.2.html
+2) http://selectize.github.io/selectize.js/ (Tagging)
+3) http://getfuelux.com/index.html
+4) https://fk.github.io/select2-bootstrap-css/index.html
+5) http://www.bootply.com/tagged/search
