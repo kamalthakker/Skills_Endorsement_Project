@@ -24,3 +24,6 @@ https://fk.github.io/select2-bootstrap-css/3.5.2.html
 3) http://getfuelux.com/index.html
 4) https://fk.github.io/select2-bootstrap-css/index.html
 5) http://www.bootply.com/tagged/search
+6) http://www.jqueryrain.com/demo/jquery-autocomplete/
+7) https://github.com/bassjobsen/Bootstrap-3-Typeahead
+8) http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-typeahead.php
