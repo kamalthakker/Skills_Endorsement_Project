@@ -22,6 +22,22 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
+
+    <!-- type head.js -->
+
+    <script src="user/includes/typeahead.bundle.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://twitter.github.io/typeahead.js/css/examples.css">
+
+    <!--
+    http://twitter.github.io/typeahead.js/examples/
+    http://stackoverflow.com/questions/21893153/twitters-typeahead-js-doesnt-pop-dropdown-window
+    http://stackoverflow.com/questions/18156679/bootstrap-typahead-and-mysql-data-retrieving
+
+    <script type='text/javascript' src='//code.jquery.com/jquery-1.11.0.js'></script>
+    <script type='text/javascript' src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+-->
+
     <!-- Custom styles for this template -->
     <link href="user/includes/stylesmain.css" rel="stylesheet">
     <link href="user/includes/callout.css" rel="stylesheet">
@@ -237,6 +253,35 @@
 
     </script>
 
+    <script type='text/javascript'>//<![CDATA[
+    $(window).load(function(){
+/*----------------------*/
+
+
+        var bestPictures = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: 'http://twitter.github.io/typeahead.js/data/films/post_1960.json',
+            remote: {
+                url: 'http://twitter.github.io/typeahead.js/data/films/queries/%QUERY.json',
+                wildcard: '%QUERY'
+            }
+        });
+
+        $('#remote .typeahead').typeahead(null, {
+            name: 'best-pictures',
+            display: 'value',
+            source: bestPictures
+        });
+
+
+
+
+/*--------------------*/
+    });//]]>
+
+    </script>
+
 </head>
 
 <body>
@@ -302,6 +347,11 @@
 
 <div class="container">
 
+    <div id="remote">
+        <input class="typeahead" type="text" placeholder="Oscar winners for Best Picture">
+    </div>
+
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
     <a href="#" data-toggle="modal" data-target="#makeViewEndorsementsModal" data-skillname="SQL" data-skillid="5">SQL</a>
 
