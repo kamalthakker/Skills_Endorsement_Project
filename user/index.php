@@ -13,6 +13,7 @@ if(isset($_REQUEST['search_user_id'])) {
 include_once 'includes/header.php';
 include_once 'classes/user.php';
 include_once 'classes/project.php';
+include_once 'classes/endorsement.php';
 ?>
 
 <?php 
@@ -104,6 +105,16 @@ $objProject = new project();
 
 // Get approved projects
 $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
+/*----------------------------*/
+
+$objEndorsement = new endorsement();
+	
+// Get suggestions to make endorsements
+$dbRows_Suggestions = $objEndorsement->getEndorsementSuggestions($userid);
+
+// Get recent activities
+$dbRows_RecentActivities = $objEndorsement->getRecentActivities();
+
 /*----------------------------*/
 ?>
 
@@ -508,29 +519,95 @@ $dbRow_Projects = $objProject->getApprovedProjects($display_user_id);
         <!-- Right Area -->
         <div class="col-md-3" role="complementary" style="background-color: #ffffff">
 
-		<nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
+		<nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top voffset3">
+			
             <div class="bs-example" data-example-id="list-group-custom-content"> 
+	            <!-- suggestions - if any -->
 	            <div class="list-group"> 
 		            
+		            
+		           <!-- Heading -->
+		           <?php if (isset($dbRows_Suggestions)) { ?> 
 		            <div  class="list-group-item active"> 
 		            <h4 class="list-group-item-heading">Make an Endorsement</h4> 
 		            <p class="list-group-item-text">You have 5 endorsements left for this time period, here's some people you are eligible to endorse:</p> </div> 
+		           <?php } /*end of if condition*/?> 
 		            
-		            <div  class="list-group-item"> 
-			            <h4 class="list-group-item-heading">Jim Smith</h4> 
-			            <p class="list-group-item-text">You worked together on project A, and can endorse him for skill1, skill2, skill3.</p> </div> 
+		           
+		            <?php
+			        $usedlname = "";
+			        $lname = "";
+			        while ( isset($dbRows_Suggestions) && $dbRow = mysqli_fetch_array($dbRows_Suggestions))
+					{ 
+						$lname=$dbRow['user_id'];
+						//echo 'name:',$name.'<br/>';
+						$pos = strpos($usedlname, $lname,0);
+						//echo '-->' . $usedlname . '=' . $pos;
+						if ($pos!==false) {/*do not print repeat names*/} else { //echo '<br/>-->inside if';
+					?>
+		            	<div  class="list-group-item"> 
+				            <h4 class="list-group-item-heading"><span class="text-capitalize"><?php echo $dbRow['fname'] . ' ' . $dbRow['lname']?></span></h4> 
+				            <p class="list-group-item-text">You worked together on <?php echo $dbRow['project_name']?>. To make an endorsement, <a href="index.php?search_user_id=<?php echo $dbRow['user_id']?>">click here</a> to visit the profile.</p> 
+			            </div> 
+		            
+		             <?php
+			             } // End of if
+			              
+			             $usedlname =   $usedlname . $dbRow['user_id'];
+			             
+			           } /*end of while loop*/?>
 				            
-				            <div class="list-group-item"> 
-					            <h4 class="list-group-item-heading">Kimberly Jones</h4> 
-					            <p class="list-group-item-text">You worked together on project B, and can endorse him for skill1, skill2, skill3.</p> </div> 
+		            
 					            
-					        <div class="list-group-item"> 
-					            <h4 class="list-group-item-heading">Sam Burns</h4> 
-					            <p class="list-group-item-text">You worked together on project C, and can endorse him for skill1, skill2, skill3.</p> </div> 
+				</div> 
+	            
+	            <!-- recent activities -->
+	            <div class="list-group"> 
+		            
+		            
+		           <!-- Heading -->
+		           <?php if (isset($dbRows_RecentActivities)) { ?> 
+		           
+		            <div  class="list-group-item active"> 
+		            <h4 class="list-group-item-heading">Recent Activities</h4> </div> 
+		           <?php } /*end of if condition*/?> 
+		            
+		           
+		            <?php
+			        
+			        while ( isset($dbRows_RecentActivities) && $dbRow = mysqli_fetch_array($dbRows_RecentActivities))
+					{ ?>
+		            	<div  class="list-group-item"> 
+				            
+				            <p class="list-group-item-text">
+					            
+					            <a href="index.php?search_user_id=<?php echo $dbRow['user_id']?>">
+					            <span class="text-capitalize"><?php echo $dbRow['uto_fname'] . ' ' . $dbRow['uto_lname'] ?></span></a> has been endorsed by
+					            
+					            
+					            <a href="index.php?search_user_id=<?php echo $dbRow['endorsed_by_user_id']?>">
+					            <span class="text-capitalize"><?php echo $dbRow['uby_fname'] . ' ' . $dbRow['uby_lname'] ?></span></a><small>, on 
+					            <?php 
+						            		$EndorsedOn = new DateTime($dbRow['endorsed_on']);
+											echo $EndorsedOn->format('m/d');
+					            		?>
+					            </small>
+					            
+					            
+					           </p> 
+			            </div> 
+		            
+		             <?php
+			             
+			           } /*end of while loop*/?>
+				            
+		            
 					            
 				</div> 
 			</div>
-		</nav>
+			
+			
+		</nav> <!-- auto hidden right pane -->
         </div> <!-- end of right area-->
     </div> <!-- end of row-->
     
