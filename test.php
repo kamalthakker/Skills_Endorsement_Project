@@ -1,63 +1,85 @@
-<script src="includes/jqueryscripts.js"></script>
-
 <?php
-$skill_id=$_REQUEST['skillid'];
-echo 'skill id:' . $skill_id . '<br>';
+//include_once '../dbconnection.php';
+
+$db_servername = "localhost";
+$db_username = "root";
+$db_password = "root";
+$db_name = "Skills_Endorsement";
+
+
+$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+
+
+$q = "select * from skills";
+
+if(isset($_POST['query'])){
+
+    // Now set the WHERE clause with LIKE query
+    $q .= ' WHERE title LIKE "%'.$_POST['query'].'%"';
+}
+
+if(isset($_REQUEST['query'])){
+
+    // Now set the WHERE clause with LIKE query
+    $q .= ' WHERE  NAME like "%'.$_REQUEST['query'].'%"';
+}
+
+//echo $q;
+
+
+
+//$r = mysqli_query($dbc,$q);
+//mysqli_close($dbc); // close the connection
+
+
+    // User is found in DB
+    //$row = mysqli_fetch_array($r);
+    //return 	$row;
+
+    $return = array();
+
+    //if($result = $mysqli->query($q)){
+    if($result = mysqli_query($dbc,$q) ){
+
+        // fetch object array
+        while($obj = $result->fetch_object()) {
+            //$return[] = $obj->name;
+            //echo $obj->name;
+
+            $return[] = array('id' => $obj->skill_id, 'name' => $obj->name);
+        }
+        // free result set
+        $result->close();
+    }
+
+
+// close connection
+mysqli_close($dbc);
+
+//$json = json_encode($return);
+
+//echo json_encode($return);
+
+//echo $return;
+
+//print_r($json);
+//print($json);
+//echo $json;
+
+//echo json_encode($return, JSON_PRETTY_PRINT);
+
+
+$json = json_encode($return);
+$File = 'skillsfile.json' ;
+
+$fh = fopen($File, 'a') or die();
+fwrite($fh,$json);
+fclose($fh);
+
+echo $json;
+
 ?>
 
-<div class="bs-callout bs-callout-primary">
 
-    <div class="row">
 
-        <div class="col-md-1" role="main" style="background-color: #ffffff">
-            <img src="images/userdp/default-user.png" class="img-responsive" alt="img" width="70" height="70">
-        </div>
 
-        <div class="col-md-11" role="main" style="background-color: #ffffff">
-            <h4><a href="#">Kamal Thakker</a> <br> <small>Group Leader</small></h4>
-
-            <q class="lead">This is a primary callout.</q>
-
-        </div>
-
-    </div> <!-- end of row -->
-
-</div> <!-- end of callout -->
-
-<div class="bs-callout bs-callout-primary">
-
-    <div class="row">
-
-        <div class="col-md-1" role="main" style="background-color: #ffffff">
-            <img src="images/userdp/default-user.png" class="img-responsive" alt="img" width="70" height="70">
-        </div>
-
-        <div class="col-md-11" role="main" style="background-color: #ffffff">
-            <h4><a href="#">Ram Thakker</a> <br> <small>Group Leader</small></h4>
-
-            <q class="lead">This is a primary callout.</q>
-
-        </div>
-
-    </div> <!-- end of row -->
-
-</div> <!-- end of callout -->
-
-<div class="bs-callout bs-callout-primary">
-
-    <div class="row">
-
-        <div class="col-md-1" role="main" style="background-color: #ffffff">
-            <img src="images/userdp/default-user.png" class="img-responsive" alt="img" width="70" height="70">
-        </div>
-
-        <div class="col-md-11" role="main" style="background-color: #ffffff">
-            <h4><a href="#">Kamal Thakker</a> <br> <small>Group Leader</small></h4>
-
-            <q class="lead">This is a primary callout.</q>
-
-        </div>
-
-    </div> <!-- end of row -->
-
-</div> <!-- end of callout -->
