@@ -27,3 +27,6 @@ https://fk.github.io/select2-bootstrap-css/3.5.2.html
 6) http://www.jqueryrain.com/demo/jquery-autocomplete/
 7) https://github.com/bassjobsen/Bootstrap-3-Typeahead
 8) http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-typeahead.php
+
+9) https://github.com/aehlke/tag-it/blob/master/README.markdown (tagging)
+10) http://www.uibox.in/tag/typeahead (typehead.js options)
