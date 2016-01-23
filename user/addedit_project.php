@@ -10,6 +10,12 @@ include_once 'includes/header.php';
 $project_id=0;
 if(isset($_REQUEST['project_id'])) $project_id=$_REQUEST['project_id'];
 
+if($_SERVER['REQUEST_METHOD'] == 'GET' )
+{
+	echo '<br/><br/><br/><br/>posted';
+	echo '<br/>'. $_POST['addskills_select2'][0] ;
+	echo '<br/>'. $_POST['addskills_select2'][1] ;
+}
 
 ?>
 
@@ -58,6 +64,7 @@ function formatRepo (repo) {
 $(document).ready(function(){
 /*--------------------------*/
 
+/*Do not delete the commented code - this one also works, but keeping the other method, which is below*/
 /*
 	$("#addskills_select2").select2({
             theme: "bootstrap",
@@ -128,8 +135,14 @@ $(document).ready(function(){
         },
         cache: true
       },
+      theme: "bootstrap",
+	  placeholder: "Add Skills",
+	  quietMillis: 100,
+	  tags: true,
+	  multiple: true,
+	  tokenSeparators: [','],
+	  minimumInputLength: 2,
       escapeMarkup: function (markup) { return markup; }, 
-      minimumInputLength: 1,
       templateResult: formatRepo, 
       templateSelection: formatRepoSelection 
         
@@ -156,7 +169,7 @@ $(document).ready(function(){
         <div class="alert alert-danger" role="alert">danger</div>
         -->
 
-        <form class="form-horizontal">
+        <form class="form-horizontal" method="get">
 
             <!-- Project Name -->
             <div class="form-group">
@@ -190,17 +203,12 @@ $(document).ready(function(){
                     <!--
                     <input type="text" class="form-control" id="skillsUsed" placeholder="Skills"> -->
 
-				<select id="addskills_select2" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
+				<select id="addskills_select2" name="addskills_select2[]" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
 					
 				</select>
                     
                 </div>
                 <br/>
-
-                <!-- to be deleted -->
-                <div style="color: brown">
-                    <strong>&nbsp; *HL: this should be a drop down box for all the skills in the DB, table:skills + user can add new skill which is not in the table. It should allow to add multiple tags as we show in the class last time.</strong>
-                </div>
             </div>
 
             <!-- Start Date -->
