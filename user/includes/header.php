@@ -91,9 +91,9 @@ if(!isset($linkno)) $linkno=0;
                         <ul class="dropdown-menu">
 	                        <li><a href="#">Edit Profile</a></li>
 	                        <li class="divider"></li>
-                            <li><a href="#">Manage Projects</a></li>
+                            <li><a href="manage_projects.php">Manage Projects</a></li>
                             <li><a href="#">Manage Skills</a></li>
-							<li><a href="#">Manage Endorsements</a></li>
+					<!--	<li><a href="#">Manage Endorsements</a></li> -->
 							<li class="divider"></li>
 							<li><a href="#">Approvals</a></li>
                         </ul>

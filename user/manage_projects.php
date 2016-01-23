@@ -1,21 +1,6 @@
 <?php
-
-// to be deleted - after setting up db connection...
-
-//session_start();
-
-// set session var
-$_SESSION['userid']= 1;
-$_SESSION['uname']= 'mbush@mitre.org';
-$_SESSION['fname']= 'mike';
-$_SESSION['lname']= 'bush';
-$_SESSION['role']= 'user';
-?>
-
-
-<?php
-$page_title = "Home";
-$linkno = 1;
+$page_title = "Manage Projects";
+$linkno = 0;
 include_once 'includes/header.php';
 //include_once 'classes/user.php';
 ?>
