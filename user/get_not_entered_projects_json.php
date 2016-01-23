@@ -1,29 +1,15 @@
 <?php
 include_once '../dbconnection.php';
 
-/*
-$db_servername = "localhost";
-$db_username = "root";
-$db_password = "root";
-$db_name = "Skills_Endorsement";
-*/
-
 $dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
 
 
-$q = "select * from skills";
 
-if(isset($_POST['query'])){
+$q = "/*List of projects yet not entered by the user*/
+				SELECT distinct project_name FROM projects 
+				WHERE project_name not in (
+				select distinct project_name from projects where user_id=".$_REQUEST['userid'].")";
 
-    // Now set the WHERE clause with LIKE query
-    $q .= ' WHERE title LIKE "%'.$_POST['query'].'%"';
-}
-
-if(isset($_REQUEST['query'])){
-
-    // Now set the WHERE clause with LIKE query
-    $q .= ' WHERE  NAME like "%'.$_REQUEST['query'].'%"';
-}
 
 //echo $q;
 
@@ -47,7 +33,7 @@ if(isset($_REQUEST['query'])){
             //$return[] = $obj->name;
             //echo $obj->name;
 
-            $return[] = array('id' => $obj->skill_id, 'name' => $obj->name);
+            $return[] = array('name' => $obj->project_name, 'value' => $obj->project_name);
         }
         // free result set
         $result->close();
@@ -71,7 +57,7 @@ mysqli_close($dbc);
 
 
 $json = json_encode($return);
-$File = 'skillsfile.json' ;
+$File = 'projectssfile.json' ;
 
 $fh = fopen($File, 'a') or die();
 fwrite($fh,$json);

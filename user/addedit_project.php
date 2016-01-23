@@ -10,7 +10,7 @@ include_once 'includes/header.php';
 $project_id=0;
 if(isset($_REQUEST['project_id'])) $project_id=$_REQUEST['project_id'];
 
-if($_SERVER['REQUEST_METHOD'] == 'GET' )
+if($_SERVER['REQUEST_METHOD'] == 'POST' )
 {
 	echo '<br/><br/><br/><br/>posted';
 	echo '<br/>'. $_POST['addskills_select2'][0] ;
@@ -18,6 +18,10 @@ if($_SERVER['REQUEST_METHOD'] == 'GET' )
 }
 
 ?>
+
+<!-- Typehead -->
+<script src="includes/typeahead.bundle.js"></script>
+<!-- End of Typehead ref. -->
 
  <!-- Select 2 -->
 <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
@@ -147,6 +151,24 @@ $(document).ready(function(){
       templateSelection: formatRepoSelection 
         
     });
+    
+    
+    // Typehead for project names
+    var bestPictures = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: "get_not_entered_projects_json.php?userid='<?php echo $userid;?>'"
+        });
+
+        $('#remote .typeahead').typeahead(null, {
+            name: 'best-pictures',
+            display: 'value',
+            source: bestPictures
+        });
+        
+        
+        
+		
   
 /*--------------------------*/
 });
@@ -169,19 +191,15 @@ $(document).ready(function(){
         <div class="alert alert-danger" role="alert">danger</div>
         -->
 
-        <form class="form-horizontal" method="get">
+        <form class="form-horizontal" method="post">
 
             <!-- Project Name -->
             <div class="form-group">
                 <label for="projectName" class="col-sm-2 control-label">Project Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="projectName" placeholder="Project Name">
-                </div>
-                <br/>
-
-                <!-- to be deleted -->
-                <div style="color: brown">
-                    <strong>&nbsp; *HL: this should be a drop down box with all the projects in the DB, except already entered. It should behave something like auto complete.</strong>
+	                <div id="remote">
+                    <input type="text" class="typeahead form-control" id="projectName" placeholder="Project Name">
+	                </div>    
                 </div>
             </div>
 
