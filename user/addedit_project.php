@@ -154,16 +154,18 @@ $(document).ready(function(){
     
     
     // Typehead for project names
-    var bestPictures = new Bloodhound({
+    var projectNames = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             prefetch: "get_not_entered_projects_json.php?userid='<?php echo $userid;?>'"
         });
 
-        $('#remote .typeahead').typeahead(null, {
-            name: 'best-pictures',
+
+        //$('#remote .typeahead').typeahead(null, {
+	      $('#projectName').typeahead(null, {  
+            name: 'projects',
             display: 'value',
-            source: bestPictures
+            source: projectNames
         });
         
         

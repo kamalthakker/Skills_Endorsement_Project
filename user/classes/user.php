@@ -71,7 +71,6 @@ public function getUserSkillsWithRank($user_id){
 		}
 	} // End of getUserSkills
 	
-
 public function getEndorsements($user_id, $skill_id){
 $dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
 	
@@ -103,6 +102,35 @@ $dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBA
 		}	
 	
 } // End of getEndorsements
+
+public function getManagers($user_id){
+$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+	
+	
+		$q = "select
+				user_id,
+				CONCAT(UCASE(SUBSTRING(fname,1,1)),'', LCASE(SUBSTRING(fname,2,LENGTH(fname)))) as fname,
+				CONCAT(UCASE(SUBSTRING(lname,1,1)),'', LCASE(SUBSTRING(lname,2,LENGTH(lname)))) as lname from users
+				where user_id<>".$user_id." order by fname, lname;";
+	
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+	
+		if (isset($r) && mysqli_num_rows($r) >= 1)
+		{
+			//found in DB
+			//$row = mysqli_fetch_array($r);
+			return 	$r; // send collection
+		}
+		else
+		{
+			// not found in DB
+			return null;
+		}	
+	
+} // End of getManagers
 	
 } // End of class
 
