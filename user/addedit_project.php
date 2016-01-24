@@ -160,15 +160,13 @@ $(document).ready(function(){
     
     
     // Select 2 - Managers
+   
     $("#manager_select2").select2({
 		theme: "bootstrap",
-		placeholder: "Select a manager",
-		tags: true,
-        
-
-		
-		
-	});
+	  placeholder: "Select Manager"
+	
+	}); 
+	
     
     
     // Typehead for project names
@@ -266,20 +264,22 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="manager" class="col-sm-2 control-label">Manager</label>
                 <div class="col-sm-3">
-                    <select id="manager_select2" name="manager_select2" class="form-control" required="true" style="width: 100%">
+                    <select id="manager_select2" name="manager_select2" class="js-example-placeholder-single" required="true" placeholder="Select manager" style="width: 100%">
+
+<option value="-1" selected disabled>Select Manager</option>
 
 		<?php while ( isset($dbRow_Managers) && $dbRow = mysqli_fetch_array($dbRow_Managers))
-		{
-			//echo "--->".$dbRow['skill_name']."<br>";
-		?>
+		{ ?>
 
 					<option value="<?php echo $dbRow['user_id'];?>"><?php echo $dbRow['fname']. ' ' . $dbRow['lname'];?></option>
 						
-		<?php } ?>						
+		<?php } ?>		
+						
 						
 					
 				</select>
-
+				
+				
                 </div>
                 <br/><br/>
 
