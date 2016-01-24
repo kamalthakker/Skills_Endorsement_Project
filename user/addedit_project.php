@@ -2,10 +2,16 @@
 $page_title = "Manage Project";
 $linkno = 0;
 include_once 'includes/header.php';
-//include_once 'classes/user.php';
+include_once 'classes/user.php';
 ?>
 
 <?php
+// Create an object for users to get manager's list
+$objUser = new user();
+
+// Get manager's list
+$dbRow_Managers = $objUser->getManagers($userid);
+	
 /*Add or Edit*/
 $project_id=0;
 if(isset($_REQUEST['project_id'])) $project_id=$_REQUEST['project_id'];
@@ -114,7 +120,7 @@ $(document).ready(function(){
 */  
 
 
-
+	// Select 2 - skills - version # 2	
 	 $("#addskills_select2").select2({
       ajax: {
         url: "get_skills_json.php",
@@ -151,6 +157,18 @@ $(document).ready(function(){
       templateSelection: formatRepoSelection 
         
     });
+    
+    
+    // Select 2 - Managers
+    $("#manager_select2").select2({
+		theme: "bootstrap",
+		placeholder: "Select a manager",
+		tags: true,
+        
+
+		
+		
+	});
     
     
     // Typehead for project names
@@ -200,7 +218,7 @@ $(document).ready(function(){
                 <label for="projectName" class="col-sm-2 control-label">Project Name</label>
                 <div class="col-sm-10">
 	                <div id="remote">
-                    <input type="text" class="typeahead form-control" id="projectName" placeholder="Project Name">
+                    <input type="text" class="typeahead form-control" id="projectName" placeholder="Project Name" autofocus="true" required="true">
 	                </div>    
                 </div>
             </div>
@@ -209,7 +227,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="projectDesc" class="col-sm-2 control-label">Project Description</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="3" id="projectDesc" placeholder="Project Description"></textarea>
+                    <textarea class="form-control" rows="3" id="projectDesc" placeholder="Project Description" required="true"></textarea>
                 </div>
             </div>
 
@@ -219,11 +237,8 @@ $(document).ready(function(){
                 	Skills Used</label>
                 	
                 <div class="col-sm-10">
-                    
-                    <!--
-                    <input type="text" class="form-control" id="skillsUsed" placeholder="Skills"> -->
-
-				<select id="addskills_select2" name="addskills_select2[]" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
+                   
+				<select id="addskills_select2" name="addskills_select2[]" class="js-example-basic-multiple form-control" multiple="multiple" required="true" style="width: 100%">
 					
 				</select>
                     
@@ -235,7 +250,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="startDate" class="col-sm-2 control-label">Start Date</label>
                 <div class="col-sm-3">
-                    <input type="date" class="form-control" id="startDate" placeholder="Start date">
+                    <input type="date" class="form-control" id="startDate" placeholder="Start date" required="true">
                 </div>
             </div>
 
@@ -243,7 +258,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="endDate" class="col-sm-2 control-label">End Date</label>
                 <div class="col-sm-3">
-                    <input type="date" class="form-control" id="endDate" placeholder="Start date">
+                    <input type="date" class="form-control" id="endDate" placeholder="End date" required="true">
                 </div>
             </div>
 
@@ -251,20 +266,24 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="manager" class="col-sm-2 control-label">Manager</label>
                 <div class="col-sm-3">
-                    <select class="form-control" id="manager" placeholder="Manager">
-                        <option>A</option>
-                        <option>B</option>
-                        <option>C</option>
-                        <option>D</option>
-                        <option>E</option>
-                    </select>
+                    <select id="manager_select2" name="manager_select2" class="form-control" required="true" style="width: 100%">
+
+		<?php while ( isset($dbRow_Managers) && $dbRow = mysqli_fetch_array($dbRow_Managers))
+		{
+			//echo "--->".$dbRow['skill_name']."<br>";
+		?>
+
+					<option value="<?php echo $dbRow['user_id'];?>"><?php echo $dbRow['fname']. ' ' . $dbRow['lname'];?></option>
+						
+		<?php } ?>						
+						
+					
+				</select>
+
                 </div>
                 <br/><br/>
 
-                <!-- to be deleted -->
-                <div style="color: brown">
-                    <strong>&nbsp; *HL: list=select * from users where user_id<>$user_id -- not equal to logged in user id</strong>
-                </div>
+               
             </div>
 
             <!-- Submit -->
