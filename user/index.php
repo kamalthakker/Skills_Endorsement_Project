@@ -581,6 +581,9 @@ $dbRows_RecentActivities = $objEndorsement->getRecentActivities();
 				            
 				            <p class="list-group-item-text">
 					            
+					            <!-- For skill_name, -->
+					            For <?php echo $dbRow['name'];?>,
+					            
 					            <a href="index.php?search_user_id=<?php echo $dbRow['user_id']?>">
 					            <span class="text-capitalize"><?php echo $dbRow['uto_fname'] . ' ' . $dbRow['uto_lname'] ?></span></a> has been endorsed by
 					            

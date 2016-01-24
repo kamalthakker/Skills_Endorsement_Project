@@ -20,8 +20,9 @@ $objProject = new project();
 $project_id=0;
 if(isset($_REQUEST['project_id'])) $project_id=$_REQUEST['project_id'];
 
+$outputMessage=null;
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' /*&& $_POST['key'] == $_SESSION['key']*/ )
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['key'] == $_SESSION['key'] )
 {
 	/*
 	echo '<br/><br/><br/><br/>Posted';
@@ -37,7 +38,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' /*&& $_POST['key'] == $_SESSION['key']*/
 	echo '<br/>Manager_Id:'. $_POST['manager_select2'];
 	*/
 	
-	echo '<br/><br/><br/><br/><br/><br/>';
+	//echo '<br/><br/><br/><br/><br/><br/>';
 	
 	$user_id=$userid; 
 	$project_name=$_POST['projectName'];
@@ -50,17 +51,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' /*&& $_POST['key'] == $_SESSION['key']*/
 	$result=$objProject->addProject($user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id, $skills);
 	
 	//echo '<br/><br/><br/><br/><br/><br/>Result:'. $result;
-	if($result==true)
-		echo '<br/><br/><br/><br/><br/><br/>Success';
-	else
-		echo '<br/><br/><br/><br/><br/><br/>Failure';
-
+	if($result==true){
+		//echo '<br/><br/><br/><br/><br/><br/>Success';
+		$outputMessage='
+		<div style="text-align:center">
+		<div class="alert alert-success alert-dismissible" role="alert" style="width:100%;">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Success!</strong> Project is added successfully.
+</div></div>';
+	}
 		
-
+	else{
+		//echo '<br/><br/><br/><br/><br/><br/>Failure';
+		$outputMessage='
+		<div style="text-align:center">
+		<div class="alert alert-danger alert-dismissible" role="alert" style="width:100%;">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Oh snap!</strong> Something went wrong!
+</div></div>';
+	}
+		
 }
 else 
 {
 	//echo '<br/><br/><br/><br/><br/>Page is refreshed. No need to post.';
+	$outputMessage=null;
 }
 
 // When page is refreshed, this will avoid multiple post
@@ -252,6 +267,8 @@ $(document).ready(function(){
         <div class="alert alert-warning" role="alert">warning</div>
         <div class="alert alert-danger" role="alert">danger</div>
         -->
+        
+        <?php echo $outputMessage; ?>
 
         <form class="form-horizontal" method="post">
 

@@ -1,6 +1,7 @@
 <?php
 
 include_once '../dbconnection.php';
+include_once 'classes/skill.php';
 
 class project{
 
@@ -179,19 +180,18 @@ class project{
 		
 		foreach($skills as $skill_id) 
 		{
-			echo '<br/>skill_id:'.$skill_id;
+			//echo '<br/>skill_id:'.$skill_id;
 			
 			if (is_numeric($skill_id)){
 				
 				// it is an existing skill
 				$r=$this->insertProjectSkill($project_id,$skill_id);
 				
-				if ($r==false) $result=$r;
-				
-				}
+				if ($r==false) $result=$r;	
+			}
 			else {
 				// Insert a new skill
-				// To be done...
+				$result = $this->insertCustomSkill($project_id,$skill_id);
 			}
 				
 		}
@@ -236,5 +236,28 @@ class project{
 			return false;
 	} // End of deleteAllProjectSkill
 
+	private function insertCustomSkill($project_id, $skill_name){
+		// Create an object for skill
+		$objSkill = new skill();
+		
+		// First check if it a duplicate skill, if yes, add that skill in the project table
+		$skill_id=$objSkill->getSkillId($skill_name);
+		
+		if($skill_id<=0)
+		{
+			// It is a new skill and not fond in DB, so insert it
+			$skill_id=$objSkill->insertSkill($skill_name);
+		}
+		else
+		{
+			// If skill_id>0, use it to insert below...
+			// No need to do anything, this block is just for info
+		}
+		
+		$result=$this->insertProjectSkill($project_id,$skill_id);
+
+		return $result;
+		
+	} // End of insertCustomSkill
 	
 }// End of project class
