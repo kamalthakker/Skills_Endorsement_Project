@@ -98,6 +98,143 @@ class project{
 			return null;
 		}
 	} // End of getNotEnteredProjects
+	
+	public function addProject($user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id, $skills){
+		
+		$project_id = $this->insertProject($user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id);
+		
+		if ($project_id>0)
+		{
+			// Successfuly inserted project, now insert skills
+			$result = $this->insertProjectSkills($project_id, $skills);
+		}
+		else
+		{
+			$result = false;
+		}
+		
+		return $result;
+		
+	} // End of addProject
+	
+	public function editProject($project_id, $user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id, $skills){
+		
+	} // End of updateProject
+	
+	private function insertProject($user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id)
+	{
+		$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+		
+		if(!empty($end_date))
+			$enddate="'".$end_date."'";
+		else 
+			$enddate="null";
+		
+		$q = "INSERT INTO projects (user_id, project_name, project_desc, start_date, end_date, manager_user_id)
+			VALUES (".$user_id.",'".$project_name."','".$project_desc."','".$start_date."',".$enddate.",".$manager_user_id.")";
+		
+		//echo $q . '<br>';
+		
+		$r = mysqli_query($dbc,$q);
+		
+		// Get project_id of the insert query
+		$project_id = -1; 
+		if($r) $project_id = mysqli_insert_id($dbc);
+		
+		//echo '---->' . $project_id;
+		
+		mysqli_close($dbc); // close the connection
+		
+		return $project_id; // success= >0, failure=-1
+		
+	} // End of insertProject
+
+	private function updateProject($project_id, $user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id){
+		
+		$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+		
+		$q = "update projects
+				set project_name='".$project_name."',
+					project_desc='".$project_desc."',
+					start_date='".$start_date."',
+					end_date='".$end_date."',
+					manager_user_id='".$manager_user_id."'
+				where project_id=".$project_id." and user_id=".$user_id."";
+		
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+		
+		if($r)
+			return true;
+		else
+			return false;
+		
+	} // End of updateProject
+	
+	private function insertProjectSkills($project_id, $skills){
+		
+		$result = true;
+		
+		foreach($skills as $skill_id) 
+		{
+			echo '<br/>skill_id:'.$skill_id;
+			
+			if (is_numeric($skill_id)){
+				
+				// it is an existing skill
+				$r=$this->insertProjectSkill($project_id,$skill_id);
+				
+				if ($r==false) $result=$r;
+				
+				}
+			else {
+				// Insert a new skill
+				// To be done...
+			}
+				
+		}
+		
+		return $result;
+		
+	} // End of insertProjectSkills
+	
+	private function insertProjectSkill($project_id, $skill_id)
+	{
+		$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+		
+		$q = "INSERT INTO project_skills (project_id, skill_id)
+				VALUES
+				(".$project_id.", ".$skill_id.")";
+		
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+		
+		if($r)
+			return true;
+		else
+			return false;
+	} // End of insertProjectSkill
+	
+	private function deleteAllProjectSkill($project_id)
+	{
+		$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+		
+		$q = "Delete from project_skills where project_id=".$project_id;
+		
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+		
+		if($r)
+			return true;
+		else
+			return false;
+	} // End of deleteAllProjectSkill
 
 	
 }// End of project class

@@ -3,6 +3,7 @@ $page_title = "Manage Project";
 $linkno = 0;
 include_once 'includes/header.php';
 include_once 'classes/user.php';
+include_once 'classes/project.php';
 ?>
 
 <?php
@@ -11,17 +12,60 @@ $objUser = new user();
 
 // Get manager's list
 $dbRow_Managers = $objUser->getManagers($userid);
+
+// Create an object for projects
+$objProject = new project();
 	
 /*Add or Edit*/
 $project_id=0;
 if(isset($_REQUEST['project_id'])) $project_id=$_REQUEST['project_id'];
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' )
+
+if($_SERVER['REQUEST_METHOD'] == 'POST' /*&& $_POST['key'] == $_SESSION['key']*/ )
 {
-	echo '<br/><br/><br/><br/>posted';
-	echo '<br/>'. $_POST['addskills_select2'][0] ;
-	echo '<br/>'. $_POST['addskills_select2'][1] ;
+	/*
+	echo '<br/><br/><br/><br/>Posted';
+	
+	echo '<br/>ProjectName:'. $_POST['projectName'] ;
+	echo '<br/>ProjectDesc:'. $_POST['projectDesc'] ;
+	
+	foreach($_POST['addskills_select2'] as $skillid) {echo '<br/>'. $skillid;}
+	
+	//echo '<br/>Skills:'. $_POST['addskills_select2'][0] ;
+	echo '<br/>Start Date:'. $_POST['startDate'];
+	echo '<br/>End Date:'. $_POST['endDate'];
+	echo '<br/>Manager_Id:'. $_POST['manager_select2'];
+	*/
+	
+	echo '<br/><br/><br/><br/><br/><br/>';
+	
+	$user_id=$userid; 
+	$project_name=$_POST['projectName'];
+	$project_desc=$_POST['projectDesc']; 
+	$skills=$_POST['addskills_select2'];
+	$start_date=$_POST['startDate']; 
+	if (isset($_POST['endDate']) && $_POST['endDate'] <> '0000-00-00' ) $end_date=$_POST['endDate'];  else $end_date=null;
+	$manager_user_id=$_POST['manager_select2'];
+
+	$result=$objProject->addProject($user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id, $skills);
+	
+	//echo '<br/><br/><br/><br/><br/><br/>Result:'. $result;
+	if($result==true)
+		echo '<br/><br/><br/><br/><br/><br/>Success';
+	else
+		echo '<br/><br/><br/><br/><br/><br/>Failure';
+
+		
+
 }
+else 
+{
+	//echo '<br/><br/><br/><br/><br/>Page is refreshed. No need to post.';
+}
+
+// When page is refreshed, this will avoid multiple post
+$_SESSION['key'] = mt_rand(1, 1000);
+
 
 ?>
 
@@ -216,7 +260,7 @@ $(document).ready(function(){
                 <label for="projectName" class="col-sm-2 control-label">Project Name</label>
                 <div class="col-sm-10">
 	                <div id="remote">
-                    <input type="text" class="typeahead form-control" id="projectName" placeholder="Project Name" autofocus="true" required="true">
+                    <input type="text" class="typeahead form-control" id="projectName" name="projectName" placeholder="Project Name" autofocus="true" required="true" maxlength="50">
 	                </div>    
                 </div>
             </div>
@@ -225,7 +269,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="projectDesc" class="col-sm-2 control-label">Project Description</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="3" id="projectDesc" placeholder="Project Description" required="true"></textarea>
+                    <textarea class="form-control" rows="3" id="projectDesc" name="projectDesc" placeholder="Project Description" required="true" maxlength="5000"></textarea>
                 </div>
             </div>
 
@@ -248,7 +292,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="startDate" class="col-sm-2 control-label">Start Date</label>
                 <div class="col-sm-3">
-                    <input type="date" class="form-control" id="startDate" placeholder="Start date" required="true">
+                    <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start date" required="true">
                 </div>
             </div>
 
@@ -256,7 +300,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="endDate" class="col-sm-2 control-label">End Date</label>
                 <div class="col-sm-3">
-                    <input type="date" class="form-control" id="endDate" placeholder="End date" required="true">
+                    <input type="date" class="form-control" id="endDate"  name="endDate" placeholder="End date">
                 </div>
             </div>
 
@@ -289,8 +333,9 @@ $(document).ready(function(){
             <!-- Submit -->
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary">
-                    <?php if($project_id==0) echo "Add"; else "Update"; ?>
+	                <input type="hidden" name="key" value="<?php echo $_SESSION['key']; ?>" />
+                    <button type="submit" name="submit"  class="btn btn-primary">
+                    	<?php if($project_id==0) echo "Add"; else "Update"; ?>
                     </button>
                 </div>
             </div>
