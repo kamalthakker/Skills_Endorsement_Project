@@ -2,7 +2,14 @@
 $page_title = "Manage Projects";
 $linkno = 0;
 include_once 'includes/header.php';
-//include_once 'classes/user.php';
+include_once 'classes/project.php';
+?>
+
+<?php
+$objProject = new project();
+
+// Get approved projects
+$dbRow_Projects = $objProject->getAllProjects($userid);
 ?>
 
     <!-- Begin page content -->
@@ -41,51 +48,61 @@ include_once 'includes/header.php';
                 </thead>
 
                 <tbody>
+	                
+<?php
+while ( isset($dbRow_Projects) && $dbRow = mysqli_fetch_array($dbRow_Projects))
+{
+	//echo "--->".$dbRow['skill_name']."<br>";
+?>
+	                
                     <tr>
-                        <td  style="display: none;">1</td>
-                        <td>Android - PC Chatting & Image Sharing System</td>
-                        <td>Oct 15</td>
-                        <td>Present</td>
-                        <td>Kamal Thakker</td>
-                        <td>Yes</td>
+                        <td  style="display: none;"><?php echo $dbRow['project_id'];?></td>
+                        <td><?php echo $dbRow['project_name'];?></td>
+                        <td>
+	                        <?php
+		                        // Start date
+									$startDate = new DateTime($dbRow['start_date']);
+									echo $startDate->format('M y');   
+	                        ?>
+                        </td>
+                        <td>
+	                        <?php
+		                        // End date
+									if (isset($dbRow['end_date'])) {
+										$endDate = new DateTime($dbRow['end_date']);
+										echo $endDate->format('M y'); }
+									else 
+										echo 'Present';     
+	                        ?>
+	                        
+                        </td>
+                        <td>
+	                        <span class="text-capitalize">
+	                        <?php echo $dbRow['manager_fname'] . ' ' . $dbRow['manager_lname']; ?></span>
+
+                        </td>
+                        <td>
+	                        <span class="text-capitalize">
+	                        <?php echo  substr($dbRow['approved'],0,1); ?></span>
+                        </td>
 
                         <!-- Edit Button -->
                         <td>
-                            <a role="button" href="addedit_project.php" class="btn btn-default" aria-label="Left Align" >
+                            <a role="button" href="addedit_project.php?project_id=<?php echo $dbRow['project_id'];?>" class="btn btn-default" aria-label="Left Align" >
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a>
                         </td>
 
                         <!-- Delete Button -->
                         <td>
-                            <a role="button" class="btn btn-default" aria-label="Left Align">
+                            <a role="button" href="delete_project.php?project_id=<?php echo $dbRow['project_id'];?>" class="btn btn-default" aria-label="Left Align">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </a>
                         </td>
                     </tr>
+                    
+<?php }/*End of while loop*/ ?> 
 
-                    <tr>
-                        <td  style="display: none;">2</td>
-                        <td>Railway Tracking and Arrival Time Prediction</td>
-                        <td>Feb 13</td>
-                        <td>Sep 15</td>
-                        <td>Mike Bush</td>
-                        <td>Yes</td>
-
-                        <!-- Edit Button -->
-                        <td>
-                            <a role="button" href="addedit_project.php" class="btn btn-default" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
-                        </td>
-
-                        <!-- Delete Button -->
-                        <td>
-                            <a role="button" class="btn btn-default" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </a>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
 
