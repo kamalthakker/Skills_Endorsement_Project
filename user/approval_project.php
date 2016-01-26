@@ -1,5 +1,5 @@
 <?php
-$page_title = "Manage Projects";
+$page_title = "Approvals";
 $linkno = 0;
 include_once 'includes/header.php';
 include_once 'classes/project.php';
@@ -9,13 +9,40 @@ include_once 'classes/project.php';
 $objProject = new project();
 
 // Get approved projects
-$dbRow_Projects = $objProject->getAllProjects($userid);
+$dbRow_Projects = $objProject->getProjectsToApprove($userid);
+
+
+if($_SERVER['REQUEST_METHOD'] == 'POST' )
+{
+	
+	
+	echo '<br/><br/><br/><br/><br/>--->' . $_POST['approvehid'] ;
+	if (isset($_POST['approvechbx']))
+		echo '=checked';
+	else
+		echo '=unchecked';	
+
+}
+
 ?>
 
 <script type="text/javascript">
 $(document).ready(function(){
 /*--------------------------*/
-//$(':checkbox').checkboxpicker();
+$(':checkbox').checkboxpicker();
+
+/*    
+$(".checkbox_class").change(
+            function()
+            {
+                //if( $(this).is(":checked") )
+                {
+	                alert("hhh");
+                    $("#approveForm").submit();
+                }
+            }
+        )
+*/        
 /*--------------------------*/
 });
 </script>
@@ -25,20 +52,8 @@ $(document).ready(function(){
 
         <!-- page header -->
         <div class = "page-header">
-            <h2>Manage Projects</h2>
+            <h2>Approve Projects</h2>
         </div>
-
-        <div class="pull-right">
-            <a  role="button" class="btn btn-primary" href="addedit_project.php">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span> Add Project</span>
-            </a>
-        </div>
-
-
-
-        <br/><br/><br/>
-        
-        
 
         <!-- Projects Table -->
         <div class="table-responsive">
@@ -47,13 +62,11 @@ $(document).ready(function(){
                 <thead>
                     <tr>
                         <th style="display: none;">Project Id</th>
+                        <th>User Name</th>                        
                         <th>Project Name</th>
                         <th>Start Date</th>
                         <th>End Date</th>
-                        <th>Manager</th>
                         <th>Approved</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
                     </tr>
                 </thead>
 
@@ -67,6 +80,11 @@ while ( isset($dbRow_Projects) && $dbRow = mysqli_fetch_array($dbRow_Projects))
 	                
                     <tr>
                         <td  style="display: none;"><?php echo $dbRow['project_id'];?></td>
+                         <td>
+	                        <span class="text-capitalize">
+	                        <?php echo $dbRow['fname'] . ' ' . $dbRow['lname']; ?></span>
+
+                        </td>
                         <td><?php echo $dbRow['project_name'];?></td>
                         <td>
 	                        <?php
@@ -86,29 +104,23 @@ while ( isset($dbRow_Projects) && $dbRow = mysqli_fetch_array($dbRow_Projects))
 	                        ?>
 	                        
                         </td>
+                       
                         <td>
-	                        <span class="text-capitalize">
-	                        <?php echo $dbRow['manager_fname'] . ' ' . $dbRow['manager_lname']; ?></span>
+	                        <?php 
+		                        //echo  substr($dbRow['approved'],0,1); 
+		                    	    
+	                        ?>
+	                        
+	                        <!-- https://forums.digitalpoint.com/threads/html-checkbox-onclick-submit.1271195/ -->
+	                        
+	                        <form id="approveForm" method="post">
+		                     
+		                     <input type="hidden" name="approvehid" value="<?php echo $dbRow['project_id'];?>" />   
+		                        
+	                        <input type="checkbox" checked data-off-class="btn-warning" data-on-class="btn-primary" class="checkbox_class" name="approvechbx" value="<?php echo $dbRow['project_id'];?>" onchange="this.form.submit();">
+	                        </form>
+                        </td>
 
-                        </td>
-                        <td>
-	                        <span class="text-capitalize">
-	                        <?php echo  substr($dbRow['approved'],0,1); ?></span>
-                        </td>
-
-                        <!-- Edit Button -->
-                        <td>
-                            <a role="button" href="addedit_project.php?project_id=<?php echo $dbRow['project_id'];?>" class="btn btn-default" aria-label="Left Align" >
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </a>
-                        </td>
-
-                        <!-- Delete Button -->
-                        <td>
-                            <a role="button" href="delete_project.php?project_id=<?php echo $dbRow['project_id'];?>" class="btn btn-default" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </a>
-                        </td>
                     </tr>
                     
 <?php }/*End of while loop*/ ?> 

@@ -30,3 +30,7 @@ https://fk.github.io/select2-bootstrap-css/3.5.2.html
 
 9) https://github.com/aehlke/tag-it/blob/master/README.markdown (tagging)
 10) http://www.uibox.in/tag/typeahead (typehead.js options)
+
+
+checkbox
+https://vsn4ik.github.io/bootstrap-checkbox/

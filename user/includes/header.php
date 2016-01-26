@@ -47,6 +47,9 @@ if(!isset($linkno)) $linkno=0;
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
+	<!-- Bootstrap custom checkbox-->
+	<script src="includes/bootstrap-checkbox.min.js" defer></script>
+
     <!-- Custom styles for this template -->
     <link href="includes/stylesmain.css" rel="stylesheet">
     <link href="includes/callout.css" rel="stylesheet">
@@ -95,7 +98,7 @@ if(!isset($linkno)) $linkno=0;
                             <li><a href="#">Manage Skills</a></li>
 					<!--	<li><a href="#">Manage Endorsements</a></li> -->
 							<li class="divider"></li>
-							<li><a href="#">Approvals</a></li>
+							<li><a href="approval_project.php">Approvals</a></li>
                         </ul>
                     </li>
                 </ul>
