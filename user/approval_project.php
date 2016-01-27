@@ -6,23 +6,29 @@ include_once 'classes/project.php';
 ?>
 
 <?php
-$objProject = new project();
 
-// Get approved projects
-$dbRow_Projects = $objProject->getProjectsToApprove($userid);
+$objProject = new project();
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' )
 {
+	//echo '<br/><br/><br/><br/><br/>--->' . $_POST['approvehid'] ;
+	$project_id = $_POST['approvehid'];
 	
-	
-	echo '<br/><br/><br/><br/><br/>--->' . $_POST['approvehid'] ;
-	if (isset($_POST['approvechbx']))
-		echo '=checked';
-	else
-		echo '=unchecked';	
-
+	if (isset($_POST['approvechbx'])){
+		//echo '=checked';
+		$yesno='Y';
+	}	
+	else{
+		//echo '=unchecked';
+		$yesno='N';
+	}
+			
+$result=$objProject->updateProjectToApprove($project_id, $yesno);
 }
+
+// Get approved projects
+$dbRow_Projects = $objProject->getProjectsToApprove($userid);
 
 ?>
 
@@ -117,7 +123,8 @@ while ( isset($dbRow_Projects) && $dbRow = mysqli_fetch_array($dbRow_Projects))
 		                     
 		                     <input type="hidden" name="approvehid" value="<?php echo $dbRow['project_id'];?>" />   
 		                        
-	                        <input type="checkbox" checked data-off-class="btn-warning" data-on-class="btn-primary" class="checkbox_class" name="approvechbx" value="<?php echo $dbRow['project_id'];?>" onchange="this.form.submit();">
+	                        <input type="checkbox" data-off-class="btn-warning" data-on-class="btn-primary" class="checkbox_class" name="approvechbx" value="<?php echo $dbRow['project_id'];?>" onchange="this.form.submit();" 
+	                        <?php if(substr($dbRow['approved'],0,1)=="Y") echo "checked";?> >
 	                        </form>
                         </td>
 

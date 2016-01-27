@@ -69,7 +69,7 @@ class project{
 		$q = "/*List of projects to approve*/
 				select p.*, u.fname, u.lname from projects p 
 				inner join users u on p.user_id=u.user_id
-				where p.manager_user_id=".$user_id. " order by approved, p.end_date is not null, p.end_date desc, p.start_date desc";
+				where p.manager_user_id=".$user_id. " order by p.end_date is not null, p.end_date desc, p.start_date desc";
 	
 		//echo $q;
 		
@@ -88,6 +88,27 @@ class project{
 			return null;
 		}
 	} // End of getProjectsToApprove
+	
+	public function updateProjectToApprove($project_id, $yesno){
+		
+		$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+		
+		$q = "update projects
+				set approved='".$yesno."'
+				where project_id=".$project_id; // SUBTRACT
+		
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+		
+		if($r)
+			return true;
+		else
+			return false;
+			
+	} // End of updateProjectToApprove
+	
 	
 	public function getProjectSkills($project_id){
 	
