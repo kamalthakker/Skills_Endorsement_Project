@@ -61,6 +61,34 @@ class project{
 		}
 	} // End of getAllProjects
 	
+	public function getProject($user_id, $project_id){
+	
+	$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+	
+	
+		$q = "/*get project*/
+				select p.*, u.fname as manager_fname, u.lname as manager_lname from projects p 
+				inner join users u on p.manager_user_id=u.user_id
+				where p.user_id=". $user_id ." and p.project_id=".$project_id;
+	
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+	
+		if (isset($r) && mysqli_num_rows($r) >= 1)
+		{
+			//found in DB
+			$row = mysqli_fetch_array($r);
+			return 	$row; 
+		}
+		else
+		{
+			// not found in DB
+			return null;
+		}
+	} // End of getProject
+	
 	public function getProjectsToApprove($user_id){
 	
 	$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
@@ -197,7 +225,32 @@ class project{
 	
 	public function editProject($project_id, $user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id, $skills){
 		
+		$result = $this->updateProject($project_id, $user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id);
+		
+		if ($result)
+		{
+			// Successfuly updated the project, now remove old skills and insert new skills
+			
+			//Delete old skills
+			$result = $this->deleteAllProjectSkill($project_id);
+			
+			// Insert new skills
+			if($result){
+				$result = $this->insertProjectSkills($project_id, $skills);
+				
+			} else {$result = false;}
+			
+		}
+		else
+		{
+			$result = false;
+		}
+		
+		return $result;
+		
 	} // End of updateProject
+	
+	/* --- Private functions below --- */
 	
 	private function insertProject($user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id)
 	{

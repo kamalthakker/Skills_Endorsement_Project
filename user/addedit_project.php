@@ -18,8 +18,6 @@ $objProject = new project();
 	
 /*Add or Edit*/
 $project_id=0;
-if(isset($_REQUEST['project_id'])) $project_id=$_REQUEST['project_id'];
-
 $outputMessage=null;
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['key'] == $_SESSION['key'] )
@@ -41,14 +39,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['key'] == $_SESSION['key'] )
 	//echo '<br/><br/><br/><br/><br/><br/>';
 	
 	$user_id=$userid; 
+	$project_id=$_POST['projectId'];
 	$project_name=$_POST['projectName'];
 	$project_desc=$_POST['projectDesc']; 
 	$skills=$_POST['addskills_select2'];
 	$start_date=$_POST['startDate']; 
+	
 	if (isset($_POST['endDate']) && $_POST['endDate'] <> '0000-00-00' ) $end_date=$_POST['endDate'];  else $end_date=null;
 	$manager_user_id=$_POST['manager_select2'];
 
-	$result=$objProject->addProject($user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id, $skills);
+	if($project_id>0){
+		// Update project
+		$AddOrUpdate="updated";
+		$result=$objProject->editProject($project_id,$user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id, $skills);
+	}else{
+		// Add project
+		$AddOrUpdate="added";
+		$result=$objProject->addProject($user_id, $project_name, $project_desc, $start_date, $end_date, $manager_user_id, $skills);
+	}
+	
+	
 	
 	//echo '<br/><br/><br/><br/><br/><br/>Result:'. $result;
 	if($result==true){
@@ -57,7 +67,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['key'] == $_SESSION['key'] )
 		<div style="text-align:center">
 		<div class="alert alert-success alert-dismissible" role="alert" style="width:100%;">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Success!</strong> Project is added successfully.
+  <strong>Success!</strong> Project is '. $AddOrUpdate .' successfully.
 </div></div>';
 	}
 		
@@ -78,9 +88,23 @@ else
 	$outputMessage=null;
 }
 
+
+if(isset($_REQUEST['project_id']))
+{
+ // Project id is set that means this is for update, not add
+ 
+ // Get project id
+ $project_id=$_REQUEST['project_id'];
+ 
+ //Get project
+ $dbRow_Project=$objProject->getProject($userid, $project_id);
+ 
+ if(isset($dbRow_Project)) $dbRows_Skill=$objProject->getProjectSkills($project_id);
+}
+
+
 // When page is refreshed, this will avoid multiple post
 $_SESSION['key'] = mt_rand(1, 1000);
-
 
 ?>
 
@@ -257,7 +281,7 @@ $(document).ready(function(){
 
         <!-- page header -->
         <div class = "page-header">
-            <h2><?php if($project_id==0) echo "Add "; else "Edit "; ?> Project</h2>
+            <h2><?php if($project_id==0) echo "Add "; else echo "Edit "; ?> Project</h2>
         </div>
 
         <!-- use this to show validation errors or success messages -->
@@ -272,12 +296,15 @@ $(document).ready(function(){
 
         <form class="form-horizontal" method="post">
 
+			<!-- Project ID-->
+			<input type="hidden" name="projectId" value="<?php echo $project_id; ?>">
+
             <!-- Project Name -->
             <div class="form-group">
                 <label for="projectName" class="col-sm-2 control-label">Project Name</label>
                 <div class="col-sm-10">
 	                <div id="remote">
-                    <input type="text" class="typeahead form-control" id="projectName" name="projectName" placeholder="Project Name" autofocus="true" required="true" maxlength="50">
+                    <input type="text" class="typeahead form-control" id="projectName" name="projectName" placeholder="Project Name" autofocus="true" required="true" maxlength="50" value="<?php if (isset($dbRow_Project['project_name'])) echo $dbRow_Project['project_name']; ?>">
 	                </div>    
                 </div>
             </div>
@@ -286,7 +313,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="projectDesc" class="col-sm-2 control-label">Project Description</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" rows="3" id="projectDesc" name="projectDesc" placeholder="Project Description" required="true" maxlength="5000"></textarea>
+                    <textarea class="form-control" rows="3" id="projectDesc" name="projectDesc" placeholder="Project Description" required="true" maxlength="5000"><?php if (isset($dbRow_Project['project_desc'])) echo $dbRow_Project['project_desc']; ?></textarea>
                 </div>
             </div>
 
@@ -299,7 +326,12 @@ $(document).ready(function(){
                    
 				<select id="addskills_select2" name="addskills_select2[]" class="js-example-basic-multiple form-control" multiple="multiple" required="true" style="width: 100%">
 					
-				</select>
+		<?php while ( isset($dbRows_Skill) && $dbRow = mysqli_fetch_array($dbRows_Skill))
+		{ ?>
+					
+					<option value="<?php echo $dbRow['skill_id']; ?>" selected="selected"><?php echo $dbRow['skill_name']; ?></option>
+					
+		<?php } ?>	</select>
                     
                 </div>
                 <br/>
@@ -309,7 +341,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="startDate" class="col-sm-2 control-label">Start Date</label>
                 <div class="col-sm-3">
-                    <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start date" required="true">
+                    <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start date" required="true" value="<?php if (isset($dbRow_Project['start_date'])) echo $dbRow_Project['start_date']; ?>">
                 </div>
             </div>
 
@@ -317,7 +349,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="endDate" class="col-sm-2 control-label">End Date</label>
                 <div class="col-sm-3">
-                    <input type="date" class="form-control" id="endDate"  name="endDate" placeholder="End date">
+                    <input type="date" class="form-control" id="endDate"  name="endDate" placeholder="End date" value="<?php if (isset($dbRow_Project['end_date'])) echo $dbRow_Project['end_date']; ?>">
                 </div>
             </div>
 
@@ -332,7 +364,7 @@ $(document).ready(function(){
 		<?php while ( isset($dbRow_Managers) && $dbRow = mysqli_fetch_array($dbRow_Managers))
 		{ ?>
 
-					<option value="<?php echo $dbRow['user_id'];?>"><?php echo $dbRow['fname']. ' ' . $dbRow['lname'];?></option>
+					<option value="<?php echo $dbRow['user_id'];?>" <?php if (isset($dbRow_Project['manager_user_id']) &&$dbRow['user_id']==$dbRow_Project['manager_user_id']) echo 'selected="selected"';?>><?php echo $dbRow['fname']. ' ' . $dbRow['lname'];?></option>
 						
 		<?php } ?>		
 						
@@ -352,7 +384,7 @@ $(document).ready(function(){
                 <div class="col-sm-offset-2 col-sm-10">
 	                <input type="hidden" name="key" value="<?php echo $_SESSION['key']; ?>" />
                     <button type="submit" name="submit"  class="btn btn-primary">
-                    	<?php if($project_id==0) echo "Add"; else "Update"; ?>
+                    	<?php if($project_id==0) echo "Add"; else echo "Update"; ?>
                     </button>
                 </div>
             </div>
