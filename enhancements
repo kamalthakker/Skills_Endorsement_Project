@@ -1,4 +1,5 @@
 For our website, professor also give us some suggestions:
-(1) when someone add a project, then the manager will get a notification says there is one project need to be approve;
+(1) when someone add a project, then the manager will get a notification saying there is one project need to be approve;
 (2) when a manager approve or reject a project, the correspond person will get a notification about this result.
 (3) when A endorse B, B will get a notification that A has endorsed him.
+(4) send email on all above actions
