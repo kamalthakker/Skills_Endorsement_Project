@@ -38,6 +38,14 @@ body > .container-fluid {
 }
 */
 
+.divider-vertical {
+height: 50px;
+width: 1px;
+margin: 0 0px;
+border-left: 1px solid #F2F2F2;
+border-right: 0px solid #FFF;
+}
+
 /* --------------------------------------
   Notification Navbar
    -------------------------------------- */

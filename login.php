@@ -85,6 +85,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 			$fname = $dbRow['fname'];
 			$lname = $dbRow['lname'];
 			$approved = $dbRow['approved_by_admin'];
+			$userdp = $dbRow['userdp'];
 			$userid = $dbRow['user_id'];
 				
 			if(!empty($dbRow['login_attempt'])) $loginAttempt=$dbRow['login_attempt'];
@@ -144,6 +145,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 				$_SESSION['uname']= $uname;
 				$_SESSION['fname']= $fname;
 				$_SESSION['lname']= $lname;
+				$_SESSION['userdp']= $userdp;
 				$_SESSION['role']= $role;
 				
 			

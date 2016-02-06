@@ -5,6 +5,7 @@ $userid = null;
 $uname = null;
 $fname = null;
 $lname = null;
+$userdp = null;
 $role = null;
 
 session_start();
@@ -14,6 +15,7 @@ if(isset($_SESSION['role']) && $_SESSION['role'] == 'user' ){
 	$uname= $_SESSION['uname'];
 	$fname= $_SESSION['fname'];
 	$lname= $_SESSION['lname'];
+	$userdp= $_SESSION['userdp'];
 	$role = $_SESSION['role'];
 }
 else
@@ -93,19 +95,27 @@ if(!isset($linkno)) $linkno=0;
                         <a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a>
                     </li>
 
+					<!--
+					<li class="divider-vertical"></li> -->
+
                     <!-- drop down menu -->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> My Profile <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-cog"></span> Projects
+	                        <!-- <span class="caret"></span> -->
+	                        
+                        </a>
                         <ul class="dropdown-menu">
-	                        <li><a href="#">Edit Profile</a></li>
-	                        <li class="divider"></li>
-                            <li><a href="manage_projects.php">Manage Projects</a></li>
-                            <li><a href="#">Manage Skills</a></li>
+	                        <li><a href="manage_projects.php">
+		                        <span class="glyphicon glyphicon-wrench"></span> Manage</a></li>
 					<!--	<li><a href="#">Manage Endorsements</a></li> -->
 							<li class="divider"></li>
-							<li><a href="approval_project.php">Approvals</a></li>
+							<li><a href="approval_project.php">
+								<span class="glyphicon glyphicon-ok"></span> Approve</a></li>
                         </ul>
                     </li>
+                
+                <!--
+                <li class="divider-vertical"></li> -->
                 
                 <!--Search Form-->
 				<li>	
@@ -146,6 +156,8 @@ if(!isset($linkno)) $linkno=0;
                         
                     </li>
 	                
+	                <li class="divider-vertical"></li>
+	                
 	                <!-- Log out -->  
                     <!--
                     <li>
@@ -157,20 +169,27 @@ if(!isset($linkno)) $linkno=0;
                     <!-- Profile - drop down menu -->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
-	                        <span class="glyphicon glyphicon-user"></span> 
-	                        <span class="text-capitalize"><?php echo $fname;?></span> <span class="caret"></span>
 	                        
+	                        <img src="../images/userdp/<?php echo $userdp;?>" class="img-circle" alt="My Picture" width="18px" height="18px"> 
+	                        
+	                        <span class="text-capitalize"><?php echo $fname . ' ' . $lname;?></span> 
+	                        <!-- <span class="caret"></span> -->
                         </a>
                         
                         
                         <ul class="dropdown-menu">    
-	                        <li><a href="#">Edit Profile</a></li>
+	                        <li>
+	                        	
+	                        	<a href="#">
+		                        	<span class="glyphicon glyphicon-pencil"></span> Edit Profile
+		                        </a>
+	                        </li>
+	                        
 	                        <li class="divider"></li>
 	                        
 	                         <li>
 		                        <a href="../logout.php">
-			                        <span class="glyphicon glyphicon-off"></span> 
-			                        Logout
+			                        <span class="glyphicon glyphicon-off"></span> Logout
 			                    </a>
 							</li>
                             
