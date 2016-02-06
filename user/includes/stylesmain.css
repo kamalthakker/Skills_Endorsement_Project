@@ -27,10 +27,44 @@ body > .container-fluid {
    Navbar
    -------------------------------------- */
 
-#searchInput {
-    width: 300px;
+/*
+.searchInputCls {
+    //width: 1000px;
 }
 
+
+.searchBtnCls {
+	//height:  10px;
+}
+*/
+
+/* --------------------------------------
+  Notification Navbar
+   -------------------------------------- */
+.nbrmsgCls {
+    /*margin-left: 2px;
+    background-color: red;*/
+    display: none;
+    background:#cc0052;
+	position:relative;
+	top: -10px;
+	left: 0px;
+    border-radius: 0 !important;
+}
+
+.nbrmsgCls:hover {
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.scrollable-menu {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+    max-width: 500px !important;
+    }
 
 
 /* --------------------------------------

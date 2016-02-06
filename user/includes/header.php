@@ -41,11 +41,14 @@ if(!isset($linkno)) $linkno=0;
     <!-- Bootstrap core CSS - Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-    <!-- Optional theme -->
+	<!-- Optional theme -->    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
 
 	<!-- Bootstrap custom checkbox-->
 	<script src="includes/bootstrap-checkbox.min.js" defer></script>
@@ -59,6 +62,8 @@ if(!isset($linkno)) $linkno=0;
 	
 	<!-- http://www.iconarchive.com/show/beautiful-flat-icons-by-elegantthemes.1.html -->
 	<link rel="shortcut icon" href="../images/website.ico">
+	
+	
 	
 </head>
 
@@ -101,28 +106,79 @@ if(!isset($linkno)) $linkno=0;
 							<li><a href="approval_project.php">Approvals</a></li>
                         </ul>
                     </li>
-                </ul>
-
+                
                 <!--Search Form-->
-                <form class="navbar-form pull-left" role="search" method="post" action="searchresult.php">
-	               
+				<li>	
+	                <form class="navbar-form pull-left" role="search" method="post" action="searchresult.php">
+		               
+			             <div class="input-group"> 
+						<input type="text" class="form-control" placeholder="Search people, skills, or projects..." id="searchInput" name="searchby" style="width: 350px;">
+						
+						<div class="input-group-btn">
+						<button type="submit" class="btn btn-default" style="height: 34px; margin-left: -4px;"><span class="glyphicon glyphicon-search"></span></button>
+					   </div>
+        			</div>	
 		                
-					<input type="text" class="form-control" placeholder="Search people, skills, or projects..." id="searchInput" name="searchby">
-					
-					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-	                
-				</form>
+					</form>
+				</li>
+				<!--End of Search Form-->
 				
-				
-				
+				</ul>
+				<!-- End of left menu items-->
+			
 
-                <!--Logout - right align -->
+                <!--right align -->     
                 <ul class="nav navbar-nav navbar-right">
 	                
+	                <!-- Messages -->  
+					<li class="dropdown">
+					
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" id="nbrflag"> 
+						
+						<span class="glyphicon glyphicon-flag"></span>
+						<span id="nbrmsg" class="badge nbrmsgcls"></span>
+						
+					</a>
+					
+                        <ul class="dropdown-menu scrollable-menu" role="menu" id="nbrcontent">
+	                        
+                        </ul>
+                        
+                    </li>
+	                
+	                <!-- Log out -->  
+                    <!--
                     <li>
                         <a href="../logout.php"><span class="glyphicon glyphicon-off"></span> Hello 
 	                        <span class="text-capitalize"><strong><?php echo $fname;?></strong></span> - Logout?</a>
                     </li>
+                    -->
+                    
+                    <!-- Profile - drop down menu -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+	                        <span class="glyphicon glyphicon-user"></span> 
+	                        <span class="text-capitalize"><?php echo $fname;?></span> <span class="caret"></span>
+	                        
+                        </a>
+                        
+                        
+                        <ul class="dropdown-menu">    
+	                        <li><a href="#">Edit Profile</a></li>
+	                        <li class="divider"></li>
+	                        
+	                         <li>
+		                        <a href="../logout.php">
+			                        <span class="glyphicon glyphicon-off"></span> 
+			                        Logout
+			                    </a>
+							</li>
+                            
+                        </ul>
+                    </li>
+                    
+                    
+                    
                 </ul>
 
             </div> <!-- end of logical div menu  -->

@@ -30,3 +30,87 @@
 </html>
 
 
+<script type="text/javascript">
+	
+$(document).ready(function(){	
+	
+	/*Notification - message count*/
+	$(function(){
+		
+		
+		var dataString = 'user_id=<?php echo $userid;?>';
+		
+		/* AJAX Call */
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: 'notification_getCount.php',
+            data: dataString,
+            success: function(data)
+            {
+                
+                var message=$('#nbrmsg');
+                
+                message.empty();
+                message.append(data);
+        
+				// Animate the count - if not empty
+				if(!message.is(':empty')){
+					$('#nbrflag').append(message);
+					message.show('slow');
+				}
+
+            },
+            error: function(){
+                alert("fail to load notification count - please contact sys admin!");
+            }
+        });
+        /* End of AJAX Call */
+		
+	});
+	
+	/*Notification - flag click - load drop downbox*/
+    $('#nbrflag').click(function(){ 
+        
+       //alert("Clicked");
+       
+       var loadingContent = '<li><div id="ajax_loader"><img class="img-responsive center-block" src="../images/ajax-loader.gif"></img></div></li>';
+       
+       
+       // Show ajax loading icon
+       $('#nbrcontent').append(loadingContent);
+		
+       
+       var dataString = 'user_id=<?php echo $userid;?>';
+		
+		/* AJAX Call */
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: 'notification_getContent.php',
+            data: dataString,
+            success: function(data)
+            {
+                
+                var message=$('#nbrcontent');
+                
+                message.empty();
+                message.append(data);
+                //message.show('slow');
+            },
+            error: function(){
+                alert("fail to load notification content - please contact sys admin!");
+            }
+        });
+        /* End of AJAX Call */
+
+        
+ 
+    });
+	
+
+ }); // End of ready function	
+</script>
+
+
+

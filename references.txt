@@ -34,3 +34,13 @@ https://fk.github.io/select2-bootstrap-css/3.5.2.html
 
 checkbox
 https://vsn4ik.github.io/bootstrap-checkbox/
+
+
+Notification:
+
+http://tutorialzine.com/2013/07/50-must-have-plugins-for-extending-twitter-bootstrap/
+http://infinite-woodland-5276.herokuapp.com/index.html
+http://www.bootply.com/tB4UXeU5pi#
+http://stackoverflow.com/questions/32792991/bootply-bootstrap-notification-menu-include-a-number-at-the-upper-right
+http://sdtuts.com/22jquerybootstrap-popup-notifications/
+
