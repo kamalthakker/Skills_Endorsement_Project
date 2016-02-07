@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.38)
 # Database: Skills_Endorsement
-# Generation Time: 2016-02-06 21:31:33 +0000
+# Generation Time: 2016-02-07 23:17:46 +0000
 # ************************************************************
 
 
@@ -101,6 +101,27 @@ CREATE TABLE `notifications` (
   PRIMARY KEY (`notification_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `notifications` WRITE;
+/*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
+
+INSERT INTO `notifications` (`notification_id`, `notification_type_id`, `recipient_user_id`, `sender_user_id`, `correspondence_id`, `read`, `created_date`)
+VALUES
+	(1,1,3,2,39,'Y','2016-02-07 13:26:46'),
+	(2,2,2,3,39,'Y','2016-02-07 13:52:44'),
+	(3,3,3,1,14,'Y','2016-02-07 14:02:49'),
+	(4,3,1,2,1,'Y','2016-02-07 16:42:57'),
+	(5,3,1,3,2,'Y','2016-02-07 16:44:03'),
+	(11,2,2,1,11,'Y','2016-02-07 17:41:48'),
+	(12,2,2,1,11,'Y','2016-02-07 17:46:21'),
+	(13,2,1,2,1,'Y','2016-02-07 17:50:10'),
+	(14,2,2,1,11,'Y','2016-02-07 17:50:57'),
+	(15,2,1,2,1,'Y','2016-02-07 17:52:14'),
+	(16,1,6,4,40,'Y','2016-02-07 17:58:46'),
+	(17,2,4,6,40,'Y','2016-02-07 17:59:51'),
+	(18,3,1,4,19,'Y','2016-02-07 18:07:48');
+
+/*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table project_skills
@@ -183,7 +204,10 @@ VALUES
 	(164,4,6595),
 	(165,4,3060),
 	(166,4,3052),
-	(167,4,2713);
+	(167,4,2713),
+	(168,40,160),
+	(169,40,473),
+	(170,40,270);
 
 /*!40000 ALTER TABLE `project_skills` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -221,10 +245,11 @@ VALUES
 	(8,4,'MLM Project','A multilevel marketing project is a system that allows companies to make and implement their MLM strategies for education tutorials online. Users may first register on website. As soon as a new member registers he needs to pay a fee. On paying fees he becomes a member and can view online education tutorials and download educational e-books and he may now refer other members. When these members register on website for form filling they can select the person who referred them. So these people are registered under their referrer. This can be done for various levels. User sees the users registered under him when he logs in. When a user is registered under him he gets 20 % of his registration fees. The referral fees decreases by levels. There are four referral levels and with every level the percentage of reference discount decreases.','2013-03-01','2013-01-01',2,'Y'),
 	(9,5,'MLM Project','A multilevel marketing project is a system that allows companies to make and implement their MLM strategies for education tutorials online. Users may first register on website. As soon as a new member registers he needs to pay a fee. On paying fees he becomes a member and can view online education tutorials and download educational e-books and he may now refer other members. When these members register on website for form filling they can select the person who referred them. So these people are registered under their referrer. This can be done for various levels. User sees the users registered under him when he logs in. When a user is registered under him he gets 20 % of his registration fees. The referral fees decreases by levels. There are four referral levels and with every level the percentage of reference discount decreases.','2013-03-01','2013-01-01',2,'Y'),
 	(10,6,'Android - PC Chatting & Image Sharing System','Chatting, image, audio and video sharing is possible between two or more people using mobile phones which is common now- a-days. This system enables user to send or receive messages and images with mobile phone and personal computer. This system involves two users where user can send messages, share images using their devices. Both the users must have this application to be installed in their devices in order to use the functionality of this system. For security purpose, system will encrypt and decrypt the images. So images are sent securely through network medium. This system enables the user to send messages from his mobile phone to the user using his personal computer. This system also enables the user to send and receive messages between two handheld devices i.e. mobile phones. This system requires good network connection. User can send or receive messages, images with their mobile phones as well as with their personal computers. This system is a web application in android technology. People can communicate with each other anywhere at any time. People can share their views. This system enables messages to be send between devices having two different operating system. This system is platform independent since this system works on different operating system. User can share their views by sending messages or images. User can feel this application to be visually appealing since it has an effective Graphical User Interface.','2015-10-01',NULL,2,'Y'),
-	(11,2,'Android - PC Chatting & Image Sharing System','Chatting, image, audio and video sharing is possible between two or more people using mobile phones which is common now- a-days. This system enables user to send or receive messages and images with mobile phone and personal computer. This system involves two users where user can send messages, share images using their devices. Both the users must have this application to be installed in their devices in order to use the functionality of this system. For security purpose, system will encrypt and decrypt the images. So images are sent securely through network medium. This system enables the user to send messages from his mobile phone to the user using his personal computer. This system also enables the user to send and receive messages between two handheld devices i.e. mobile phones. This system requires good network connection. User can send or receive messages, images with their mobile phones as well as with their personal computers. This system is a web application in android technology. People can communicate with each other anywhere at any time. People can share their views. This system enables messages to be send between devices having two different operating system. This system is platform independent since this system works on different operating system. User can share their views by sending messages or images. User can feel this application to be visually appealing since it has an effective Graphical User Interface.','2015-10-01',NULL,1,'Y'),
+	(11,2,'Android - PC Chatting & Image Sharing System','Chatting, image, audio and video sharing is possible between two or more people using mobile phones which is common now- a-days. This system enables user to send or receive messages and images with mobile phone and personal computer. This system involves two users where user can send messages, share images using their devices. Both the users must have this application to be installed in their devices in order to use the functionality of this system. For security purpose, system will encrypt and decrypt the images. So images are sent securely through network medium. This system enables the user to send messages from his mobile phone to the user using his personal computer. This system also enables the user to send and receive messages between two handheld devices i.e. mobile phones. This system requires good network connection. User can send or receive messages, images with their mobile phones as well as with their personal computers. This system is a web application in android technology. People can communicate with each other anywhere at any time. People can share their views. This system enables messages to be send between devices having two different operating system. This system is platform independent since this system works on different operating system. User can share their views by sending messages or images. User can feel this application to be visually appealing since it has an effective Graphical User Interface.','2015-10-01',NULL,1,'N'),
 	(12,3,'Image Editor Project','This is an image editor with various image editing functionality that allows you to crop, zoom, transform, adjust brightness and apply more such transformations over an image.','2012-01-01','2012-12-01',2,'Y'),
 	(13,4,'Image Editor Project','This is an image editor with various image editing functionality that allows you to crop, zoom, transform, adjust brightness and apply more such transformations over an image.','2012-01-01','2012-12-01',2,'Y'),
-	(39,2,'Railway Tracking and Arrival Time Prediction','It has happened so many times that you have been waiting on railway station for someone to arrive and you don\'t have any exact information about train timing and other stuff. So here we present to you a project on Railway Tracking and Arrival Time Prediction. Using this system user\'s can get the information about train timing, and is it on time or not, and other information. In this, system will track the train timing at what time train departed from a particular station and pass these timing details to other station\'s system where it will display the timing according to train departed from previous station. If system will find any delay in train due to signal it will automatically update the train timing in next station and will be displayed to viewers.\nIn this system there is an admin module, who enters the detail about trains and its timing and these details will be passed through internet server and is fetched by the system on other stations, and there is other system that shows train information to the viewers on platform. Second system will get all the information of all trains but will automatically select the data that refers to particular station and shows that information on screen. For example if an admin at Mumbai station enter information about Delhi station Chennai station system will not be effected, but Delhi Station system will show the information about train. This system works like - when train is departed late from a station, admin will enter details about departure and its time, and this information goes in real time on internet server and retrieved on other system through internet server and shows the details on screen. Station masters on every station have a login wherein them may update train arrival time at their station when it arrives. This second System is installed on various locations on station for viewers to view the information. Admin will add information like train departed from station, expected arrival at destination, delay in the train schedule, etc. This project publishes real-time train schedule events to subscribing multiple client applications.','2014-01-01','2016-01-01',3,'Y');
+	(39,2,'Railway Tracking and Arrival Time Prediction','It has happened so many times that you have been waiting on railway station for someone to arrive and you don\'t have any exact information about train timing and other stuff. So here we present to you a project on Railway Tracking and Arrival Time Prediction. Using this system user\'s can get the information about train timing, and is it on time or not, and other information. In this, system will track the train timing at what time train departed from a particular station and pass these timing details to other station\'s system where it will display the timing according to train departed from previous station. If system will find any delay in train due to signal it will automatically update the train timing in next station and will be displayed to viewers.\nIn this system there is an admin module, who enters the detail about trains and its timing and these details will be passed through internet server and is fetched by the system on other stations, and there is other system that shows train information to the viewers on platform. Second system will get all the information of all trains but will automatically select the data that refers to particular station and shows that information on screen. For example if an admin at Mumbai station enter information about Delhi station Chennai station system will not be effected, but Delhi Station system will show the information about train. This system works like - when train is departed late from a station, admin will enter details about departure and its time, and this information goes in real time on internet server and retrieved on other system through internet server and shows the details on screen. Station masters on every station have a login wherein them may update train arrival time at their station when it arrives. This second System is installed on various locations on station for viewers to view the information. Admin will add information like train departed from station, expected arrival at destination, delay in the train schedule, etc. This project publishes real-time train schedule events to subscribing multiple client applications.','2014-01-01','2016-01-01',3,'Y'),
+	(40,4,'Android - PC Chatting & Image Sharing System','Test 123','2014-01-31','2014-12-31',6,'Y');
 
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -260,7 +285,9 @@ VALUES
 	(8,1,2918,5,'I write on behalf of xyz\'s application for a Rhodes Scholarship.  I believe abc to be an exemplary student-scholar as well as a person of tremendous character with significant leadership skills.\r\rI heard of xyz before I met her.  A top student of mine and Truman finalist came into my office and announced that she had met the next Truman finalist - a first year woman who was full of energy for leading the Students for Choice organization.  The young woman I encountered in my American Politics class that next semester was, in fact, quite enthusiastic for her studies and a solid, conscientious student.  Full of questions, xyz regularly participated in class discussions and probed the materials with a zest for learning.  In her first year, however, I was more struck by her openness to the world than her analytic ability.   ','2016-01-16 16:39:30'),
 	(14,3,2918,1,'he is an expert','2016-01-16 23:37:14'),
 	(16,2,538,1,'He is an expert in Bootstrap!','2016-01-24 16:12:51'),
-	(17,2,160,1,'yes, he knows it...','2016-01-24 16:13:19');
+	(17,2,160,1,'yes, he knows it...','2016-01-24 16:13:19'),
+	(18,1,3050,4,'He is an expert in JQuery','2016-02-07 18:06:15'),
+	(19,1,3067,4,'he is an expert!','2016-02-07 18:07:48');
 
 /*!40000 ALTER TABLE `skill_endorsements` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -302,12 +329,12 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`user_id`, `uname`, `role`, `psword`, `fname`, `lname`, `gender`, `email`, `phone`, `address`, `state`, `city`, `zip`, `registration_date`, `last_login`, `login_attempt`, `blocked_time`, `approved_by_admin`, `speciality`, `speciality2`, `job_title`, `userdp`)
 VALUES
-	(1,'mbush@mitre.org','user','test','mike','bush','m','mbush@mitre.org','410-272-5848',NULL,'MD','Aberdeen','03-441',NULL,'2016-01-26 19:48:09',0,NULL,NULL,'Software Engineering','Software Apps Development','Group leader','mike.jpg'),
-	(2,'kamalthakker@gmail.com','user','test','kamal','thakker','m','kamalthakker@gmail.com','123-456-7890',NULL,'NJ','Monroe','08831',NULL,'2016-02-06 15:31:46',0,NULL,NULL,'Software Engineering','Software Apps Development','Manager','kamal.jpg'),
-	(3,'savon40@gmail.com ','user','test','steve','avon','m','savon40@gmail.com ','234-567-89101',NULL,'NJ','Point Pleasant','1234',NULL,'2016-02-06 16:09:29',0,NULL,NULL,'Software Engineering','Software Apps Development','Manager','steve.jpg'),
-	(4,'hli1022@gmail.com ','user','test','howard','li','m','hli1022@gmail.com ','345-678-9012',NULL,'NJ','Point Pleasant','1234',NULL,'2016-01-19 19:23:47',0,NULL,NULL,'Software Engineering','Software Apps Development','Manager','howard.jpg'),
+	(1,'mbush@mitre.org','user','test','mike','bush','m','mbush@mitre.org','410-272-5848',NULL,'MD','Aberdeen','03-441',NULL,'2016-02-07 18:08:14',0,NULL,NULL,'Software Engineering','Software Apps Development','Group leader','mike.jpg'),
+	(2,'kamalthakker@gmail.com','user','test','kamal','thakker','m','kamalthakker@gmail.com','123-456-7890',NULL,'NJ','Monroe','08831',NULL,'2016-02-07 17:52:26',0,NULL,NULL,'Software Engineering','Software Apps Development','Manager','kamal.jpg'),
+	(3,'savon40@gmail.com ','user','test','steve','avon','m','savon40@gmail.com ','234-567-89101',NULL,'NJ','Point Pleasant','1234',NULL,'2016-02-07 16:28:31',0,NULL,NULL,'Software Engineering','Software Apps Development','Manager','steve.jpg'),
+	(4,'hli1022@gmail.com ','user','test','howard','li','m','hli1022@gmail.com ','345-678-9012',NULL,'NJ','Point Pleasant','1234',NULL,'2016-02-07 17:57:53',0,NULL,NULL,'Software Engineering','Software Apps Development','Manager','howard.jpg'),
 	(5,'bharti.chinni@gmail.com ','user','test','chaitanya','bharti','f','bharti.chinni@gmail.com ','456-789-0123',NULL,'NJ','Long Branch','1234',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development','Group Leader','chaitanya.jpg'),
-	(6,'chz8983@gmail.com','user','test','cathy','chen','f','chz8983@gmail.com','567-890-1234',NULL,'NJ','Long Branch','1234',NULL,NULL,NULL,NULL,NULL,'Software Engineering','Software Apps Development','Group Leader','cathy.jpg');
+	(6,'chz8983@gmail.com','user','test','cathy','chen','f','chz8983@gmail.com','567-890-1234',NULL,'NJ','Long Branch','1234',NULL,'2016-02-07 17:59:30',0,NULL,NULL,'Software Engineering','Software Apps Development','Group Leader','cathy.jpg');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
