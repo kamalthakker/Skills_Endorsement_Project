@@ -45,3 +45,5 @@ $dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBA
 	
 } // End of getEndorsements
 }
+
+?>	

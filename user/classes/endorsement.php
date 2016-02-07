@@ -105,3 +105,5 @@ public function getRecentActivities(){
 
 	
 } // End of class
+
+?>	

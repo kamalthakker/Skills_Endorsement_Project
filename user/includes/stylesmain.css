@@ -69,11 +69,14 @@ border-right: 0px solid #FFF;
 
 .scrollable-menu {
     height: auto;
-    max-height: 300px;
+    width: 500px;
+    max-height: 600px;
     overflow-x: hidden;
     max-width: 500px !important;
+    white-space: normal;
     }
 
+.navbar .nav li .dropdown-menu li a {white-space: normal;}
 
 /* --------------------------------------
    Footer

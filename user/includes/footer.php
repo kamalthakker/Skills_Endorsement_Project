@@ -97,6 +97,18 @@ $(document).ready(function(){
                 message.empty();
                 message.append(data);
                 //message.show('slow');
+                
+                // Remove unread message count form the flag
+                setTimeout(
+				  function() 
+				  {
+				    //do count after a few seconds
+				    var nbrmsg=$('#nbrmsg');
+					nbrmsg.empty();
+					nbrmsg.css('display', 'none');
+				  }, 100);
+                
+                
             },
             error: function(){
                 alert("fail to load notification content - please contact sys admin!");

@@ -1,6 +1,6 @@
 <?php
 $page_title = "Manage Project";
-$linkno = 0;
+$linkno = 2;
 include_once 'includes/header.php';
 include_once 'classes/user.php';
 include_once 'classes/project.php';

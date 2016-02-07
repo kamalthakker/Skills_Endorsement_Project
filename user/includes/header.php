@@ -88,9 +88,13 @@ if(!isset($linkno)) $linkno=0;
                 <a href="#" class="navbar-brand">MITRE Skills Endorsement</a>
             </div>
 
+			
             <!-- Menu Items -->
             <div  id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav ">
+	                
+	                <li class="divider-vertical"></li>
+	                
                     <li <?php if($linkno==1) echo 'class="active"'?>>
                         <a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a>
                     </li>
@@ -99,7 +103,7 @@ if(!isset($linkno)) $linkno=0;
 					<li class="divider-vertical"></li> -->
 
                     <!-- drop down menu -->
-                    <li class="dropdown">
+                    <li class="dropdown <?php if($linkno==2) echo ' active';?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="glyphicon glyphicon-cog"></span> Projects
 	                        <!-- <span class="caret"></span> -->
 	                        
@@ -167,7 +171,7 @@ if(!isset($linkno)) $linkno=0;
                     -->
                     
                     <!-- Profile - drop down menu -->
-                    <li class="dropdown">
+                    <li class="dropdown <?php if($linkno==3) echo ' active';?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
 	                        
 	                        <img src="../images/userdp/<?php echo $userdp;?>" class="img-circle" alt="My Picture" width="18px" height="18px"> 

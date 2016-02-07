@@ -132,7 +132,50 @@ order by se.endorsed_on desc
 limit 5;
 
 
+/*Unread messages*/ 
+select count(*) as ncount from notifications nt
+where nt.recipient_user_id=3 and nt.read='N';
+
+/*Notifications*/
+select  
+n.notification_id,
+n.notification_type_id,
+nt.notification_name,
+n.recipient_user_id,
+ru.fname as ru_fname, ru.lname as ru_lname, ru.userdp as ru_userdp,
+su.fname as su_fname, su.lname as su_lname, su.userdp as su_userdp,
+n.sender_user_id,
+n.correspondence_id,
+n.read,
+n.created_date,
+p.project_id,
+p.project_name,
+p.manager_user_id,
+p.approved,
+se.skill_endorsement_id,
+s.name as skill_name,
+se.comments
+from notifications n 
+inner join notification_types nt 
+on n.notification_type_id=nt.notification_type_id
+inner join users ru
+on ru.user_id=n.recipient_user_id
+inner join users su
+on su.user_id=n.sender_user_id
+left join projects p 
+on nt.notification_name in ('project_added','project_approved') and 
+   n.correspondence_id=p.project_id
+left join skill_endorsements se
+on nt.notification_name in ('endorsed') and
+   n.correspondence_id=skill_endorsement_id
+left join skills s on
+	se.skill_id=s.skill_id	   
+where n.recipient_user_id=2
+order by n.created_date desc
+limit 8;
 
 
- 
- 
+update notifications set read='Y' where recipient_user_id=3 and read='N'
+   
+
+

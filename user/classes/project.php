@@ -2,6 +2,7 @@
 
 include_once '../dbconnection.php';
 include_once 'classes/skill.php';
+include_once 'classes/notification.php';
 
 class project{
 
@@ -117,7 +118,7 @@ class project{
 		}
 	} // End of getProjectsToApprove
 	
-	public function updateProjectToApprove($project_id, $yesno){
+	public function updateProjectToApprove($user_id, $requester_user_id, $project_id, $yesno){
 		
 		$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
 		
@@ -129,6 +130,10 @@ class project{
 		
 		$r = mysqli_query($dbc,$q);
 		mysqli_close($dbc); // close the connection
+		
+		// Add notification
+		$objNotification = new notification();
+		$result = $objNotification->addNotification(2,$requester_user_id,$user_id,$project_id);
 		
 		if($r)
 			return true;
@@ -391,3 +396,5 @@ class project{
 	} // End of insertCustomSkill
 	
 }// End of project class
+
+?>	

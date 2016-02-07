@@ -1,6 +1,6 @@
 <?php
 $page_title = "Approvals";
-$linkno = 0;
+$linkno = 2;
 include_once 'includes/header.php';
 include_once 'classes/project.php';
 ?>
@@ -10,10 +10,11 @@ include_once 'classes/project.php';
 $objProject = new project();
 
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' )
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['key'] == $_SESSION['key'] )
 {
 	//echo '<br/><br/><br/><br/><br/>--->' . $_POST['approvehid'] ;
 	$project_id = $_POST['approvehid'];
+	$requester_user_id = $_POST['requester_userid'];
 	
 	if (isset($_POST['approvechbx'])){
 		//echo '=checked';
@@ -24,8 +25,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 		$yesno='N';
 	}
 			
-$result=$objProject->updateProjectToApprove($project_id, $yesno);
+$result=$objProject->updateProjectToApprove($userid, $requester_user_id, $project_id, $yesno);
 }
+
+// When page is refreshed, this will avoid multiple post
+$_SESSION['key'] = mt_rand(1, 1000);
 
 // Get approved projects
 $dbRow_Projects = $objProject->getProjectsToApprove($userid);
@@ -121,7 +125,12 @@ while ( isset($dbRow_Projects) && $dbRow = mysqli_fetch_array($dbRow_Projects))
 	                        
 	                        <form id="approveForm" method="post">
 		                     
-		                     <input type="hidden" name="approvehid" value="<?php echo $dbRow['project_id'];?>" />   
+		                     <input type="hidden" name="approvehid" value="<?php echo $dbRow['project_id'];?>" />
+		                     
+							 <input type="hidden" name="requester_userid" value="<?php echo $dbRow['user_id'];?>" />
+		                     
+							 <input type="hidden" name="key" value="<?php echo $_SESSION['key']; ?>" />
+		                        
 		                        
 	                        <input type="checkbox" data-off-class="btn-warning" data-on-class="btn-primary" class="checkbox_class" name="approvechbx" value="<?php echo $dbRow['project_id'];?>" onchange="this.form.submit();" 
 	                        <?php if(substr($dbRow['approved'],0,1)=="Y") echo "checked";?> >
