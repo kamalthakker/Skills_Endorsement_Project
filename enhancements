@@ -3,3 +3,11 @@ For our website, professor also give us some suggestions:
 (2) when a manager approve or reject a project, the correspond person will get a notification about this result.
 (3) when A endorse B, B will get a notification that A has endorsed him.
 (4) send email on all above actions
+
+
+steps:
+1) populate data in the table
+2) update two php - notification_getCount and notification_getContent
+3) on flag click - mark as read - in the same get request, update the table, may be send count
+4) create a new class to populate this notification tables - wire it with the main functionalities
+5) test

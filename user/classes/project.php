@@ -131,14 +131,17 @@ class project{
 		$r = mysqli_query($dbc,$q);
 		mysqli_close($dbc); // close the connection
 		
-		// Add notification
-		$objNotification = new notification();
-		$result = $objNotification->addNotification(2,$requester_user_id,$user_id,$project_id);
 		
-		if($r)
+		if($r){
+			// Add notification -- project approved/disapproved
+			$objNotification = new notification();
+			$result = $objNotification->addNotification(2,$requester_user_id,$user_id,$project_id);
+		
 			return true;
-		else
+		}
+		else {
 			return false;
+		}	
 			
 	} // End of updateProjectToApprove
 	
@@ -222,6 +225,13 @@ class project{
 		else
 		{
 			$result = false;
+		}
+		
+		
+		if($result==true){
+			// Add notification -- project added
+			$objNotification = new notification();
+			$result = $objNotification->addNotification(1,$manager_user_id,$user_id,$project_id);
 		}
 		
 		return $result;

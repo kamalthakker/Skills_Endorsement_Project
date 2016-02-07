@@ -1,6 +1,7 @@
 <?php
 
 include_once '../dbconnection.php';
+include_once 'classes/notification.php';
 
 class endorsement{
 	
@@ -14,13 +15,24 @@ VALUES (".$display_user_id.",".$skill_id.",".$logged_user_id.",'".$message."')";
 		//echo $q . '<br>';
 		
 		$r = mysqli_query($dbc,$q);
+		
+		// Get $skill_endorsement_id of the insert query
+		$skill_endorsement_id = -1; 
+		if($r) $skill_endorsement_id = mysqli_insert_id($dbc);
+
 		mysqli_close($dbc); // close the connection
 		
-		if($r)
+		if($r) {
+			
+			// Add notification -- endorsed
+			$objNotification = new notification();
+			$result = $objNotification->addNotification(3,$display_user_id,$logged_user_id,$skill_endorsement_id);
+			
 			return true;
-		else
+		}	
+		else {
 			return false;
-		
+		}
 	}
 
 
