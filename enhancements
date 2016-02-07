@@ -2,12 +2,10 @@ For our website, professor also give us some suggestions:
 (1) when someone add a project, then the manager will get a notification saying there is one project need to be approve;
 (2) when a manager approve or reject a project, the correspond person will get a notification about this result.
 (3) when A endorse B, B will get a notification that A has endorsed him.
+
 (4) send email on all above actions
+(5) show skills on search result
+(6) typehead in search box
+(7) edit profile
+(8) page # or infinite scroller - on home page and manage project and approve project
 
-
-steps:
-1) populate data in the table
-2) update two php - notification_getCount and notification_getContent
-3) on flag click - mark as read - in the same get request, update the table, may be send count
-4) create a new class to populate this notification tables - wire it with the main functionalities
-5) test
