@@ -115,6 +115,32 @@ public function getRecentActivities(){
 		}
 	} // End of getRecentActivities
 
+public function getEndorsementLeft($user_id){
+	
+	$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+	
+	
+		$q = "select (select c.value from config c where c.name='max_endorsement')-count(*) as endorsement_left from  skill_endorsements se
+					where year(endorsed_on)=year(CURDATE()) and se.endorsed_by_user_id=".$user_id;
+	
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+	
+		if (isset($r) && mysqli_num_rows($r) >= 1)
+		{
+			//found in DB
+			$row = mysqli_fetch_array($r);
+			return 	$row['endorsement_left']; 
+		}
+		else
+		{
+			// not found in DB
+			return null;
+		}
+	} // End of getEndorsementLeft
+
 	
 } // End of class
 
