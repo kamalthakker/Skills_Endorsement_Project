@@ -17,7 +17,7 @@ include_once 'classes/endorsement.php';
 ?>
 
 <?php 
-function printSkills($dbRows_UserSkillsWithRank, $HowManyShow, $LoggedInUserId, $DisplayUsername)
+function printSkills($dbRows_UserSkillsWithRank, $HowManyShow, $LoggedInUserId, $DisplayUsername /*, $EndorsementLeft*/)
 {
 	$counter = 0;
 	$more = 0;
@@ -114,6 +114,9 @@ $dbRows_Suggestions = $objEndorsement->getEndorsementSuggestions($userid);
 
 // Get recent activities
 $dbRows_RecentActivities = $objEndorsement->getRecentActivities();
+
+// Get endorsement left
+$endorsement_left = $objEndorsement->getEndorsementLeft($userid);
 
 /*----------------------------*/
 ?>
@@ -530,7 +533,7 @@ $dbRows_RecentActivities = $objEndorsement->getRecentActivities();
 		           <?php if (isset($dbRows_Suggestions)) { ?> 
 		            <div  class="list-group-item active"> 
 		            <h4 class="list-group-item-heading">Make an Endorsement</h4> 
-		            <p class="list-group-item-text">You have 5 endorsements left for this time period, here's some people you are eligible to endorse:</p> </div> 
+		            <p class="list-group-item-text">You have <span class="badge progress-bar-info"><?php echo $endorsement_left;?></span>   endorsements left for this time period, here's some people you are eligible to endorse:</p> </div> 
 		           <?php } /*end of if condition*/?> 
 		            
 		           
