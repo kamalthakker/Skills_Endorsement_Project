@@ -13,11 +13,11 @@ if(isset($_REQUEST['search_user_id'])) {
 include_once 'includes/header.php';
 include_once 'classes/user.php';
 include_once 'classes/project.php';
-include_once 'classes/endorsement.php';
+include_once 'classes/endorsement.php';	
 ?>
 
 <?php 
-function printSkills($dbRows_UserSkillsWithRank, $HowManyShow, $LoggedInUserId, $DisplayUsername /*, $EndorsementLeft*/)
+function printSkills($dbRows_UserSkillsWithRank, $HowManyShow, $LoggedInUserId, $DisplayUsername, $EndorsementLeft)
 {
 	$counter = 0;
 	$more = 0;
@@ -29,7 +29,7 @@ function printSkills($dbRows_UserSkillsWithRank, $HowManyShow, $LoggedInUserId, 
 	{
 		$counter = $counter + 1;
 		
-		$li_str = '<li role="presentation"><a href="#" data-toggle="modal" data-target="#makeViewEndorsementsModal" data-skillid="'.$dbRow['skill_id'].'"  data-skillname="'.$dbRow['skill_name'].'"  data-displayuserid="'.$dbRow['user_id'].'"  data-loggedinuserid="'.$LoggedInUserId.'" data-displayusername="'.$DisplayUsername.'">'. $dbRow['skill_name'] .'<span class="badge">'. $dbRow['rank'] .'</span></a></li>';
+		$li_str = '<li role="presentation"><a href="#" data-toggle="modal" data-target="#makeViewEndorsementsModal" data-skillid="'.$dbRow['skill_id'].'"  data-skillname="'.$dbRow['skill_name'].'"  data-displayuserid="'.$dbRow['user_id'].'"  data-loggedinuserid="'.$LoggedInUserId.'" data-displayusername="'.$DisplayUsername.'" data-endorsementleft="'.$EndorsementLeft.'">'. $dbRow['skill_name'] .'<span class="badge">'. $dbRow['rank'] .'</span></a></li>';
 		
 		if ($counter <= $HowManyShow)
 		{
@@ -124,6 +124,9 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
 <script type="text/javascript">
 
     $(document).ready(function(){
+	    
+	    // initialize all tooltips on the page 
+	    $('[data-toggle="tooltip"]').tooltip();
 
 
         $('.morelessul').click(function(){ 
@@ -182,6 +185,13 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                 // Clear and hide the last result, if any
                 $('#makeEndorsementResult').empty();
                 $('#makeEndorsementResult').css('display', 'none');
+                
+                
+                //$('#endorsesubmit').attr("disabled","disabled");
+                //$('#endorsesubmit').attr("data-placement","top");
+                //$('#endorsesubmit').attr("title","No endorsement left!");
+                
+                
         
                 // End of make an endorsement logic
 
@@ -311,7 +321,9 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                     <li class="active"><a data-toggle="tab" href="#viewEndorsement"><strong>View endorsements</strong></a></li>
                     
                     <!-- hide when it is for the logged in user -->
-                    <li <?php if ($display_user_id==$userid) echo 'style="display:none;"' ?>><a data-toggle="tab" href="#makeEndorsement"><strong>Make an endorsement</strong></a></li>
+                    <li <?php if ($display_user_id==$userid) echo 'style="display:none;"' ?>><a data-toggle="tab" href="#makeEndorsement"><strong>Make an endorsement</strong> &nbsp;
+	                    <span class="badge progress-bar-info pull-right" style="margin-top:-6px;	"> <?php echo $endorsement_left;?> left</span>    
+                    </a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -329,11 +341,10 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                             <h4 class="lead" id="endorsefor">Endorse Kamal Thakker for Java!</h4>
 
                             <label for="Recommendation" class="sr-only">Recommendation</label>
-                            <textarea id="recommendation" class="form-control input-xlarge"  style="min-width: 100%; min-height: 35%;" placeholder="Your recommendation meesage" required autofocus></textarea>
-
+                            <textarea id="recommendation" class="form-control input-xlarge"  style="min-width: 100%; min-height: 35%;" placeholder="Your recommendation meesage" required autofocus <?php if ($endorsement_left<=0) echo 'disabled';?>><?php if ($endorsement_left<=0) echo 'You have exceeded the number of endorsements allowed in this calendar year!';?></textarea>
                             <br>
 
-                            <input class="btn btn-primary pull-right"  value = "Endorse" type="submit" id="submitEndorsement">
+                            <input class="btn btn-primary pull-right" id="endorsesubmit"  value = "Endorse" type="submit" id="submitEndorsement" <?php if ($endorsement_left<=0) echo 'disabled';?>>
                             <!--
                                 <button type="button" class="btn btn-primary" id="submitEndorsement1">Save changes</button> -->
                             </form>
@@ -407,7 +418,7 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
 					
 					<h2 class="text-capitalize">Skills</h2>
 						
-					<?php printSkills($dbRows_UserSkillsWithRank, 10, $userid, $displayname); ?>
+					<?php printSkills($dbRows_UserSkillsWithRank, 10, $userid, $displayname, $endorsement_left); ?>
 
 					
 				</div> <!-- End of Skills-->
@@ -479,7 +490,7 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
 								  $dbRow_ProjectSkills = $objProject->getProjectSkills($dbRow['project_id']);
 
 								  // Print skills		
-								   printSkills($dbRow_ProjectSkills, 10, $userid, $displayname);
+								   printSkills($dbRow_ProjectSkills, 10, $userid, $displayname, $endorsement_left);
 					          ?>
 					          
 					          <!--
