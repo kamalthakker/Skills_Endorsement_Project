@@ -52,7 +52,9 @@ $(document).ready(function(){
                 var message=$('#nbrmsg');
                 
                 message.empty();
-                message.append(data);
+                message.append($.trim(data));
+        
+				//alert(">" + $.trim(data) + "<");
         
 				// Animate the count - if not empty
 				if(!message.is(':empty')){

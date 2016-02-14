@@ -1,6 +1,8 @@
 <?php
 
 include_once '../dbconnection.php';
+include_once 'classes/user.php';
+//require("../sendgrid-php/sendgrid-php.php");
 
 class notification{
 	
@@ -129,12 +131,50 @@ class notification{
 		mysqli_close($dbc); // close the connection
 		
 		if($r)
+		{
+			//$this->sendEmail($notification_type_id,$recipient_user_id);
 			return true;
-		else
-			return false;
+		}else{
+			return false; }
 			
 	} // End of addNotification
 	
+	/*
+	private function sendEmail($notification_type_id, $recipient_user_id){
+		
+		$objUser = new user();
+		$rowuser=$objUser->getUserInfo($recipient_user_id);
+		$to_email_id=$rowuser['uname'];
+		
+		
+        $sendgrid = new SendGrid('kkamalthakker696', 'm0nm0uth'); 
+		$email    = new SendGrid\Email();
+	
+		//$to		= $to_email_id;
+		$to 	= "kamalthakker@gmail.com";
+		
+		$subject = "You have a new notification!";
+		
+		if($notification_type_id==1){
+			//Project added
+			$message="A new project is added, please approve!";
+		}else if($notification_type_id==2){
+			//Project approved/disapproved
+			$message="Your project has been approved or disapproved.";
+		}else if($notification_type_id==3){
+			//endorsed
+			$message="You have been endorsed!";
+		}
+		
+		$email->addTo($to)
+		      ->setFrom("MITRE.SE.Notifications@skillsendorsement-monmouth.rhcloud.com")
+		      ->setSubject($subject)
+		      ->setHtml($message);
+		
+		$sendgrid->send($email);
+		
+	} // sendEmail
+	*/
 }
 	
 ?>
