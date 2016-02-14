@@ -2,6 +2,7 @@
 
 include_once '../dbconnection.php';
 include_once 'classes/user.php';
+include_once 'classes/email.php';
 //require("../sendgrid-php/sendgrid-php.php");
 
 class notification{
@@ -32,10 +33,11 @@ class notification{
 		}
 	} // End of getUnreadMessageCount
 	
-	public function getNotifications($user_id){
+	public function getNotifications($user_id, $notification_id=null){
 	
 	$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
 	
+		if(isset($notification_id)) $where="where n.notification_id=".$notification_id; else $where="where n.recipient_user_id=".$user_id;
 	
 		$q = "/*Notifications*/
 				select  
@@ -46,10 +48,12 @@ class notification{
 				  ru.fname as ru_fname, 
 				  ru.lname as ru_lname, 
 				  ru.userdp as ru_userdp,
+				  ru.email as ru_email,
 				 n.sender_user_id, 
 				 su.fname as su_fname, 
 				 su.lname as su_lname, 
 				 su.userdp as su_userdp,
+				 su.email as su_email,
 				n.correspondence_id,
 				n.read,
 				n.created_date,
@@ -68,14 +72,14 @@ class notification{
 				inner join users su
 				on su.user_id=n.sender_user_id
 				left join projects p 
-				on nt.notification_name in ('project_added','project_approved') and 
+				on nt.notification_name in ('project_added','project_approved', 'project_disapproved') and 
 				   n.correspondence_id=p.project_id
 				left join skill_endorsements se
 				on nt.notification_name in ('endorsed') and
 				   n.correspondence_id=skill_endorsement_id
 				left join skills s on
 				se.skill_id=s.skill_id	   
-				where n.recipient_user_id=".$user_id. "
+				". $where ."
 				order by n.created_date desc
 				limit 8" ;
 	
@@ -128,16 +132,72 @@ class notification{
 		//echo $q;
 		
 		$r = mysqli_query($dbc,$q);
+		
+		// Get notification_id of the insert query
+		$notification_id = -1; 
+		if($r) $notification_id = mysqli_insert_id($dbc);
+		
 		mysqli_close($dbc); // close the connection
 		
 		if($r)
 		{
 			//$this->sendEmail($notification_type_id,$recipient_user_id);
+			$this->emailNotification($notification_id);
 			return true;
 		}else{
 			return false; }
 			
 	} // End of addNotification
+	
+	private function emailNotification($notification_id){
+	
+		$r = $this->getNotifications(null, $notification_id);	
+		$row = mysqli_fetch_array($r);
+		
+		$to = $row['ru_email'];
+		$subject='MITRE SE - New Notification';
+		
+		$message='';
+		//$message='<img src="http://skillsendorsement-monmouth.rhcloud.com/images/userdp/'. $row['su_userdp'] . ' class="img-responsive voffset2" alt="img" width="60" height="60">';
+		
+		if ($row['notification_name']=="project_added"){
+			$message .=  '<h3>' . $row['su_fname'] . ' ' . $row['su_lname'] . ':</h3>';
+			$message .= 'I have added a new project, ' . $row['project_name'] . '. Please approve.';
+		} 
+		
+		if ($row['notification_name']=="project_approved"){
+			$message .=  '<h3><span class="text-capitalize">' . $row['su_fname'] . ' </span><span class="text-capitalize">' . $row['su_lname'] . '</span>:</h3>';
+			$message .= 'I have approved ' . $row['project_name'] . ' project.';
+		} 
+		
+		if ($row['notification_name']=="project_disapproved"){
+			$message .=  '<h3><span class="text-capitalize">' . $row['su_fname'] . ' </span><span class="text-capitalize">' . $row['su_lname'] . '</span>:</h3>';
+			$message .= 'I have disapproved ' . $row['project_name'] . ' project.';
+		}
+		
+		if ($row['notification_name']=="endorsed"){
+			$message .=  '<h3>' . $row['su_fname'] . ' ' . $row['su_lname'] . ':</h3>';
+			$message .= 'Congratulations! I have endorsed you for '. $row['skill_name'] . '.';
+			$message .= '<br/><q>' . $row['comments'] . '</q>';
+			
+		}
+		
+		$message .= '<br/><br/>Login here: <a href="http://skillsendorsement-monmouth.rhcloud.com">http://skillsendorsement-monmouth.rhcloud.com</a>';
+		
+		/*
+		echo '<br/><br/><br/><br/><br/><br/>';
+		echo $subject 	. 	'<br/>';
+		echo $to 		.	'<br/>';
+		echo $message 	. 	'<br/>';				
+		*/
+		
+		// Create an object for email
+		$objEmail = new email();
+		
+		// Send email
+		$objEmail->sendEmail($to, $subject, $message);
+	
+	} // End of emailNotification
 	
 	/*
 	private function sendEmail($notification_type_id, $recipient_user_id){

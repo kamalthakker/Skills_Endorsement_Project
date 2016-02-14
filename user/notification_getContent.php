@@ -100,8 +100,13 @@ if (isset($_REQUEST['user_id'])){
 			  
 			  <?php if ($dbRow['notification_name']=='project_approved'){?>
 			  <!-- When project is approved/disapproved, notify the requester-->
-			  I have 
-			  <?php if($dbRow['approved']=='N') echo 'disapproved'; else echo 'approved'; ?>
+			  I have approved
+			  <span class="text-capitalize"><?php echo $dbRow['project_name'];?></span> project.
+			  <?php }?> 
+			  
+			  <?php if ($dbRow['notification_name']=='project_disapproved'){?>
+			  <!-- When project is approved/disapproved, notify the requester-->
+			  I have disapproved
 			  <span class="text-capitalize"><?php echo $dbRow['project_name'];?></span> project.
 			  <?php }?> 
 			  

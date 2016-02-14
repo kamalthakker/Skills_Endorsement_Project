@@ -134,8 +134,10 @@ class project{
 		
 		if($r){
 			// Add notification -- project approved/disapproved
+			if ($yesno=="Y") $notification_type_id=2; else $notification_type_id=4;
+			
 			$objNotification = new notification();
-			$result = $objNotification->addNotification(2,$requester_user_id,$user_id,$project_id);
+			$result = $objNotification->addNotification($notification_type_id,$requester_user_id,$user_id,$project_id);
 		
 			return true;
 		}
