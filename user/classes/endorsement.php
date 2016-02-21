@@ -5,20 +5,31 @@ include_once 'classes/notification.php';
 
 class endorsement{
 	
-public function addEndorsement($skill_id, $display_user_id, $logged_user_id, $message){
+public function addUpdateEndorsement($skill_endorsement_id, $skill_id, $display_user_id, $logged_user_id, $message){
 		
 		$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
 		
-		$q = "INSERT INTO skill_endorsements (user_id, skill_id, endorsed_by_user_id, comments)
+		if ($skill_endorsement_id <= 0)
+		{
+			$q = "INSERT INTO skill_endorsements (user_id, skill_id, endorsed_by_user_id, comments)
 VALUES (".$display_user_id.",".$skill_id.",".$logged_user_id.",'".$message."')";
-		
+		}
+		else
+		{
+			$q = "Update skill_endorsements 
+					set 
+						comments='".$message."',
+						endorsed_on=CURRENT_TIMESTAMP
+					where skill_endorsement_id=".$skill_endorsement_id;
+		}
 		//echo $q . '<br>';
 		
 		$r = mysqli_query($dbc,$q);
 		
 		// Get $skill_endorsement_id of the insert query
-		$skill_endorsement_id = -1; 
-		if($r) $skill_endorsement_id = mysqli_insert_id($dbc);
+		if ($skill_endorsement_id <= 0) {
+			$skill_endorsement_id = -1; 
+			if($r) $skill_endorsement_id = mysqli_insert_id($dbc); }
 
 		mysqli_close($dbc); // close the connection
 		
@@ -33,8 +44,7 @@ VALUES (".$display_user_id.",".$skill_id.",".$logged_user_id.",'".$message."')";
 		else {
 			return false;
 		}
-	}
-
+	} // End of addUpdateEndorsement
 
 public function getEndorsementSuggestions($logged_user_id){
 	
@@ -140,6 +150,35 @@ public function getEndorsementLeft($user_id){
 			return null;
 		}
 	} // End of getEndorsementLeft
+
+public function getEndorsedComment($display_user_id, $logged_user_id, $skill_id){
+	
+	$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+	
+	
+		$q = "/*Get latest endorsed comment*/
+				select * from skill_endorsements se2 
+				where se2.skill_endorsement_id =
+					(select max(se.skill_endorsement_id) from skill_endorsements se
+					where se.endorsed_by_user_id=".$logged_user_id." and se.user_id=".$display_user_id." and se.skill_id=".$skill_id."  and year(endorsed_on)=year(CURDATE()) )";
+	
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+	
+		if (isset($r) && mysqli_num_rows($r) >= 1)
+		{
+			//found in DB
+			$row = mysqli_fetch_array($r);
+			return 	$row; 
+		}
+		else
+		{
+			// not found in DB
+			return null;
+		}
+	} // End of getEndorsedComment
 
 	
 } // End of class

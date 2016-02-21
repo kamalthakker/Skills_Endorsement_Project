@@ -163,6 +163,7 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                 var displayusername = button.data('displayusername'); // Endorse To Name
                 var displayuserid = button.data('displayuserid'); // Endorse To
                 var loggedinuserid = button.data('loggedinuserid'); // Endorse By
+                var endorsementleft = button.data('endorsementleft'); // Endorsement left
                 
                 //Set these values to modal's data attributes
                 modal.data("skillid",skillid);
@@ -171,13 +172,37 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                 modal.data("refreshpage","N");
                 
                 
-                
                 var dataString = 'skillid='+skillid+'&skillname='+skillname+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid;
                 
                 
                 // For Make an endorsement 
                 $('#endorsefor').empty();
                 $('#endorsefor').append("Endorse <span class=\"text-capitalize\">"+ displayusername +"</span> for "+ skillname +"!");
+                
+                // Submit button - set to default
+				$('input#endorsesubmit').attr('value', 'Endorse');
+				
+				if(endorsementleft<=0)
+					{	
+						//alert("hello");	
+						$('#endorsefor').empty();
+						$('#endorsefor').append('You have exceeded the number of endorsements allowed in this calendar year!');
+						
+						$('input#endorsesubmit').attr('disabled', 'disabled');
+						$('textarea#recommendation').attr('disabled', 'disabled');
+						
+					}
+				
+				/*
+				if(endorsementleft>0)
+					{
+						//alert(endorsementleft);
+						$('textarea#recommendation').empty();
+						$('textarea#recommendation').append('');
+						You have exceeded the number of endorsements allowed in this calendar year!
+						
+					}
+                */
                 
                 // Show the form
                 $('#recform').css('display', 'inline');
@@ -214,6 +239,10 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
 	                    
                         $('#viewEndorsement').empty();
                         $('#viewEndorsement').append(data);
+                        
+                        // do not call if dispaly user id is same as logged in used id
+                        if (displayuserid!==loggedinuserid) {
+                        getEndorsedComment(skillname, skillid, displayusername, displayuserid, loggedinuserid); }
                     },
                     error: function(){
                         alert("failure - please contact sys admin!");
@@ -229,7 +258,71 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                 $('.modal .modal-body').css('overflow-y', 'auto');
                 //$('.modal .modal-body').css('max-height', $(window).height() * 0.5);
                 $('.modal .modal-body').css('max-height', '65%');
+                
+                
             });  
+        
+        
+				/* -----------------------------
+		        If already endorsed, get comments
+		       ----------------------------- */
+			function getEndorsedComment(skillname, skillid, displayusername, displayuserid, loggedinuserid){
+				
+	            //alert(skillname);
+	            
+	            var dataString = 'skillid='+skillid+'&skillname='+skillname+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid;
+	            
+	            	            
+	            /* AJAX Call */
+                $.ajax({
+                    cache: false,
+                    type: 'GET',
+                    dataType: "json",
+                    url: 'modal_getendorsedcomment.php',
+                    data: dataString,
+                    success: function(data)
+                    {
+	                    //alert(data + '----' + data['found']);
+	                    
+	                    if(data['found']=='Y'){
+		                    
+		                    //alert('found -- '  + data['comments']);
+		                    
+		                    //Get modal
+		                    var modal=$('#makeViewEndorsementsModal');
+		                
+		                	// Set label on top
+		                    $('#endorsefor').empty();
+							$('#endorsefor').append("You have already endorsed <span class=\"text-capitalize\">"+ displayusername +"</span> for "+ skillname +"! You can make changes here:");
+							
+							// Submit button from Endorsed to Update
+							$('input#endorsesubmit').attr('value', 'Update');
+							$('input#endorsesubmit').removeAttr('disabled');
+		                    
+		                    // Set skill_endorsement_id in modal
+		                    modal.data("skillendorsementid",data['skill_endorsement_id']);
+		                    
+		                    // Set already endorsed comment
+	                        $('textarea#recommendation').empty();
+	                        //$('textarea#recommendation').append(data['comments']);
+	                        $('textarea#recommendation').val(data['comments']);
+	                        $('textarea#recommendation').removeAttr('disabled');
+	                        
+               
+                        }
+                        else{
+	                       //alert('not found');
+	                       $('textarea#recommendation').empty(); 
+	                       $('textarea#recommendation').val('');
+                        }
+                        
+                    },
+                    error: function(){
+                        alert("failure - please contact sys admin!");
+                    }
+                });
+                /* End of AJAX Call */
+            };
         
         
           /* -----------------------------
@@ -248,8 +341,12 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                 var skillid = modal.data('skillid');
                 var displayuserid = modal.data('displayuserid');
                 var loggedinuserid = modal.data('loggedinuserid');
+                var skillendorsementid = modal.data('skillendorsementid');
                 
-                var dataString = 'skillid='+skillid+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid+'&message='+encodeURIComponent(recmsg);
+                var dataString = 'skillendorsementid='+skillendorsementid+'&skillid='+skillid+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid+'&message='+encodeURIComponent(recmsg);
+                
+                //alert(dataString);
+                //return;
                 
                 // Set loading icon
                 $('#makeEndorsementAJAXLoader').append(loadingContent);
@@ -278,8 +375,9 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
 						$('#makeEndorsementResult').append(data);
                         $('#makeEndorsementResult').css('display', 'inline');
                         
-                        // Refresh page on quiting...
-                        modal.data("refreshpage","Y");
+                        // Refresh page on quiting... only for insert, not for update
+                        if(skillendorsementid<=0)
+ 	                       modal.data("refreshpage","Y");
                         
                         
                     },
@@ -293,7 +391,11 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
             });  
             
             
-           $('#makeViewEndorsementsModal').on('hidden.bs.modal', function () {
+            
+          /* -----------------------------
+	        On hidden
+	       ----------------------------- */  
+        $('#makeViewEndorsementsModal').on('hidden.bs.modal', function () {
 		   		
 		   		if ($('#makeViewEndorsementsModal').data('refreshpage')=="Y")
 		   			location.reload();
@@ -306,7 +408,7 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
 </script>	
 
 <!-- Endorsement Modal -->
-<div class="modal fade" id="makeViewEndorsementsModal" tabindex="-1" role="dialog" aria-labelledby="makeViewEndorsementsModalLabel" data-skillid="0" data-displayuserid="0" data-loggedinuserid="0" data-refreshpage="N">
+<div class="modal fade" id="makeViewEndorsementsModal" tabindex="-1" role="dialog" aria-labelledby="makeViewEndorsementsModalLabel" data-skillid="0" data-displayuserid="0" data-loggedinuserid="0" data-refreshpage="N" data-skillendorsementid="0">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">

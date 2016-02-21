@@ -5,6 +5,7 @@ include_once 'classes/endorsement.php';
 if ( isset($_REQUEST['skillid']) && isset($_REQUEST['displayuserid']) && isset($_REQUEST['loggedinuserid']) && isset($_REQUEST['message']) )
 {
 	// Get values
+	$skill_endorsement_id=$_REQUEST['skillendorsementid'];
 	$skill_id=$_REQUEST['skillid'];
 	$display_user_id=$_REQUEST['displayuserid'];
 	$logged_user_id=$_REQUEST['loggedinuserid'];
@@ -20,7 +21,7 @@ if ( isset($_REQUEST['skillid']) && isset($_REQUEST['displayuserid']) && isset($
 	$objEndorsement = new endorsement();
 	
 	// Insert endorsement in DB
-	$result = $objEndorsement->addEndorsement($skill_id, $display_user_id, $logged_user_id, $message);
+	$result = $objEndorsement->addUpdateEndorsement($skill_endorsement_id, $skill_id, $display_user_id, $logged_user_id, $message);
 	
 	if($result) 
 	{

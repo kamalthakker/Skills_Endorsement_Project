@@ -176,6 +176,11 @@ limit 8;
 
 
 update notifications set read='Y' where recipient_user_id=3 and read='N'
+
+select * from skill_endorsements se2 
+where se2.skill_endorsement_id =
+(select max(se.skill_endorsement_id) from skill_endorsements se
+where se.endorsed_by_user_id=2 and se.user_id=3 and se.skill_id=2918)
    
 
 
