@@ -184,7 +184,7 @@ if(!isset($linkno)) $linkno=0;
                         <ul class="dropdown-menu">    
 	                        <li>
 	                        	
-	                        	<a href="#">
+	                        	<a href="edit_profile.php">
 		                        	<span class="glyphicon glyphicon-pencil"></span> Edit Profile
 		                        </a>
 	                        </li>

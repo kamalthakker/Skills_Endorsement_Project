@@ -131,6 +131,39 @@ $dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBA
 		}	
 	
 } // End of getManagers
+
+public function updateUser($user_id, $fname, $lname, $phone, $job_title, $speciality, $speciality2, $city, $state, $zip){
+	
+	
+	$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+		
+		$q = "update users
+				set fname='".$fname."',
+				lname='".$lname."',
+				phone='".$phone."',
+				job_title='".$job_title."',
+				speciality='".$speciality."',
+				speciality2='".$speciality2."',
+				city='".$city."',
+				state='".$state."',
+				zip='".$zip."'
+			where user_id=".$user_id; 
+		
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+		
+		
+		if($r){
+			return true;
+		}
+		else {
+			return false;
+		}	
+	
+} // End of updateUser
+
 	
 } // End of class
 
