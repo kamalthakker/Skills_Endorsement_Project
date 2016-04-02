@@ -198,3 +198,19 @@ select s.name as skeyword from skills s
 ) s
 where s.skeyword like 'ja%'
 
+
+--- Clean up script for demo ---
+--- Run this script to clean up database before giving the demo ---
+
+delete from projects where project_id > 39;
+delete from project_skills where project_id > 39;
+
+-- delete all endorsements
+delete from skill_endorsements;
+
+delete from skills where skill_id>6590;
+
+delete from notifications;
+
+-- End of clean up scripts --
+
