@@ -54,6 +54,10 @@ if(!isset($linkno)) $linkno=0;
 
 	<!-- Bootstrap custom checkbox-->
 	<script src="includes/bootstrap-checkbox.min.js" defer></script>
+	
+	<!-- Typehead -->
+	<script src="includes/typeahead.bundle.js"></script>
+	
 
     <!-- Custom styles for this template -->
     <link href="includes/stylesmain.css" rel="stylesheet">
@@ -66,6 +70,32 @@ if(!isset($linkno)) $linkno=0;
 	<link rel="shortcut icon" href="../images/website.ico">
 	
 	
+	<script type="text/javascript">
+	$(document).ready(function(){
+	/*--------------------------*/
+	
+	// Typehead for search keywords
+    var searchKeywords = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            //prefetch: "search_keywords_json.php?query=%QUERY"
+            remote: {
+		    url: 'search_keywords_json.php?query=%QUERY',
+		    wildcard: '%QUERY'
+		  	}
+        });
+
+
+        //$('#remote .typeahead').typeahead(null, {
+	      $('#searchInput').typeahead(null, {  
+            name: 'skeyword',
+            display: 'value',
+            source: searchKeywords
+        });
+	
+	/*--------------------------*/
+	});	
+	</script>
 	
 </head>
 
@@ -125,8 +155,11 @@ if(!isset($linkno)) $linkno=0;
 				<li>	
 	                <form class="navbar-form pull-left" role="search" method="post" action="searchresult.php">
 		               
-			             <div class="input-group"> 
-						<input type="text" class="form-control" placeholder="Search people, skills, or projects..." id="searchInput" name="searchby" style="width: 350px;">
+			            <div class="input-group"> 
+				             
+				        <div id="remote">    
+							 <input type="text" class="typeahead form-control" placeholder="Search people, skills, or projects..." id="searchInput" name="searchby" style="width: 350px;">
+				         </div>
 						
 						<div class="input-group-btn">
 						<button type="submit" class="btn btn-default" style="height: 34px; margin-left: -4px;"><span class="glyphicon glyphicon-search"></span></button>

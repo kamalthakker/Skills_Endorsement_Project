@@ -5,13 +5,19 @@ $dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBA
 
 
 
-$q = "/*List of projects yet not entered by the user*/
-				SELECT distinct project_name FROM projects 
-				WHERE project_name not in (
-				select distinct project_name from projects where user_id=".$_REQUEST['userid'].")";
+$q = "select s.skeyword from (
+		select u1.fname as skeyword from users u1
+		union all
+		select u2.lname as skeyword from users u2
+		union all
+		select distinct p.project_name as skeyword from projects p
+		union all
+		select s.name as skeyword from skills s
+	) s
+		where s.skeyword like '".$_REQUEST['query']."%'";
 
 
-echo $q;
+//echo $q;
 
 
 
@@ -33,7 +39,7 @@ echo $q;
             //$return[] = $obj->name;
             //echo $obj->name;
 
-            $return[] = array('name' => $obj->project_name, 'value' => $obj->project_name);
+            $return[] = array('name' => $obj->skeyword, 'value' => $obj->skeyword);
         }
         // free result set
         $result->close();
@@ -57,7 +63,7 @@ mysqli_close($dbc);
 
 
 $json = json_encode($return);
-$File = 'projectssfile.json' ;
+$File = 'skeywords.json' ;
 
 $fh = fopen($File, 'a') or die();
 fwrite($fh,$json);

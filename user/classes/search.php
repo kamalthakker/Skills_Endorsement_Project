@@ -13,7 +13,7 @@ $dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBA
 		$q = "/*Search results*/
 				select distinct user_id, fname, lname, job_title, speciality, speciality2, userdp 
 				from users
-				where fname like '%".$search_keyword."%'
+				where (fname like '%".$search_keyword."%' or lname like '%".$search_keyword."%')
 				
 				
 				union 

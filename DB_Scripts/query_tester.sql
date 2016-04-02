@@ -185,7 +185,16 @@ where se.endorsed_by_user_id=2 and se.user_id=3 and se.skill_id=2918 and year(en
 
 update skill_endorsements
 set endorsed_on=CURRENT_TIMESTAMP
-where skill_endorsement_id=24
+where skill_endorsement_id=24;
    
-
+select s.skeyword from (
+select u1.fname as skeyword from users u1
+union all
+select u2.lname as skeyword from users u2
+union all
+select distinct p.project_name as skeyword from projects p
+union all
+select s.name as skeyword from skills s
+) s
+where s.skeyword like 'ja%'
 
