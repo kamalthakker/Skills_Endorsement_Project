@@ -8,7 +8,7 @@ public function sendEmail($to, $subject, $message){
 		$email    = new SendGrid\Email();
 	
 		// Overwrite
-		$to 	= "kamalthakker@gmail.com";
+		//$to 	= "kamalthakker@gmail.com";
 		
 		// Not working
 		//$message = '<html><head><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"></head><body>' . $message . '</body></html>';
