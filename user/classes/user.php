@@ -166,5 +166,4 @@ public function updateUser($user_id, $fname, $lname, $phone, $job_title, $specia
 
 	
 } // End of class
-
-?>	
+?>
