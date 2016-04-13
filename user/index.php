@@ -349,7 +349,7 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                 var loggedinuserid = modal.data('loggedinuserid');
                 var skillendorsementid = modal.data('skillendorsementid');
                 
-                alert('skillid: '  + skillid + '  \nskillendorsementid: '  + skillendorsementid);
+                //alert('skillid: '  + skillid + '  \nskillendorsementid: '  + skillendorsementid);
                 
                 
                 var dataString = 'skillendorsementid='+skillendorsementid+'&skillid='+skillid+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid+'&message='+encodeURIComponent(recmsg);
