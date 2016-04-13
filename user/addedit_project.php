@@ -303,7 +303,7 @@ $(document).ready(function(){
             <div class="form-group">
                 <label for="projectName" class="col-sm-2 control-label">Project Name</label>
                 <div class="col-sm-10">
-	                <div id="remote">
+	                <div id="remote1">
                     <input type="text" class="typeahead form-control" id="projectName" name="projectName" placeholder="Project Name" autofocus="true" required="true" maxlength="50" value="<?php if (isset($dbRow_Project['project_name'])) echo $dbRow_Project['project_name']; ?>">
 	                </div>    
                 </div>

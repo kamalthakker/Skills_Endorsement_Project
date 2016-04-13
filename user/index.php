@@ -164,12 +164,14 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                 var displayuserid = button.data('displayuserid'); // Endorse To
                 var loggedinuserid = button.data('loggedinuserid'); // Endorse By
                 var endorsementleft = button.data('endorsementleft'); // Endorsement left
+                var skillendorsementid = 0;
                 
                 //Set these values to modal's data attributes
                 modal.data("skillid",skillid);
                 modal.data("displayuserid",displayuserid);
                 modal.data("loggedinuserid",loggedinuserid);
                 modal.data("refreshpage","N");
+                modal.data("skillendorsementid",skillendorsementid);
                 
                 
                 var dataString = 'skillid='+skillid+'&skillname='+skillname+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid;
@@ -299,7 +301,7 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
 							$('input#endorsesubmit').attr('value', 'Update');
 							$('input#endorsesubmit').removeAttr('disabled');
 		                    
-		                    // Set skill_endorsement_id in modal
+		                    // Set skill_endorsement_id in modal -- used to run an update query
 		                    modal.data("skillendorsementid",data['skill_endorsement_id']);
 		                    
 		                    // Set already endorsed comment
@@ -312,6 +314,10 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                         }
                         else{
 	                       //alert('not found');
+	                       
+	                       // Set skill_endorsement_id in modal -- used to run an insert query
+		                    //modal.data("skillendorsementid","0");
+		                    
 	                       $('textarea#recommendation').empty(); 
 	                       $('textarea#recommendation').val('');
                         }
@@ -342,6 +348,9 @@ $endorsement_left = $objEndorsement->getEndorsementLeft($userid);
                 var displayuserid = modal.data('displayuserid');
                 var loggedinuserid = modal.data('loggedinuserid');
                 var skillendorsementid = modal.data('skillendorsementid');
+                
+                alert('skillid: '  + skillid + '  \nskillendorsementid: '  + skillendorsementid);
+                
                 
                 var dataString = 'skillendorsementid='+skillendorsementid+'&skillid='+skillid+'&displayuserid='+displayuserid+'&loggedinuserid='+loggedinuserid+'&message='+encodeURIComponent(recmsg);
                 

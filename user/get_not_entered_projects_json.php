@@ -11,7 +11,7 @@ $q = "/*List of projects yet not entered by the user*/
 				select distinct project_name from projects where user_id=".$_REQUEST['userid'].")";
 
 
-echo $q;
+//echo $q;
 
 
 

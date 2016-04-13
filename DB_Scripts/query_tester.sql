@@ -212,5 +212,18 @@ delete from skills where skill_id>6590;
 
 delete from notifications;
 
+INSERT INTO `skill_endorsements` (`skill_endorsement_id`, `user_id`, `skill_id`, `endorsed_by_user_id`, `comments`, `endorsed_on`) VALUES
+(38, 1, 2918, 2, 'Mike and I both have worked together on Android project. Mike exhibits high proficiency in comprehensive technologies. Especially, Mike is very knowledgeable in Java. He promotes positive energy among the team members.', '2016-04-02 22:44:36'),
+(39, 1, 2918, 3, 'Mike is an outstanding leader and manager who provided steady direction to the group in Java development project.', '2016-04-02 22:48:08'),
+(40, 1, 1010, 3, 'Mike is very knowledgeable. Over the years, Mike has accumulated tremendous amount of experience and knowledge in the field of XML and integrations.', '2016-04-02 22:49:56'),
+(41, 2, 4439, 1, 'Kamal has a very good blend of business knowledge and technical skills. He is an excellent PHP developer with a strong understanding of server and client scripts. ', '2016-04-02 22:54:30');
+
+INSERT INTO `notifications` (`notification_id`, `notification_type_id`, `recipient_user_id`, `sender_user_id`, `correspondence_id`, `read`, `created_date`) VALUES
+(52, 3, 1, 2, 38, 'Y', '2016-04-02 22:44:36'),
+(53, 3, 1, 3, 39, 'Y', '2016-04-02 22:48:08'),
+(54, 3, 1, 3, 40, 'Y', '2016-04-02 22:49:56'),
+(55, 3, 2, 1, 41, 'Y', '2016-04-02 22:54:30');
+
+
 -- End of clean up scripts --
 
