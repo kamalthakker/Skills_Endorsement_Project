@@ -407,6 +407,23 @@ class project{
 		
 	} // End of insertCustomSkill
 	
+	
+	public function deleteProject($project_id) {
+		$dbc = mysqli_connect($GLOBALS['db_servername'], $GLOBALS['db_username'], $GLOBALS['db_password'], $GLOBALS['db_name']) or die("Not connected..");
+		
+		$q = "Delete from projects where project_id=".$project_id;
+		
+		//echo $q;
+		
+		$r = mysqli_query($dbc,$q);
+		mysqli_close($dbc); // close the connection
+		
+		if($r)
+			return true;
+		else
+			return false;
+		
+	} // End of deleteProject
+	
 }// End of project class
-
-?>	
+?>
