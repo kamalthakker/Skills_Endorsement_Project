@@ -61,7 +61,6 @@ function printSkills($dbRows_UserSkillsWithRank, $HowManyShow, $LoggedInUserId, 
 		echo '<a href="#" id="more" data-more="'.$more.'" class="morelessul" data-toggle="collapse" data-target="#hiddenskills">See more ('.$more.'+) </a>';
 }
 ?>
-
 <?php 
 
 
